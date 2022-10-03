@@ -1,0 +1,8 @@
+$mcard-net-width: 113px;
+$mcard-img-height: 108px;
+$mcard-label-height: 39px;
+$mcard-pad: 5px;
+$mcard-gap: 10px;
+/*calculations*/
+$mcard-width: $mcard-net-width + $mcard-pad * 2 + 2px;
+$mcard-height: $mcard-img-height + $mcard-label-height + $mcard-pad * 2 + 3px;
