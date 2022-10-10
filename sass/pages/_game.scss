@@ -1,0 +1,41 @@
+/*Game*/
+#gameField {
+    //position: relative;
+    border: 1px solid orange;
+}
+
+.game {
+    &_label {
+        display: inline-block;
+        margin-bottom: 1rem;
+        padding: .4rem 1rem;
+        border-radius: torem(4.8);
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .2);
+    }
+
+    &_row {
+        display: flex;
+        flex-wrap: wrap;
+        /*border: 2px solid goldenrod;*/
+    }
+
+    &_board {
+        min-width: torem(480);
+        border: 1px solid red;
+    }
+}
+
+/*#gameBoard-main {
+    padding: 20px;
+}*/
+
+/*Control board*/
+#controlBoard {
+    width: torem(100.8);
+    margin: torem(19.2);
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /*justify-content: space-evenly;*/
+    /*padding: 0px 10px;*/
+}

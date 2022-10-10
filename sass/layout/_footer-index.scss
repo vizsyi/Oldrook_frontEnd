@@ -1,0 +1,17 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: torem(60.8); /* Vertically center the text there */
+    //background-color: #ffe9c0;
+    //border-top: 1px solid rgba(0, 0, 0, .1);
+    padding: 0px 20px;
+
+    & > div {
+        //max-width: 100%;
+        border-top: 1px solid rgba(0, 0, 0, .1);
+    }
+
+}

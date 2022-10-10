@@ -2,11 +2,20 @@
 @import "abstract/mixins";
 @import "abstract/variables";
 
+@import "base/typography-import";
+@import "base/root-variables";
 @import "base/base";
 @import "base/typography";
-@import "base/animations";
+@import "base/from_bootstrap";
 @import "base/utilities";
+@import "base/animations";
+
+//@import "layout/layout-utilities";
+@import "layout/header-index";
+@import "layout/footer-index";
 
 @import "pages/home";
+@import "pages/game";
 
-@import "components/buttons.scss";
+@import "components/buttons/buttons";
+@import "components/modals";

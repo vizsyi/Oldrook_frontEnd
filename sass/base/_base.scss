@@ -7,9 +7,29 @@
 }
 
 html {
-    font-size: 62.5%;
+    //font-size: 62.5%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     box-sizing: border-box;
+    text-align: center;
+    font: 100% Heebo, DroidSerif, Georgia, "Times New Roman", Times, sans-serif, serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: var(--color-background-2); /* For browsers that do not support gradients */
+    /*background-image: -webkit-gradient(linear, left top, left bottom
+        ,color-stop(15%, var(--color-background-1))
+        ,color-stop(45%, var(--color-background-2)));*/
+    /*background-image: linear-gradient(to bottom
+        ,var(--color-background-1) 15%
+        ,var(--color-background-2) 45%);*/
+    background-image: radial-gradient(farthest-corner at 25% 5%
+  	    ,var(--color-background-1) 18%
+        ,var(--color-background-2) 71%);
+    padding: .3rem 1.3rem;
+    margin: 0;
+    margin-bottom: torem(60.8);/* Margin bottom by footer height */
 }

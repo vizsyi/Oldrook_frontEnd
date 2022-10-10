@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory cards</title>
+    <link rel="stylesheet" href="src/index.css">
+    <script src="js/script.js" type="modul"></script>
+</head>
+<body>
+    <header class="navbar-peach">
+        <h2 class="leftheader navbar-brand">Oldrook.com</h2>
+        <hr>
+    </header>
+    <main id="gameField" class="game_field"><!-- id="gameContainer" -->
+        <h2 class="game_label">Memory cards</h2>
+        <div class="game_row"><!-- game-content -->
+            <section id="gameBoard-main" class="game_board"></section>
+            <section id="controlBoard">
+                <div class="btn btn-primary">Test</div>
+                <button id="cbNewGame" class="btn-control">Starting a new game</button>
+                <button id="cbDraw" class="btn-control">Offer a draw</button>
+                <button id="cbGiveUp" class="btn-control">Give up</button>
+                <button id="cbAccept" class="btn-control">Accept the draw</button>
+                <button id="cbAccept" class="btn-control">Accept the draw</button>
+            </section>
+            <section class="chat_board">
+            </section>
+        </div>
+
+    </main>
+
+    <section class="testpanel" class="nondisplay">
+        <hr>
+        <button onclick="test-down()">Down</button>
+        <button onclick="test-cliked()">Clicked</button>
+        <button onclick="test-up()">Up</button>
+        <button onclick="test-solved()">Solved</button>
+        <button onclick="test-disconnected()">Disconnected</button>
+        <button onclick="testconnected()">Connected</button>
+    </section>
+    <footer class="footer text-muted">
+        <div class="container">
+            &copy; Oldrook - 2023 <a onclick="aboutUs()">About us</a>
+        </div>
+    </footer>
+    <!-- Modals -->
+    <section class="nondisplay">
+
+        <div id="modalfade" class="mmodal_fade"></div>
+    </section>
+    <!-- Templates -->
+    <aside id="jsTemplates" class="nondisplay">
+    </aside>
+</body>
+</html>
