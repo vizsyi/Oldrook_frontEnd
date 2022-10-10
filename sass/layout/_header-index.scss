@@ -1,0 +1,34 @@
+/*Navbar*/
+
+/* .navbar-peach {
+    //border: 1px solid #80b9f2;
+    border-radius: 5px;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .2);
+} */
+
+.navbar-brand {
+    white-space: normal;
+    padding-top: 0rem;
+    text-align: left;
+    word-break: break-all;
+    color: hsl(40, 3%, 87%);
+    font-family: 'Yatra One', cursive;
+    font-weight: 700;
+    text-shadow: hsla(203, 11%, 18%, 50%) 0px 0px 1px,
+        hsl(203, 11%, 38%) 2px 1px 1px,
+        hsl(203, 11%, 38%) 4px 2px 1px,
+        hsl(203, 11%, 38%) 6px 3px 1px,
+        hsl(203, 11%, 38%) 8px 4px 1px,
+        hsl(203, 11%, 8%) 8px 4px 2px,
+        rgba(0, 0, 0, 1) 8px 4px 12px;
+
+    &::first-letter {
+        font-size: 1.4em;
+        letter-spacing: 2px;
+    }
+
+    &:hover {
+        color: hsl(40, 3%, 96%);
+    }
+
+}
