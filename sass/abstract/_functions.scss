@@ -1,5 +1,6 @@
 //Converting pixel to Rem
 @function torem($size, $font-size : 16px) {
+    $size: $size + 0px;
     $font-size: $font-size + 0px;
     $remSize: $size / $font-size;
     @return #{$remSize}rem;
