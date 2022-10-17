@@ -1,0 +1,1 @@
+export const GAMEBOARD_CLASSES = ["game_board"];
