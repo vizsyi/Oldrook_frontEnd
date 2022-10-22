@@ -1,4 +1,5 @@
 import GameView from "./gameView.js";
+import MCardsSM from "../models/mcardsSM.js";
 
 class CardItem {
     constructor(game, elem) {
@@ -26,7 +27,7 @@ class CardItem {
     }
 }
 
-export default class mcardsView extends GameView {
+export default class MCardsView extends GameView {
     constructor(board)
     {
         super(board);
@@ -35,9 +36,10 @@ export default class mcardsView extends GameView {
         this._cards = [];
 
         /*Status*/
-        this._selectedCards = [];
-        this._unsolvedPairs = Math.floor(this._pieces / 2);
-        this._isFinished = false;
+        this._statusM = new MCardsSM(this._pieces);
+        //this._selectedCards = [];
+        //this._unsolvedPairs = Math.floor(this._pieces / 2);
+        //this._isFinished = false;
         this._clickedCard = null;
 
         this._initGame(this._pieces);
@@ -56,7 +58,6 @@ export default class mcardsView extends GameView {
             else {
                 card.turnUp("Robert Lewandowski");
             }
-            
         }
     }
 
