@@ -1,4 +1,17 @@
 :root {
     --color-background-1: #ffe9d0;
     --color-background-2: #ffe9c0;
+
+    //Mcard
+    --mcard-net-width: 7.1rem;// 113.6px
+    --mcard-img-height: 6.7rem;// 107.2px
+    --mcard-label-height: 2.5rem;// 40px
+    --mcard-pad: .3rem;// 4.8px
+    --mcard-gap: .6rem;// 9.6px
+    /*calculations*/
+    --mcard-width: calc(var(--mcard-net-width) + var(--mcard-pad) * 2 + 2px);
+    --mcard-height: calc(var(--mcard-img-height)
+        + var(--mcard-label-height)
+        + var(--mcard-pad) * 2 + 3px);
+
 }

@@ -1,0 +1,90 @@
+.mcard {
+    height: 100%;
+    width: 100%;
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, .7));
+
+    /* The rotating part */
+    & > div {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        border-radius: torem(7.2);
+        //box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    }
+
+    .mcard_front,
+    .mcard_back {
+        height: 100%;
+        width: 100%;
+        border-radius: torem(7.2);
+        backface-visibility: hidden;
+    }
+
+    .mcard_front {
+        background-color: whitesmoke;
+        padding: var(--mcard-pad);
+        transform: rotateY(180deg);
+
+        /* Border */
+        & > div {
+            height: 100%;
+            border: 1px solid #444;
+            border-radius: torem(4.8);
+        }
+    }
+
+    .mcard_img {
+        height: var(--mcard-img-height);
+        width: 100%;
+        object-fit: cover;
+        border-radius: torem(4) torem(4) 0 0;//TODO: making more punctual
+    }
+
+    .mcard_label {
+        height: calc(100% - var(--mcard-img-height));
+        border-top: 1px solid #444;
+        display: flex;
+        //text-align: center;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Courgette', cursive;
+        font-size: torem(14.8);
+
+        & > span {
+            text-align: right;
+            padding: 0 torem(4.8);
+
+            &::first-line {
+                text-align: left;
+            }
+        }
+    }
+
+    .mcard_back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: indianred;
+        z-index: 1;
+    }
+}
+
+.mcard-down:hover > div {
+    transform: rotateY(61deg);
+    transition: 0.8s
+}
+
+.mcard-clicked > div {
+    transform: rotateY(171deg);
+    transition: 1.8s
+}
+
+.mcard-up > div,
+.mcard-pair > div {
+    transform: rotateY(180deg);
+}
+
+.mcard-solved {
+    visibility: hidden;
+}
