@@ -2,6 +2,7 @@ import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameView { 
     constructor(board){
+        this._statusM;
         this._board = board;
         this._cleanBoardClasses();
 
