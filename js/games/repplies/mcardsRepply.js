@@ -1,9 +1,22 @@
 import GameRepply from "./gameRepply.js";
+import {DUMMY_CELEBS} from "../dummyData.js"
 
 export default class MCardsRepply extends GameRepply{ 
     constructor(view){
         super(view);
 
+        this._pieces = view.pieces;
+        this._allCards = [...DUMMY_CELEBS];
+        this._gameCards;
+
+        this._newGame();
+    }
+
+    _newGame (){
+        this._gameCards = this._selectingCards(this._allCards, this._pieces);
+
+        this._statusM.reset();
+        this._viewPlug.newGame();
     }
 
     //MCARDS FUNCTIONS

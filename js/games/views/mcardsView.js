@@ -5,8 +5,7 @@ class CardItem {
     constructor(game, elem) {
         this._game = game;
         this._elem = elem;
-        //this._status = "solved";
-        this.status = "down";
+        this.status = "solved";
     }
 
     setStatus(status) {
@@ -45,6 +44,10 @@ export default class MCardsView extends GameView {
         this._initGame(this._pieces);
     }
 
+    get pieces (){
+        return this._pieces;
+    }
+
     _boardClick(ev){
         const elem = ev.target.closest(".mcard");
         if (elem){
@@ -71,7 +74,7 @@ export default class MCardsView extends GameView {
         for (let i = 0; i < pieces; i++) {
             let card = tempcard.cloneNode(true);
             card.setAttribute("data-id", i);
-            card.classList.add("mcard-down");
+            card.classList.add("mcard-solved");
             this._cards.push(new CardItem(this, card));
             frag.appendChild(card);
         }
@@ -83,4 +86,11 @@ export default class MCardsView extends GameView {
 
         this._board.appendChild(frag);
     }
+
+    newGame(){
+        this._cards.forEach((card, i) => {
+            if(this._statusM.unsolvedCards[i]) card.setStatus("down");
+        });
+    }
+
 }
