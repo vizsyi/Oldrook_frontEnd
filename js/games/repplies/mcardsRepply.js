@@ -23,7 +23,7 @@ export default class MCardsRepply extends GameRepply{
     _shuffle(list){
         let i, r;
 
-        for (i = list.lengthn; i > 1; ){
+        for (i = list.length; i > 1; ){
             r = Math.floor(Math.random() * i--);
             if (i != r) [list [i], list [r]] = [list [r], list [i]];
         }
@@ -44,7 +44,7 @@ export default class MCardsRepply extends GameRepply{
 
             temp.pairId = i;
             temp.solved = false;
-            selected.push(temp, temp);
+            selected.push(temp, {...temp});
         }
 
         this._shuffle(selected);
