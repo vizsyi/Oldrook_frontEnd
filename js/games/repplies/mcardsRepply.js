@@ -8,6 +8,7 @@ export default class MCardsRepply extends GameRepply{
         this._pieces = view.pieces;
         this._allCards = [...DUMMY_CELEBS];
         this._gameCards;
+        this._firstMem = null;
 
         this._newGame();
     }
@@ -17,6 +18,33 @@ export default class MCardsRepply extends GameRepply{
 
         this._statusM.reset();
         this._viewPlug.newGame();
+    }
+
+    _move (index){
+        let card;
+
+        if (index < 0 || index >= this._pieces) 
+            throw new RangeError("Invalid position");
+
+        if (this._statusM.unsolvedCards[index] !== 1
+            || this._firstMem && this._firstMem.index === index) return;
+
+        card = this._gameCards[index];
+        card.index = index;
+
+        if(this._firstMem){
+            this._viewPlug.move([this._firstMem, card]
+                , this._firstMem.pairId === card.pairId);
+            this._firstMem = null;
+        }
+        else {
+            this._firstMem = card;
+            this._viewPlug.move([card]);
+        }
+    }
+
+    intend (index){
+        setTimeout(this._move.bind(this, index), 500);
     }
 
     //MCARDS FUNCTIONS

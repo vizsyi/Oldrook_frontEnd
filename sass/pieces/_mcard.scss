@@ -68,23 +68,27 @@
         background-color: indianred;
         z-index: 1;
     }
-}
 
-.mcard-down:hover > div {
-    transform: rotateY(61deg);
-    transition: 0.8s
-}
+    &-down {
+        &:hover > div {
+            transform: rotateY(31deg);
+            transition: 0.8s
+        }
 
-.mcard-clicked > div {
-    transform: rotateY(171deg);
-    transition: 1.8s
-}
+        &.clicked > div {
+            transform: rotateY(60deg);
+            transition: 1.8s
+        }
+    }
 
-.mcard-up > div,
-.mcard-pair > div {
-    transform: rotateY(180deg);
-}
+    &-up > div,
+    &-pair > div {
+        transform: rotateY(180deg);
+    }
+    
+    &-solved {
+        visibility: hidden;
+    }
 
-.mcard-solved {
-    visibility: hidden;
+
 }
