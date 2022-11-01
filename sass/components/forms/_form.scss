@@ -1,0 +1,54 @@
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button, select {
+    text-transform: none;
+}
+
+select {
+    word-wrap: normal;
+
+    &:not(:-internal-list-box) {
+        overflow: visible;
+    }
+}
+
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    -moz-padding-start: calc(0.75rem - 3px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: rgb(232, 204, 168);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    //background-image: url("../img/dropdown.svg");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 28px 21px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    &.select-game-label {
+        display: inline-block;
+        width: 18rem;
+        margin-bottom: 2rem;
+        padding: 0.4rem 1rem;
+        //padding-left: 1rem;
+        font-size: 1.8rem;
+        text-align: center;
+        border-radius: torem(4.8);
+        box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .2);
+    }
+}

@@ -14,7 +14,12 @@
         <hr>
     </header>
     <main id="gameField" class="game_field"><!-- id="gameContainer" -->
-        <h2 class="game_label">Memory cards</h2>
+
+        <select id="gameLabel" class="form-select select-game-label mb-3">
+            <option selected value="mcard">Memory cards</option>
+            <option value="connect4">Connect 4</option>
+        </select>
+          
         <div class="game_row"><!-- game-content -->
             <section id="gameBoard-main" class="game_board"></section>
             <section id="controlBoard">
