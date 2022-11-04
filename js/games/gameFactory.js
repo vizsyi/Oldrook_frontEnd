@@ -19,7 +19,7 @@ class GameFactory {
 
         if (game &&
             [...this._labelSelect.options].some(op => op.value === game)){
-            this._labelSelect.options = game;
+            this._labelSelect.value = game;
         }
         else {
             game = this._labelSelect.options;
@@ -31,9 +31,10 @@ class GameFactory {
     }
 
     _labelChange (){
-        console.log("label changed");
+        const game = this._labelSelect.value;
         this._labelSelect.blur();
-        this.addNewView(this._labelSelect.value);
+        this.addNewView(game);
+        localStorage.setItem("rookgame", game);
     }
 
     addNewView (game = "mcard"){
