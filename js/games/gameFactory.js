@@ -7,7 +7,8 @@ class GameFactory {
         this._game;
         this._mainView;
         this._mainRepply;
-        this._board = document.getElementById("gameBoard-main");
+        //this._board = document.getElementById("gameBoard-main");
+        this._board = document.querySelector("#gameDesk-main .game_board");
         this._labelSelect = document.getElementById("gameLabel");
 
         this._init();
