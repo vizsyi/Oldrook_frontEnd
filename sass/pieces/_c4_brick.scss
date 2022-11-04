@@ -1,0 +1,75 @@
+.c4_brick {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    //background-color: rgb(0, 0, 162);
+
+    & > div:last-child {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        background-image: radial-gradient(circle closest-side
+        , rgba(0, 0, 0, 0) 87%, var(--color-c4-board) 87%);
+        z-index: 1;
+    }
+
+    .c4_touch {
+        width: $c4_brick-height;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .c4_chip {
+        width: $c4_brick-height;
+        height: 100%;
+        margin: 0 auto;
+        background-color: orangered;
+        border-radius: 50%;
+
+        transform: translate(0);
+        //transition: transform 1s;
+
+        z-index: 0;
+    }
+
+    &.c4-empty {
+        .c4_chip {
+            opacity: 0;
+            transition: all 0s;
+        }
+    }
+
+    &.c4-red {
+        .c4_chip {
+            opacity: 1;
+            background-color: red;
+        }
+    }
+
+    &.c4-yellow {
+        .c4_chip {
+            opacity: 1;
+            background-color: rgb(202, 178, 0);
+        }
+    }
+
+}
+
+@for $i from 1 through 6 {
+    .c4_row-#{$i} {
+        .c4_chip {
+            transition: transform (.07s * (8 - $i)) ease-in;
+        }
+
+        &.c4-empty {
+            .c4_chip {
+                transform: translateY($c4_brick-height * ($i - 6.5)
+                    - $c4_border-gap - $c4_upper-gap-height * .5);
+            }
+        }
+
+    }
+}
