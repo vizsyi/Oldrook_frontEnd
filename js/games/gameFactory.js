@@ -1,6 +1,7 @@
 import MCardsView from "./views/mcardsView.js";
 import MCardsRepply from "./repplies/mcardsRepply.js";
 import C4View from "./views/c4View.js";
+import C4Repply from "./repplies/c4Repply.js";
 
 class GameFactory {
     constructor (){
@@ -44,6 +45,7 @@ class GameFactory {
             switch(game){
                 case "connect4":
                     this._mainView = new C4View(this._board);
+                    this._mainRepply = new C4Repply(this._mainView);
                     break;
                 default:
                     this._mainView = new MCardsView(this._board);
