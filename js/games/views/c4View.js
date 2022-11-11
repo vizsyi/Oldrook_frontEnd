@@ -2,19 +2,19 @@ import GameView from "./gameView.js";
 import C4SM from "../models/c4SM.js";
 
 class C4Brick {
-    static colors = ["yellow", "red", "empty"];
+    static sideColors = ["yellow", "red", "empty"];
 
-    constructor(elem, colorId = 1) {
+    constructor(elem, side = 1) {
         this._elem = elem.lastChild;
         //this._chip = elem.lastChild;
-        this._colorId = colorId;
+        this._side = side;
     }
 
-    setColor(colorId) {
-        if (colorId !== this._colorId) {
-            this._elem.classList.remove("c4-" + colors[this._colorId]);
-            this._elem.classList.add("c4-" + colors[colorId]);
-            this._colorId = colorId;
+    setColor(side) {
+        if (side !== this._side) {
+            this._elem.classList.remove("c4-" + sideColors[this._side]);
+            this._elem.classList.add("c4-" + sideColors[side]);
+            this._side = side;
         }
     }
 
@@ -73,6 +73,7 @@ export default class C4View extends GameView {
         // Creating the cards
         for (let row = 6; row > 0; row--){
             rowCl = "c4_row-" + row;
+            this._bricks.unshift(null);
             for (col = 6; col >= 0; col--) {
                 let brick = tempcard.cloneNode(true);
                 brick.setAttribute("data-col", col);
