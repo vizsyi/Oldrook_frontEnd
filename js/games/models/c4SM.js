@@ -61,4 +61,34 @@ export default class MCardsSM{
         this.side = 0;
     }
 
+    matte(side = this.side, bits = this.bits, fast = true){
+        let horDown, horUp, leftDown, rightDown, verDown, xUp;
+        const downB = bits[side],
+            upB = bits[side + 2];
+        // Horizontal
+        horDown = downB & (downB >>> 1);
+        horDown &= (horDown >>> 2);
+        horUp = upB & (upB >>> 1);
+        horUp &= (horUp >>> 2);
+        // Vertical
+        xUp = upB & (upB >>> 8);
+        verDown = downB & ((downB >>> 8) | (upB << 24));
+        verDown &= (verDown >>> 16) | (xUp << 16);
+        // Left diagonal
+        xUp = upB & (upB >>> 9);
+        leftDown = downB & ((downB >>> 9) | (upB << 23));
+        leftDown &= (leftDown >>> 18) | (xUp << 14);
+        // Right diagonal
+        xUp = upB & (upB >>> 7);
+        rightDown = downB & ((downB >>> 7) | (upB << 25));
+        rightDown &= (rightDown >>> 14) | (xUp << 18);
+        // Return
+        if (fast){
+            return horDown | horUp | leftDown | rightDown | verDown;
+        }
+        else {
+            return [horDown, horUp, leftDown, rightDown, verDown];
+        }
+    }
+
 }
