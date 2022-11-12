@@ -5,15 +5,15 @@ class C4Brick {
     static sideColors = ["yellow", "red", "empty"];
 
     constructor(elem, side = 1) {
-        this._elem = elem.lastChild;
+        this._elem = elem;
         //this._chip = elem.lastChild;
         this._side = side;
     }
 
     setColor(side) {
         if (side !== this._side) {
-            this._elem.classList.remove("c4-" + sideColors[this._side]);
-            this._elem.classList.add("c4-" + sideColors[side]);
+            this._elem.classList.remove("c4-" + C4Brick.sideColors[this._side]);
+            this._elem.classList.add("c4-" + C4Brick.sideColors[side]);
             this._side = side;
         }
     }
@@ -89,7 +89,7 @@ export default class C4View extends GameView {
 
     newGame(){
         this._bricks.forEach((brick, i) => 
-            brick.setColor(this._statusM.brickColors[i]));
+            brick?.setColor(this._statusM.brickSides[i]));
     }
 
 }

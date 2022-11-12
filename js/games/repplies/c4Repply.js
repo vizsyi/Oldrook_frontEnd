@@ -8,8 +8,6 @@ export default class C4Repply extends GameRepply{
     }
 
     _newGame (){
-        this._gameCards = this._selectingCards(this._allCards, this._pieces);
-
         this._statusM.reset();
         this._viewPlug.newGame();
     }

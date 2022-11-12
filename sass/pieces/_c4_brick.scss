@@ -12,14 +12,13 @@
         height: 100%;
         margin: 0 auto;
         background-image: radial-gradient(circle closest-side
-        , rgba(0, 0, 0, 0) 87%, var(--color-c4-board) 87%);
+            ,rgba(0, 0, 0, 0) 87%, var(--color-c4-board) 87%);
         z-index: 1;
     }
 
     .c4_touch {
         width: $c4_brick-height;
         height: 100%;
-        cursor: pointer;
     }
     
     .c4_chip {
@@ -36,6 +35,10 @@
     }
 
     &.c4-empty {
+        .c4_touch {
+            cursor: pointer;
+        }
+
         .c4_chip {
             opacity: 0;
             transition: all 0s;
