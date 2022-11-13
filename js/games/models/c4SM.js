@@ -5,30 +5,38 @@ export default class C4SM{
 
         this.side = 0;
 
-        this.colRest = [];
-        this.colRest.length = 7;
+        this._colRest = [];
+        this._colRest.length = 7;
 
-        this.bits;
+        this._bits;
+    }
+
+    get colRest(){
+        return this._colRest;
+    }
+
+    get bits(){
+        return this._bits;
     }
 
     _resetColRest(){
         let col, i = 0;
-        this.colRest.fill(6);
+        this._colRest.fill(6);
 
         for (let rest = 5; rest >= 0; rest--){
             for (col = 0; col < 7; col++){
                 if (this.brickSides[i++] !== 2){
-                    if(this.colRest[col] !== rest + 1)
+                    if(this._colRest[col] !== rest + 1)
                         throw new Error ("Invalid status model");
                     
-                    this.colRest[col] = rest;
+                    this._colRest[col] = rest;
                 }
             }
             i++;
         }
     }
 
-    _setBit(pos, side, bits = this.bits){
+    _setBit(pos, side, bits = this._bits){
         if (pos > 31){
             pos -= 32;
             side += 2;
@@ -37,8 +45,17 @@ export default class C4SM{
         bits[side] |= 1 << pos;
     }
 
-    move(col, side = this.side, bits = this.bits, colRest = this.colRest){
+    move(col, side = this.side, bits = this._bits, colRest = this._colRest){
         this._setBit((40 - (--colRest[col] << 3)) | col, side, bits);
+    }
+
+    nextColPos(col){
+        if (colRest[col] === 0){
+            return null;
+        }
+        else {
+            return ((48 - (--colRest[col] << 3)) | col, side, bits);
+        }
     }
 
     nextSide(){
@@ -46,7 +63,7 @@ export default class C4SM{
     }
 
     _resetBits(){
-        this.bits = [0, 0, 0, 0];
+        this._bits = [0, 0, 0, 0];
         this.brickSides.forEach((side, pos) => {
             if (side !== 2) this._setBit(pos, side);
         })
@@ -61,7 +78,7 @@ export default class C4SM{
         this.side = 0;
     }
 
-    matte(side = this.side, bits = this.bits, fast = true){
+    matte(side = this.side, bits = this._bits, fast = true){
         let horDown, horUp, leftDown, rightDown, verDown, xUp;
         const downB = bits[side],
             upB = bits[side + 2];
