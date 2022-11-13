@@ -30,4 +30,19 @@ export default class GameView {
         this._board.innerHTML = "";
         this._board.removeEventListener('click', this._boardClick.bind(this));
     }
+
+    bitToArray(bit){
+        let arr = [], i, x;
+
+        if (bit === 0) return arr;
+
+        for (let a = 255, x = 0; a !== 0; a <<= 8, x += 8){
+            if (a & bit){
+                for (i = x; i < x + 8; i++) {
+                    if (bit & (1 << i)) arr.push(i);
+                }
+            }
+        }
+        return arr;
+    }
 }
