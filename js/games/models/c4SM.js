@@ -9,6 +9,8 @@ export default class C4SM{
         this._colRest.length = 7;
 
         this._bits;
+
+        this.finished = false;
     }
 
     get colRest(){
@@ -50,11 +52,11 @@ export default class C4SM{
     }
 
     nextColPos(col){
-        if (colRest[col] === 0){
+        if (this._colRest[col] === 0){
             return null;
         }
         else {
-            return ((48 - (--colRest[col] << 3)) | col, side, bits);
+            return ((48 - (this._colRest[col] << 3)) | col);
         }
     }
 
@@ -76,6 +78,7 @@ export default class C4SM{
         this._resetBits();
 
         this.side = 0;
+        this.finished = false;
     }
 
     matte(side = this.side, bits = this._bits, fast = true){

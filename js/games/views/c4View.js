@@ -25,25 +25,35 @@ export default class C4View extends GameView {
     {
         super(board);
 
-        this._bricks = [];
-
         /*Status*/
         this._statusM = new C4SM();
         
         /* View status */
+        this._bricks = [];
+        this._nextColBricks = [];
+        this._nextColBricks.length = 7;
   
         this._initGame();
     }
 
  
     move (col){
+        this._nextColBricks[col].setColor(this._statusM.side);
+
+        this._nextColBricks[col] = this._bricks[this._statusM.nextColPos(col)];
+
+        if (this._statusM.finished) {
+            const winArr = this._statusM.matte(undefined, undefined, false)
+               .map(bit => this.bitToArray(bit));
+            console.log(winArr);
+        }
     }
 
     _boardClick(ev){
-        const elem = ev.target.closest(".c4_brick.c4-empty c4_touch");
+        const elem = ev.target.closest(".c4_touch")?.closest(".c4_brick.c4-empty");
         if (elem){
             const col = Number.parseInt(
-                elem.parentElement.getAttribute("data-col"));
+                elem.getAttribute("data-col"));
 
             // Intend
             this._repplyPlug.intend(col);
@@ -90,6 +100,11 @@ export default class C4View extends GameView {
     newGame(){
         this._bricks.forEach((brick, i) => 
             brick?.setColor(this._statusM.brickSides[i]));
+
+        for (let col = 0; col < 7; col++) {
+            this._nextColBricks[col]
+                = this._bricks[this._statusM.nextColPos(col)];
+        }
     }
 
 }
