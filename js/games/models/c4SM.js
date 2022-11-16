@@ -7,27 +7,34 @@ export default class C4SM{
 
         this._colRest = [];
         this._colRest.length = 7;
-
-        this._bits;
+        this._restPcs = 0;
 
         this.finished = false;
+
+        this._bits;
     }
 
     get colRest(){
         return this._colRest;
     }
 
+    get restPcs(){
+        return this._restPcs;
+    }
+
     get bits(){
         return this._bits;
     }
 
-    _resetColRest(){
+    _resetRest(){
         let col, i = 0;
         this._colRest.fill(6);
+        this._restPcs = 42;
 
         for (let rest = 5; rest >= 0; rest--){
             for (col = 0; col < 7; col++){
                 if (this.brickSides[i++] !== 2){
+                    this._restPcs--;
                     if(this._colRest[col] !== rest + 1)
                         throw new Error ("Invalid status model");
                     
@@ -36,6 +43,8 @@ export default class C4SM{
             }
             i++;
         }
+
+        this.finished =  (this._restPcs <= 0);
     }
 
     _setBit(pos, side, bits = this._bits){
@@ -47,8 +56,13 @@ export default class C4SM{
         bits[side] |= 1 << pos;
     }
 
-    move(col, side = this.side, bits = this._bits, colRest = this._colRest){
+    moveAB(col, side, bits, colRest){
         this._setBit((40 - (--colRest[col] << 3)) | col, side, bits);
+    }
+
+    move(col){
+        this.moveAB(col, this.side, this._bits, this._colRest);
+        this._restPcs--;
     }
 
     nextColPos(col){
@@ -73,12 +87,11 @@ export default class C4SM{
 
     reset(){
         this.brickSides.fill(2);
-        this._resetColRest();
+        this._resetRest();
 
         this._resetBits();
 
         this.side = 0;
-        this.finished = false;
     }
 
     matte(side = this.side, bits = this._bits, fast = true){

@@ -8,14 +8,25 @@ class C4Brick {
         this._elem = elem;
         //this._chip = elem.lastChild;
         this._side = side;
+        this._matte = false;
     }
 
-    setColor(side) {
+    setColor(side){
         if (side !== this._side) {
             this._elem.classList.remove("c4-" + C4Brick.sideColors[this._side]);
             this._elem.classList.add("c4-" + C4Brick.sideColors[side]);
             this._side = side;
         }
+
+        if (this._matte){
+            this._elem.classList.remove("matte");
+            this._matte = false;
+        }
+    }
+
+    matte(){
+        this._matte = true;
+        this._elem.classList.add("matte");
     }
 
 }
@@ -43,9 +54,27 @@ export default class C4View extends GameView {
         this._nextColBricks[col] = this._bricks[this._statusM.nextColPos(col)];
 
         if (this._statusM.finished) {
+            //horDown | horUp | leftDown | rightDown | verDown;
             const winArr = this._statusM.matte(undefined, undefined, false)
-               .map(bit => this.bitToArray(bit));
-            console.log(winArr);
+               .map(bit => this.bitToArray(bit)),
+               winSteps = [1, 1, 9, 7, 8];
+            let i, mb, step;
+
+            for (let w = 0; w < 5; w++){
+                if (winArr[w].length > 0){
+                    step = winSteps[w];
+                    winArr[w].forEach(b => {
+                        mb = b;
+                        this._bricks[b].matte();
+                    });
+                    for (i = 0; i < 3; i++){
+                        mb += step;
+                        this._bricks[mb].matte();
+                    }
+
+                }
+            }
+
         }
     }
 

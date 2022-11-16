@@ -17,10 +17,11 @@ export default class C4Repply extends GameRepply{
         if (col < 0 || col >= 7) 
             throw new RangeError("Invalid position");
 
-        if (this._statusM.colRest[col] <= 0) return;
+        if (this._statusM.colRest[col] <= 0 || this._statusM.finished) return;
 
         this._statusM.move(col);
-        if (this._statusM.matte()) this._statusM.finished = true;
+        if (this._statusM.matte() || this._statusM.restPcs <=0)
+            this._statusM.finished = true;
 
         this._viewPlug.move(col);
         this._statusM.nextSide();

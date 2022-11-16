@@ -50,12 +50,24 @@
             opacity: 1;
             background-color: red;
         }
+
+        &.matte {
+            .c4_chip {
+                background-color: orange;
+            }
+        }
     }
 
     &.c4-yellow {
         .c4_chip {
             opacity: 1;
             background-color: rgb(202, 178, 0);
+        }
+
+        &.matte {
+            .c4_chip {
+                background-color: yellow;
+            }
         }
     }
 
