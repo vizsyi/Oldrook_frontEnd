@@ -1,8 +1,12 @@
 import GameRepply from "./gameRepply.js";
+import C4SM from "../models/c4SM.js";
 
 export default class C4Repply extends GameRepply{ 
     constructor(view){
         super(view);
+
+        this._statusM = new C4SM();
+        view.setStatusM();
 
         this._newGame();
     }

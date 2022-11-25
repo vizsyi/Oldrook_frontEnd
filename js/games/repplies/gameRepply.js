@@ -3,7 +3,7 @@
 export default class GameRepply { 
     constructor(view){
         this._viewPlug = view;
-        this._statusM = view.statusM;
+        //this._statusM = view.statusM;
 
         view.repplyPlug = this;
     }

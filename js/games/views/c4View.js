@@ -1,5 +1,5 @@
 import GameView from "./gameView.js";
-import C4SM from "../models/c4SM.js";
+//import C4SM from "../models/c4SM.js";
 
 class C4Brick {
     static sideColors = ["yellow", "red", "empty"];
@@ -37,7 +37,7 @@ export default class C4View extends GameView {
         super(board);
 
         /*Status*/
-        this._statusM = new C4SM();
+        //this._statusM = new C4SM();
         
         /* View status */
         this._bricks = [];

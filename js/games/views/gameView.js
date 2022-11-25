@@ -14,10 +14,10 @@ export default class GameView {
         this._repplyPlug = repply;
     }
 
-    get statusM(){
-        return this._statusM;
+    setStatusM(){
+        this._statusM = this._repplyPlug._statusM;
     }
-       
+
     _cleanBoardClasses(){
         [...this._board.classList].forEach(cl => {
             if(!GAMEBOARD_CLASSES.includes(cl)) this._board.classList.remove(cl);

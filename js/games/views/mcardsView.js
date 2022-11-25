@@ -1,5 +1,5 @@
 import GameView from "./gameView.js";
-import MCardsSM from "../models/mcardsSM.js";
+//import MCardsSM from "../models/mcardsSM.js";
 
 class CardItem {
     constructor(index, elem, game) {
@@ -36,7 +36,7 @@ export default class MCardsView extends GameView {
         this._cards = [];
 
         /*Status*/
-        this._statusM = new MCardsSM(this._pieces);
+        //this._statusM = new MCardsSM(this._pieces);
         //this._selectedCards = [];
         //this._unsolvedPairs = Math.floor(this._pieces / 2);
         //this._isFinished = false;

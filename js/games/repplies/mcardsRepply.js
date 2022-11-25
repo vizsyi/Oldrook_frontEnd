@@ -1,4 +1,5 @@
 import GameRepply from "./gameRepply.js";
+import MCardsSM from "../models/mcardsSM.js";
 import {DUMMY_CELEBS} from "../dummyData.js"
 
 export default class MCardsRepply extends GameRepply{ 
@@ -9,6 +10,9 @@ export default class MCardsRepply extends GameRepply{
         this._allCards = [...DUMMY_CELEBS];
         this._gameCards;
         this._firstMem = null;
+
+        this._statusM = new MCardsSM(30);
+        view.setStatusM();
 
         this._newGame();
     }
