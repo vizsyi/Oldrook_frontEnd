@@ -28,6 +28,7 @@
 
         /* Border */
         & > div {
+            position: relative;
             height: 100%;
             border: 1px solid #444;
             border-radius: torem(4.8);
@@ -37,6 +38,7 @@
     .mcard_img {
         height: var(--mcard-img-height);
         width: 100%;
+        display: block;
         object-fit: cover;
         border-radius: torem(4) torem(4) 0 0;//TODO: making more punctual
     }
@@ -90,5 +92,45 @@
         visibility: hidden;
     }
 
+    .mcard_heart_icon,
+    .mcard_check_icon {
+        position: absolute;
+    }
+
+    .mcard_heart_icon {
+        display: none;
+        top: 28%;
+        left: 25%;
+        height: 50%;
+        width: 50%;
+        fill: red;
+        opacity: .7;
+        filter: drop-shadow(2px 2px 6px rgba(255, 0, 0, 1));
+    }
+
+    .mcard_check_icon {
+        display: block;
+        top: 32%;
+        left: 25%;
+        height: 50%;
+        width: 60%;
+        fill: green;
+        opacity: 0;
+        filter: drop-shadow(2px 2px 6px rgba(0, 128, 0, 1));
+    }
+
+    &.mcard-like {
+        .mcard_heart_icon {
+            display: block;
+            animation: heartbeat 0.6s linear infinite;
+        }
+    }
+
+    &.mcard-pair {
+        .mcard_check_icon {
+            opacity: .9;
+            transition: all 1s;
+        }
+    }
 
 }
