@@ -1,17 +1,29 @@
 export default class C4SM{ 
-    constructor(){
-        this.brickSides = [];
-        this.brickSides.length = 47;
+    constructor(origin){
+        if (origin){
+            this.side = origin.side ^ 1;
+    
+            this._colRest = [...origin._colRest];
+            this._restPcs = origin._restPcs;
+    
+            this.finished = false;
+    
+            this._bits = [...origin._bits];
+        }
+        else {
+            this.brickSides;
 
-        this.side = 0;
+            this.side = 0;
+    
+            this._colRest = [];
+            this._colRest.length = 7;
+            this._restPcs = 0;
+    
+            this.finished = false;
+    
+            this._bits;
+        }
 
-        this._colRest = [];
-        this._colRest.length = 7;
-        this._restPcs = 0;
-
-        this.finished = false;
-
-        this._bits;
     }
 
     get colRest(){
@@ -24,6 +36,37 @@ export default class C4SM{
 
     get bits(){
         return this._bits;
+    }
+
+    _setBit(pos){
+        let side;
+        if (pos > 31){
+            pos -= 32;
+            side = this.side + 2;
+        }
+        else {
+            side = this.side;
+        }
+
+        this._bits[side] |= 1 << pos;
+    }
+
+    move(col){
+        this._setBit((40 - (--this._colRest[col] << 3)) | col);
+        this._restPcs--;
+    }
+
+    nextColPos(col){
+        if (this._colRest[col] === 0){
+            return null;
+        }
+        else {
+            return ((48 - (this._colRest[col] << 3)) | col);
+        }
+    }
+
+    nextSide(){
+        this.side ^= 1;
     }
 
     _resetRest(){
@@ -46,38 +89,7 @@ export default class C4SM{
 
         this.finished =  (this._restPcs <= 0);
     }
-
-    _setBit(pos, side, bits = this._bits){
-        if (pos > 31){
-            pos -= 32;
-            side += 2;
-        }
-
-        bits[side] |= 1 << pos;
-    }
-
-    moveAB(col, side, bits, colRest){
-        this._setBit((40 - (--colRest[col] << 3)) | col, side, bits);
-    }
-
-    move(col){
-        this.moveAB(col, this.side, this._bits, this._colRest);
-        this._restPcs--;
-    }
-
-    nextColPos(col){
-        if (this._colRest[col] === 0){
-            return null;
-        }
-        else {
-            return ((48 - (this._colRest[col] << 3)) | col);
-        }
-    }
-
-    nextSide(){
-        this.side ^= 1;
-    }
-
+    
     _resetBits(){
         this._bits = [0, 0, 0, 0];
         this.brickSides.forEach((side, pos) => {
@@ -85,8 +97,11 @@ export default class C4SM{
         })
     }
 
-    reset(){
-        this.brickSides.fill(2);
+    reset(brickSides = []){
+        const len = brickSides.length;
+        brickSides.length = 47;
+        this.brickSides = brickSides.fill(2, len);
+
         this._resetRest();
 
         this._resetBits();
