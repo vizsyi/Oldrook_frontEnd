@@ -55,7 +55,7 @@ export default class C4View extends GameView {
 
         if (this._statusM.finished) {
             //horDown | horUp | leftDown | rightDown | verDown;
-            const winArr = this._statusM.matte(undefined, undefined, false)
+            const winArr = this._statusM.matte(false)
                .map(bit => this.bitToArray(bit)),
                winSteps = [1, 1, 9, 7, 8];
             let i, mb, step;

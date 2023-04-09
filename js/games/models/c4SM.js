@@ -38,22 +38,13 @@ export default class C4SM{
         return this._bits;
     }
 
-    _setBit(pos){
-        let side;
+    _setBit(pos, side = this.side){
         if (pos > 31){
             pos -= 32;
-            side = this.side + 2;
-        }
-        else {
-            side = this.side;
+            side += 2;
         }
 
         this._bits[side] |= 1 << pos;
-    }
-
-    move(col){
-        this._setBit((40 - (--this._colRest[col] << 3)) | col);
-        this._restPcs--;
     }
 
     nextColPos(col){
@@ -67,6 +58,10 @@ export default class C4SM{
 
     nextSide(){
         this.side ^= 1;
+    }
+
+    emptyCol(col){
+        return this._colRest[col] <= 0;
     }
 
     _resetRest(){
@@ -109,10 +104,10 @@ export default class C4SM{
         this.side = 0;
     }
 
-    matte(side = this.side, bits = this._bits, fast = true){
+    matte(fast = true){
         let horDown, horUp, leftDown, rightDown, verDown, xUp;
-        const downB = bits[side],
-            upB = bits[side + 2];
+        const downB = this._bits[this.side],
+            upB = this._bits[this.side | 2];
         // Horizontal
         horDown = downB & (downB >>> 1);
         horDown &= (horDown >>> 2);
@@ -137,6 +132,12 @@ export default class C4SM{
         else {
             return [horDown, horUp, leftDown, rightDown, verDown];
         }
+    }
+
+    move(col){
+        this._setBit((40 - (--this._colRest[col] << 3)) | col);
+        this._restPcs--;
+        //this.matte(true);
     }
 
 }
