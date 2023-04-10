@@ -12,19 +12,15 @@ export default class C4Repply extends GameRepply{
     }
 
     _repply (){
-        function negaMax (column, parSM, possCol, a, b, depth){
+        function negaMax (column, parSM, possCol, a, b, depth, test){
             const sMod = new C4SM(parSM);
             let col, score;
 
+            test.push([a, b]);
+
             sMod.move(column);
-            if (column === 6){
-                console.log("61", sMod.matte(), sMod);
-            }
             if (sMod.matte()) return 1048576 + 16384 * depth;
             if (sMod.restPcs === 0) return 0;
-            if (column === 6){
-                console.log("69");
-            }
 
             if (sMod.emptyCol(col)){
                 possCol = [...possCol].splice(possCol.indexOf(col), 1);
@@ -32,12 +28,28 @@ export default class C4Repply extends GameRepply{
 
             if (depth <= 0 && possCol.length > 1) return 0;
 
-            possCol.forEach(col => {
-                score = - negaMax(col, sMod, possCol, -b, -a, depth - 1);
-                console.log ("col_1st: ", col, "scr: ", score, "a: ", a,  "b: ", b, (score > a));
+            for (col of possCol){
+                let test1 = [];
+                score = - negaMax(col, sMod, possCol, -b, -a, depth - 1, test1);
+                test1.unshift (sMod.side ^ 1, col, depth -1, score);
+                test.push(test1);
+                console.log ("col_1st: ", col, "scr: ", score, "a: ", a,  "b: ", b, (score < a));
                 if (score <= b) return score;
                 if (score < a) a = score;
-            });
+                console.log ("a: ", a);
+            };
+
+            /*
+            possCol.forEach(col => {
+                let test1 = [];
+                score = - negaMax(col, sMod, possCol, -b, -a, depth - 1, test1);
+                test1.unshift (sMod.side ^ 1, col, depth -1, score);
+                test.push(test1);
+                console.log ("col_1st: ", col, "scr: ", score, "a: ", a,  "b: ", b, (score < a));
+                if (score <= b) return score;
+                if (score < a) a = score;
+                console.log ("a: ", a);
+            });*/
 
             /*
             for (col of possCol){
@@ -57,19 +69,25 @@ export default class C4Repply extends GameRepply{
                 .filter(col => sMod.colRest[col] > 0),
                 possCount = possCol.length;
 
+            let test = [sMod.side]
+
             if(possCount > 1){
                 const extraPs = [0, 128, 256, 512, 256, 128, 0];
                 let a = -1073741824, b = 1073741824, bestC = 0, ex, depth = 2, score;
 
                 possCol.forEach(col => {
                     ex = extraPs[col] + Math.floor(Math.random() * 1024 * 0);
-                    score = negaMax(col, sMod, possCol, b, a - ex, depth - 1) + ex;
+                    let test1 = [];
+                    score = negaMax(col, sMod, possCol, b, a - ex, depth - 1, test1) + ex;
+                    test1.unshift (sMod.side ^ 1, col, depth -1, score);
+                    test.push(test1);
                     console.log ("col: ", col, "scr: ", score, "a: ", a,  "best: ", bestC);
                     if (score > a) {
                         a = score;
                         bestC = col;
                     }
                 });
+                console.log(test);
                 resolve (bestC);
             } else if (possCol === 1){
                 resolve (possCol[0]);
@@ -102,6 +120,8 @@ export default class C4Repply extends GameRepply{
 
     _newGame (){
         this._statusM.reset();
+        //this._statusM.reset([0, 0, 0, 1, 1, 1]);
+        //this._statusM.reset([1, 2, 1, 0, 0]);
         this._viewPlug.newGame();
     }
 
