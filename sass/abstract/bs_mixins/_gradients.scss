@@ -1,0 +1,14 @@
+/// Copy from TW Bootstrap 5.2.3 ///
+
+// Gradients
+
+// scss-docs-start gradient-bg-mixin
+@mixin gradient-bg($color: null) {
+    background-color: $color;
+  
+    @if $enable-gradients {
+      background-image: var(--#{$prefix}gradient);
+    }
+  }
+  // scss-docs-end gradient-bg-mixin
+  
