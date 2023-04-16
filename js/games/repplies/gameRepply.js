@@ -9,7 +9,7 @@ export default class GameRepply {
     }
 
     controlClick(ev){
-        const elem = ev.target.closest(".btn-control");
+        const elem = ev.target.closest(".btn");
         if (elem){
             //const id = Number.parseInt(elem.getAttribute("data-id"));
             const id = elem.id;

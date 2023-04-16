@@ -1,7 +1,7 @@
 /*Game*/
 #gameField {
     //position: relative;
-    border: 1px solid orange;
+    // test border: 1px solid orange;
 }
 
 .game {
@@ -16,12 +16,18 @@
     &_row {
         display: flex;
         flex-wrap: wrap;
-        /*border: 2px solid goldenrod;*/
+        //test border: 2px solid goldenrod;
+
+        & > div {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+        }
     }
 
     &_board {
         min-width: torem(480);
-        border: 1px solid red;
+        //test border: 1px solid red;
     }
 }
 
@@ -32,7 +38,7 @@
 /*Control board*/
 #controlBoard {
     width: torem(100.8);
-    margin: torem(19.2);
+    margin: torem(48);
     display: inline-flex;
     flex-direction: column;
     justify-content: space-around;
