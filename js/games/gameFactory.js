@@ -8,9 +8,13 @@ class GameFactory {
         this._game;
         this._mainView;
         this._mainRepply;
+
+        this._labelSelect = document.getElementById("gameLabel");
+
         //this._board = document.getElementById("gameBoard-main");
         this._board = document.querySelector("#gameDesk-main .game_board");
-        this._labelSelect = document.getElementById("gameLabel");
+
+        this._control = document.getElementById("controlBoard");
 
         this._init();
     }
@@ -27,6 +31,9 @@ class GameFactory {
         }
 
         this._labelSelect.addEventListener("change", this._labelChange.bind(this));
+
+        this._control.addEventListener('click'
+            , ev => this._mainRepply?.controlClick(ev));
 
         this.addNewView(game);
     }

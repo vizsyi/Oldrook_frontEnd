@@ -8,5 +8,15 @@ export default class GameRepply {
         view.repplyPlug = this;
     }
 
+    controlClick(ev){
+        const elem = ev.target.closest(".btn-control");
+        if (elem){
+            //const id = Number.parseInt(elem.getAttribute("data-id"));
+            const id = elem.id;
+            if(id === "cbNewGame") this._newGame();
+
+        }
+    }
+
 
 }
