@@ -12,3 +12,36 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  
+  /* BREAKPOINT MANAGER
+  $breakpoint argument choices:
+  - phone
+  - tab-port
+  - tab-land
+  - big-desktop
+  Others:
+  
+
+  1em = 16px
+  */
+  @mixin respond($breakpoint){
+    @if $breakpoint == phone {
+      @media (max-widht: 37.5em){ @content}; //600px
+    }
+    @if $breakpoint == tab-port {
+      @media (max-widht: 56.25em){ @content}; //900px
+    }
+    @if $breakpoint == tab-land {
+      @media (max-widht: 75em){ @content}; //1200px
+    }
+    @if $breakpoint == big-desktop {
+      @media (max-widht: 112.5em){ @content}; //1800px
+    }
+    //Others
+    @if $breakpoint == portrait {
+      @media (orientation: portrait){ @content};
+    }
+    @if $breakpoint == phone-or-port {
+      @media (max-widht: 37.5em), (orientation: portrait){ @content};
+    }
+  }
