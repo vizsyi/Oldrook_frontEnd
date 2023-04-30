@@ -15,6 +15,9 @@ class GameFactory {
         this._board = document.querySelector("#gameDesk-main .game_board");
 
         this._control = document.getElementById("controlBoard");
+        this.difficultyForm = this._control?.querySelector("#difficultyForm");
+
+        this._difficultyShow = false;
 
         this._init();
     }
@@ -45,18 +48,32 @@ class GameFactory {
         localStorage.setItem("rookgame", game);
     }
 
+    difficultyShow (show = false){
+        console.log("diffShow", this, this.difficultyForm);
+        if (this._difficultyShow !== show){
+            if(show){
+                this.difficultyForm?.classList.add("show");
+            }
+            else {
+                this.difficultyForm?.classList.remove("show");
+            }
+            this._difficultyShow = show;
+        }
+    }
+    
     addNewView (game = "mcard"){
         if (this._game !== game){
             this._game = game;
+            this.difficultyShow (false);
             this._mainView?.dispo();
             switch(game){
                 case "connect4":
                     this._mainView = new C4View(this._board);
-                    this._mainRepply = new C4Repply(this._mainView);
+                    this._mainRepply = new C4Repply(this._mainView, this);
                     break;
                 default:
                     this._mainView = new MCardsView(this._board);
-                    this._mainRepply = new MCardsRepply(this._mainView);
+                    this._mainRepply = new MCardsRepply(this._mainView, this);
             }
         }
 

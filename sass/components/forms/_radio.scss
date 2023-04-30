@@ -1,0 +1,44 @@
+.form_radio {
+    
+    input {
+        display: none;
+    }
+
+    label {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        text-align: left;
+    }
+
+    &_button {
+        height: 1.5rem;
+        //width: 1.5rem;
+        flex: 0 0 1.5rem;
+        position: relative;
+        border: .25rem solid $secondary;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+
+        &::after {
+            content: "";
+            display: block;
+            height: .6rem;
+            width: .6rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: $primary;
+            opacity: 0;
+            transition: opacity .2s;
+
+        }
+    }
+
+    input:checked ~ label &_button::after {
+        opacity: 1;
+    }
+}

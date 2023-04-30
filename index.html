@@ -28,6 +28,37 @@
     
                 <section id="controlBoard">
                     <button id="cbNewGame" class="btn btn-primary">Starting a new game</button>
+                    <form class="form_group nondisplay" id="difficultyForm">
+                        <div class="form_radio">
+                            <input type="radio" id="difficulty_easy" name="difficulty">
+                            <label for="difficulty_easy">
+                                <span class="form_radio_button"></span>
+                                Easy
+                            </label>
+                        </div>
+                        <div class="form_radio">
+                            <input type="radio" id="difficulty_med" name="difficulty" value="me" checked="checked">
+                            <label for="difficulty_med">
+                                <span class="form_radio_button"></span>
+                                Medium
+                            </label>
+                        </div>
+                        <div class="form_radio">
+                            <input type="radio" id="difficulty_hard" name="difficulty">
+                            <label for="difficulty_hard">
+                                <span class="form_radio_button"></span>
+                                Hard
+                            </label>
+                        </div>
+                        <div class="form_radio">
+                            <input type="radio" id="difficulty_robin" name="difficulty">
+                            <label for="difficulty_robin">
+                                <span class="form_radio_button"></span>
+                                Like Robin
+                            </label>
+                        </div>
+                    </form>
+
                     <div class="btn btn-rook">Test</div>
     <!--                 <button id="cbDraw" class="btn">Offer a draw</button>
                     <button id="cbGiveUp" class="btn">Give up</button>
