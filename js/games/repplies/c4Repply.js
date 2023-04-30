@@ -2,13 +2,32 @@ import GameRepply from "./gameRepply.js";
 import C4SM from "../models/c4SM.js";
 
 export default class C4Repply extends GameRepply{ 
-    constructor(view){
-        super(view);
+    constructor(view, factory){
+        super(view, factory);
 
         this._statusM = new C4SM();
         view.setStatusM();
 
+        this._difficultyDepthMap = new Map([
+            ["easy", 2],
+            ["med", 3],
+            ["hard", 4],
+            ["robin", 6]
+        ]);
+        this._negamaxDepth = 2;
+
         this._newGame();
+        this._difficultyShow();
+    }
+
+    _setDifficulty(diffName){
+        let depth = this._difficultyDepthMap.get(diffName);
+        if (depth){
+            this._negamaxDepth = depth;
+        }
+        else {
+            throw new RangeError("Invalid difficulty id");
+        }
     }
 
     _repply (){
@@ -33,7 +52,7 @@ export default class C4Repply extends GameRepply{
                 score = - negaMax(col, sMod, possCol, -b, -a, depth - 1, test1);
                 test1.unshift (sMod.side ^ 1, col, depth -1, score);
                 test.push(test1);
-                console.log ("col_1st: ", col, "scr: ", score, "a: ", a,  "b: ", b, (score < a));
+                //console.log ("col_1st: ", col, "scr: ", score, "a: ", a,  "b: ", b, (score < a));
                 if (score <= b) return score;
                 if (score < a) a = score;
                 console.log ("a: ", a);
@@ -63,7 +82,8 @@ export default class C4Repply extends GameRepply{
             return a;
         }
 
-        const sMod = new C4SM(this._statusM);
+        const sMod = new C4SM(this._statusM),
+            depth = this._negamaxDepth - 1;
         return new Promise(function(resolve, reject){
             const possCol = [3, 2, 4, 1, 5, 0, 6] //[3, 4, 5, 6] [6, 5, 4, 3] 
                 .filter(col => sMod.colRest[col] > 0),
@@ -73,13 +93,14 @@ export default class C4Repply extends GameRepply{
 
             if(possCount > 1){
                 const extraPs = [0, 128, 256, 512, 256, 128, 0];
-                let a = -1073741824, b = 1073741824, bestC = 0, ex, depth = 2, score;
+                let a = -1073741824, b = 1073741824, bestC = 0, ex, score;
+                console.log("Depth: ", depth, this);
 
                 possCol.forEach(col => {
                     ex = extraPs[col] + Math.floor(Math.random() * 1024 * 0);
                     let test1 = [];
-                    score = negaMax(col, sMod, possCol, b, a - ex, depth - 1, test1) + ex;
-                    test1.unshift (sMod.side ^ 1, col, depth -1, score);
+                    score = negaMax(col, sMod, possCol, b, a - ex, depth, test1) + ex;
+                    test1.unshift (sMod.side ^ 1, col, depth, score);
                     test.push(test1);
                     console.log ("col: ", col, "scr: ", score, "a: ", a,  "best: ", bestC);
                     if (score > a) {
