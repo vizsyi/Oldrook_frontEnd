@@ -2,10 +2,10 @@ import GameView from "./gameView.js";
 //import MCardsSM from "../models/mcardsSM.js";
 
 class CardItem {
-    constructor(index, elem, game) {
+    constructor(index, elem, view) {
         this._index = index;
         this._elem = elem;
-        this._game = game;
+        this._view = view;
         this._status = "solved";
     }
 
@@ -17,12 +17,12 @@ class CardItem {
         }
     }
 
-    turnUp(status, cName) {
-        let labelE; /*imgE,*/
-        //imgE = this.element.querySelector(".mcard_img img");
+    turnUp(status, card) {
+        let imgE, labelE;
+        imgE = this._elem.querySelector(".mcard_img img");
         labelE = this._elem.querySelector(".mcard_label span");
-        //if(imgE) imgE.setAttribute("src", this._game.celebImg + "/" + pUi);
-        if(labelE && labelE.innerHTML !== cName) labelE.innerHTML = cName;
+        if(imgE) imgE.setAttribute("src", this._view.celebImgPath + card.img);
+        if(labelE && labelE.innerHTML !== card.name) labelE.innerHTML = card.name;
         this.setStatus(status);
     }
 }
@@ -40,6 +40,9 @@ export default class MCardsView extends GameView {
         //this._selectedCards = [];
         //this._unsolvedPairs = Math.floor(this._pieces / 2);
         //this._isFinished = false;
+
+        /* Settings */
+        this.celebImgPath = "/img/celebs/";
         
         /* View status */
         this._upCards = [];
@@ -94,7 +97,7 @@ export default class MCardsView extends GameView {
             this._upCardsStatus = "down";
         }
         cards.forEach(card =>
-            this._cards[card.index].turnUp(status, card.name));
+            this._cards[card.index].turnUp(status, card));
 
         if (cards.length > 1)
             this._upCardsTO = setTimeout(this._upCardsBack.bind(this), 2000);

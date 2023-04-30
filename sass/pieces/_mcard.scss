@@ -41,6 +41,12 @@
         display: block;
         object-fit: cover;
         border-radius: torem(4) torem(4) 0 0;//TODO: making more punctual
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
     }
 
     .mcard_label {
