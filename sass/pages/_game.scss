@@ -5,6 +5,10 @@
 }
 
 .game {
+    &desk {
+        position: relative;
+    }
+
     &_label {
         display: inline-block;
         margin-bottom: 1rem;

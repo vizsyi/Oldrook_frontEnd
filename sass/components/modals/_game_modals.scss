@@ -1,0 +1,18 @@
+.game_modal {
+    display: none;
+    @include absCenter;
+    opacity: 0;
+    border-radius: .5rem;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .2),
+        2px 2px 12px rgba(0, 0, 0, .8);
+    color: hsl(36, 100%, 15%);
+    background-color: var(--color-background-2);
+    padding: 1.8rem;
+
+    &.show {
+        display: block;
+        opacity: 90%;
+        transition: opacity .25s linear;
+    }
+
+}

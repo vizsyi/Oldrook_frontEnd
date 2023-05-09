@@ -1,12 +1,20 @@
 import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameView { 
-    constructor(board){
+    constructor(desk){
         this._repplyPlug;
         this._statusM;
-        this._board = board;
-        this._cleanBoardClasses();
+        
+        this._desk = desk;
+        this._board = document.createElement("div");
+        this._resultModal;
 
+        //this._cleanBoardClasses();
+        this._initBoard();
+      }
+
+    _initBoard(){
+        this._board.classList.add("game_board");
         this._board.addEventListener('click', this._boardClick.bind(this));
     }
 
@@ -18,21 +26,21 @@ export default class GameView {
         this._statusM = this._repplyPlug._statusM;
     }
 
-    _cleanBoardClasses(){
+/*     _cleanBoardClasses(){
         [...this._board.classList].forEach(cl => {
             if(!GAMEBOARD_CLASSES.includes(cl)) this._board.classList.remove(cl);
         });
-    }
+    } */
 
     _boardClick(ev){}/*abstract method*/
 
     dispo(){
-        this._board.innerHTML = "";
-        this._board.removeEventListener('click', this._boardClick.bind(this));
+        this._desk.innerHTML = "";
+        //this._board.removeEventListener('click', this._boardClick.bind(this));
     }
 
     bitToArray(bit){
-        let arr = [], i, x;
+        let arr = [], i;
 
         if (bit === 0) return arr;
 

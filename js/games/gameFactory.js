@@ -11,8 +11,8 @@ class GameFactory {
 
         this._labelSelect = document.getElementById("gameLabel");
 
-        //this._board = document.getElementById("gameBoard-main");
-        this._board = document.querySelector("#gameDesk-main .game_board");
+        this._desk = document.getElementById("gameDesk-main");
+        //this._board = document.querySelector("#gameDesk-main .game_board");
 
         this._control = document.getElementById("controlBoard");
         this.difficultyForm = this._control?.querySelector("#difficultyForm");
@@ -68,11 +68,11 @@ class GameFactory {
             this._mainView?.dispo();
             switch(game){
                 case "connect4":
-                    this._mainView = new C4View(this._board);
+                    this._mainView = new C4View(this._desk);
                     this._mainRepply = new C4Repply(this._mainView, this);
                     break;
                 default:
-                    this._mainView = new MCardsView(this._board);
+                    this._mainView = new MCardsView(this._desk);
                     this._mainRepply = new MCardsRepply(this._mainView, this);
             }
         }
