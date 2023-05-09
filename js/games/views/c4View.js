@@ -92,21 +92,23 @@ export default class C4View extends GameView {
 
     _initGame() {
         const frag = document.createDocumentFragment(),
-            tempcard = document.querySelector("#jsTemplates .c4_brick");
+            board = this._board,
+            jsTemlates = document.getElementById("jsTemplates"),
+            tempbrick = jsTemlates.querySelector(".c4_brick");
         let col, rowCl; 
 
         // The border
         for (col = 0; col < 4; col++) {
-            let card = document.createElement("div");
-            card.classList.add("c4_border");
-            frag.appendChild(card);
+            let brick = document.createElement("div");
+            brick.classList.add("c4_border");
+            board.appendChild(brick);
         }
         
         // The upper row
         for (col = 0; col < 9; col++) {
-            let card = document.createElement("div");
-            card.classList.add("pause");
-            frag.appendChild(card);
+            let pause = document.createElement("div");
+            pause.classList.add("pause");
+            board.appendChild(pause);
         }
 
         // Creating the cards
@@ -114,16 +116,17 @@ export default class C4View extends GameView {
             rowCl = "c4_row-" + row;
             this._bricks.unshift(null);
             for (col = 6; col >= 0; col--) {
-                let brick = tempcard.cloneNode(true);
+                let brick = tempbrick.cloneNode(true);
                 brick.setAttribute("data-col", col);
                 brick.classList.add(rowCl, "c4-red");
                 this._bricks.unshift(new C4Brick(brick));
-                frag.appendChild(brick);
+                board.appendChild(brick);
             }
         }
 
-        this._board.classList.add("c4_board");
-        this._board.appendChild(frag);
+        board.classList.add("c4_board");
+        frag.appendChild(board);
+        this._desk.appendChild(frag);
     }
 
     newGame(){
