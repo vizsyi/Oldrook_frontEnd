@@ -123,9 +123,12 @@ export default class MCardsView extends GameView {
 
     _initGame(pieces) {
         const frag = document.createDocumentFragment(),
-            tempcard = document.querySelector("#jsTemplates .mcard");
+            board = this._board,
+            jsTemlates = document.getElementById("jsTemplates"),
+            resultModal = jsTemlates.querySelector(".mcard_result").cloneNode(true),
+            tempcard = jsTemlates.querySelector(".mcard");
 
-        this._board.classList.add("mcards" + pieces + "_board");
+        board.classList.add("mcards" + pieces + "_board");
 
         //Creating the cards
         for (let i = 0; i < pieces; i++) {
@@ -133,21 +136,32 @@ export default class MCardsView extends GameView {
             card.setAttribute("data-id", i);
             card.classList.add("mcard-solved");
             this._cards.push(new CardItem(i, card, this));
-            frag.appendChild(card);
+            board.appendChild(card);
         }
         for (let i = 0; i < 2; i++) {
             let card = document.createElement("div");
             card.classList.add("pause");
-            frag.appendChild(card);
+            board.appendChild(card);
         }
 
-        this._board.appendChild(frag);
+        frag.appendChild(board);
+        frag.appendChild(resultModal);
+        this._desk.appendChild(frag);
+
+        this._resultModal = resultModal;
+
     }
 
     newGame(){
+        this._resultModal.classList.remove("show");
+
         this._cards.forEach((card, i) => {
             if(this._statusM.unsolvedCards[i]) card.setStatus("down");
         });
+    }
+
+    showResult(){
+        this._resultModal.classList.add("show");
     }
 
 }

@@ -37,9 +37,15 @@ export default class MCardsRepply extends GameRepply{
         card.index = index;
 
         if(this._firstMem){
+            let paired = this._firstMem.pairId === card.pairId;
             this._viewPlug.move([this._firstMem, card]
-                , this._firstMem.pairId === card.pairId);
+                , paired);
             this._firstMem = null;
+            if (paired){
+                if(this._statusM.solved()){
+                    this._viewPlug.showResult();
+                };
+            }
         }
         else {
             this._firstMem = card;
