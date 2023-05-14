@@ -64,9 +64,9 @@ export default class C4View extends GameView {
                 for (let w = 0; w < 5; w++){
                     if (winArr[w].length > 0){
                         step = winSteps[w];
-                    winArr[w].forEach(b => {
-                        mb = b;
-                        this._bricks[b].matte();
+                        winArr[w].forEach(br => {
+                            mb = (w === 1) ? br + 32 : br;
+                            this._bricks[mb].matte();
                         });
                         for (i = 0; i < 3; i++){
                             mb += step;
