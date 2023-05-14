@@ -146,7 +146,8 @@ export default class C4Repply extends GameRepply{
         this._viewPlug.newGame();
     }
 
-    _move (col){
+    _move (col, isMach = false){
+        let matte;
 
         if (col < 0 || col >= 7) 
             throw new RangeError("Invalid position");
@@ -154,15 +155,16 @@ export default class C4Repply extends GameRepply{
         if (this._statusM.colRest[col] <= 0 || this._statusM.finished) return;
 
         this._statusM.move(col);
-        if (this._statusM.matte() || this._statusM.restPcs <=0)
+        matte = this._statusM.matte();
+        if (matte || this._statusM.restPcs <=0)
             this._statusM.finished = true;
 
-        this._viewPlug.move(col);
+        this._viewPlug.move(col, matte, isMach);
         this._statusM.nextSide();
 
         if (!this._statusM.finished && this._statusM.side === 1){
             this._repply()
-                .then(col => this._move(col))
+                .then(col => this._move(col, true))
                 .catch(err => console.error(err));
         }
     }

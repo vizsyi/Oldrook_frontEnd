@@ -48,31 +48,38 @@ export default class C4View extends GameView {
     }
 
  
-    move (col){
+    move (col, matte, isMach){
         this._nextColBricks[col].setColor(this._statusM.side);
 
         this._nextColBricks[col] = this._bricks[this._statusM.nextColPos(col)];
 
         if (this._statusM.finished) {
-            //horDown | horUp | leftDown | rightDown | verDown;
-            const winArr = this._statusM.matte(false)
-               .map(bit => this.bitToArray(bit)),
-               winSteps = [1, 1, 9, 7, 8];
-            let i, mb, step;
+            if (matte){
+                //horDown | horUp | leftDown | rightDown | verDown;
+                const winArr = this._statusM.matte(false)
+                .map(bit => this.bitToArray(bit)),
+                winSteps = [1, 1, 9, 7, 8];
+                let i, mb, step;
 
-            for (let w = 0; w < 5; w++){
-                if (winArr[w].length > 0){
-                    step = winSteps[w];
+                for (let w = 0; w < 5; w++){
+                    if (winArr[w].length > 0){
+                        step = winSteps[w];
                     winArr[w].forEach(b => {
                         mb = b;
                         this._bricks[b].matte();
-                    });
-                    for (i = 0; i < 3; i++){
-                        mb += step;
-                        this._bricks[mb].matte();
-                    }
+                        });
+                        for (i = 0; i < 3; i++){
+                            mb += step;
+                            this._bricks[mb].matte();
+                        }
 
+                    }
                 }
+
+                this.showResult(isMach ? -1 : 1);
+            }
+            else {
+                this.showResult(0);
             }
 
         }
@@ -93,8 +100,7 @@ export default class C4View extends GameView {
     _initGame() {
         const frag = document.createDocumentFragment(),
             board = this._board,
-            jsTemlates = document.getElementById("jsTemplates"),
-            tempbrick = jsTemlates.querySelector(".c4_brick");
+            tempbrick = this._jsTemplates.querySelector(".c4_brick");
         let col, rowCl; 
 
         // The border
@@ -126,10 +132,13 @@ export default class C4View extends GameView {
 
         board.classList.add("c4_board");
         frag.appendChild(board);
+        this._appendResultModal(frag);
         this._desk.appendChild(frag);
     }
 
     newGame(){
+        this._clearResult();
+        
         this._bricks.forEach((brick, i) => 
             brick?.setColor(this._statusM.brickSides[i]));
 
