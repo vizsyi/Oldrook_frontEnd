@@ -48,12 +48,12 @@
     &.c4-red {
         .c4_chip {
             opacity: 1;
-            background-color: red;
+            background-color: darken(red, 5%);
         }
 
         &.matte {
             .c4_chip {
-                background-color: orange;
+                background-color: lighten(red, 10%);
             }
         }
     }
@@ -61,7 +61,8 @@
     &.c4-yellow {
         .c4_chip {
             opacity: 1;
-            background-color: rgb(202, 178, 0);
+            //background-color: rgb(202, 178, 0);
+            background-color: darken(yellow, 10%);
         }
 
         &.matte {
