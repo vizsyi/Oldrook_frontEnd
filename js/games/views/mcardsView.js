@@ -35,6 +35,8 @@ export default class MCardsView extends GameView {
         this._pieces = 30;
         this._cards = [];
 
+        this._resultOutputs;
+
         /*Status*/
         //this._statusM = new MCardsSM(this._pieces);
         //this._selectedCards = [];
@@ -124,9 +126,8 @@ export default class MCardsView extends GameView {
     _initGame(pieces) {
         const frag = document.createDocumentFragment(),
             board = this._board,
-            jsTemlates = document.getElementById("jsTemplates"),
-            resultModal = jsTemlates.querySelector(".mcard_result").cloneNode(true),
-            tempcard = jsTemlates.querySelector(".mcard");
+            resultModal = this._jsTemplates.querySelector(".mcardresult").cloneNode(true),
+            tempcard = this._jsTemplates.querySelector(".mcard");
 
         board.classList.add("mcards" + pieces + "_board");
 
@@ -148,12 +149,13 @@ export default class MCardsView extends GameView {
         frag.appendChild(resultModal);
         this._desk.appendChild(frag);
 
-        this._resultModal = resultModal;
+        this._resultOutputs = resultModal.querySelectorAll("output");
+        this._setResultModal(resultModal, false);
 
     }
 
     newGame(){
-        this._resultModal.classList.remove("show");
+        this._clearResult();
 
         this._cards.forEach((card, i) => {
             if(this._statusM.unsolvedCards[i]) card.setStatus("down");
@@ -161,7 +163,12 @@ export default class MCardsView extends GameView {
     }
 
     showResult(){
-        this._resultModal.classList.add("show");
+        if (this._resultOutputs.length > 2){
+            this._setResult("result");
+            this._resultOutputs[0].value = this._statusM.period;
+            this._resultOutputs[1].value = this._statusM.stepCount;
+            this._resultOutputs[2].value = this._statusM.points;
+        }
     }
 
 }

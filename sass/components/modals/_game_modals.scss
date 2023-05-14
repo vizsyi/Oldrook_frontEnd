@@ -19,7 +19,17 @@
         opacity: 93%;
     }
     
- }
+    &.mcardresult {
+        width: 32rem;
+        height: 14.7rem;
+        border-radius: 1.5rem;
+
+        output {
+            font-weight: bold;
+        }
+    }
+    
+}
 
 .gameresult {
     [class^="gameresult_label"] {
