@@ -7,7 +7,11 @@ export default class GameView {
         
         this._desk = desk;
         this._board = document.createElement("div");
+
         this._resultModal;
+        this._endResult = "";
+
+        this._jsTemplates = document.getElementById("jsTemplates");
 
         //this._cleanBoardClasses();
         this._initBoard();
@@ -33,6 +37,51 @@ export default class GameView {
     } */
 
     _boardClick(ev){}/*abstract method*/
+
+    _setResult(result){
+        if (this._resultModal && result !== this._endResult){
+            this._endResult = result;
+            this._resultModal.classList.add(result);
+        }
+    
+    }
+
+    _clearResult(){
+        if (this._endResult !== ""){
+            this._resultModal.classList.remove(this._endResult);
+            this._endResult = "";
+        }
+    }
+
+    showResult(result){
+        if (result > 0){
+            this._setResult("result-won");
+        }
+        else if (result < 0){
+            this._setResult("result-lost");
+        }
+        else {
+            this._setResult("result-draw");
+        }
+    }
+
+    _resultModalClick(ev){
+        const elem = ev.target.closest(".btn-close");
+        if (elem){
+            this._clearResult();
+        }
+    }
+
+    _setResultModal(modal, hasBtns = true){
+        if (hasBtns) modal.addEventListener('click', this._resultModalClick.bind(this));
+        this._resultModal = modal;
+    }
+
+    _appendResultModal(parent){
+        const modal = this._jsTemplates.querySelector(".gameresult")?.cloneNode(true);
+        parent.appendChild(modal);
+        this._setResultModal(modal);
+    }
 
     dispo(){
         this._desk.innerHTML = "";

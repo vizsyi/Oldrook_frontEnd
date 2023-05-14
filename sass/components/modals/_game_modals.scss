@@ -1,4 +1,4 @@
-.game_modal {
+.gamemodal {
     display: none;
     @include absCenter;
     opacity: 0;
@@ -8,11 +8,37 @@
     color: hsl(36, 100%, 15%);
     background-color: var(--color-background-2);
     padding: 1.8rem;
+    z-index: 2003;
+    transition: opacity 0.25s 2s;
 
-    &.show {
+    &.result,
+    &.result-won,
+    &.result-lost,
+    &.result-draw {
         display: block;
-        opacity: 90%;
-        transition: opacity .25s linear;
+        opacity: 93%;
+    }
+    
+ }
+
+.gameresult {
+    [class^="gameresult_label"] {
+        display: none;
     }
 
+    &.result-won {
+        .gameresult_label-won {
+            display: block;
+        }
+    }
+    &.result-lost {
+        .gameresult_label-lost {
+            display: block;
+        }
+    }
+    &.result-draw {
+        .gameresult_label-draw {
+            display: block;
+        }
+    }
 }
