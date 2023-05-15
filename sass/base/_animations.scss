@@ -1,3 +1,13 @@
+@keyframes fade-93 {
+  0% {
+      opacity: 0;
+  }
+
+  100% {
+      opacity: 93%;
+  }
+}
+
 @keyframes heartbeat {
     0% {
       transform: scale(1.00);

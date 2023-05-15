@@ -9,14 +9,13 @@
     background-color: var(--color-background-2);
     padding: 1.8rem;
     z-index: 2003;
-    transition: opacity 0.25s 2s;
 
     &.result,
     &.result-won,
     &.result-lost,
     &.result-draw {
         display: block;
-        opacity: 93%;
+        animation: fade-93 .25s 1.7s forwards;
     }
     
     &.mcardresult {
