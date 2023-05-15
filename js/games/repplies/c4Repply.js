@@ -55,7 +55,6 @@ export default class C4Repply extends GameRepply{
                 //console.log ("col_1st: ", col, "scr: ", score, "a: ", a,  "b: ", b, (score < a));
                 if (score <= b) return score;
                 if (score < a) a = score;
-                console.log ("a: ", a);
             };
 
             /*
@@ -94,10 +93,9 @@ export default class C4Repply extends GameRepply{
             if(possCount > 1){
                 const extraPs = [0, 128, 256, 512, 256, 128, 0];
                 let a = -1073741824, b = 1073741824, bestC = 0, ex, score;
-                console.log("Depth: ", depth, this);
 
                 possCol.forEach(col => {
-                    ex = extraPs[col] + Math.floor(Math.random() * 1024 * 0);
+                    ex = extraPs[col] + Math.floor(Math.random() * 1024);
                     let test1 = [];
                     score = negaMax(col, sMod, possCol, b, a - ex, depth, test1) + ex;
                     test1.unshift (sMod.side ^ 1, col, depth, score);
@@ -110,7 +108,7 @@ export default class C4Repply extends GameRepply{
                 });
                 console.log(test);
                 resolve (bestC);
-            } else if (possCol === 1){
+            } else if (possCount === 1){
                 resolve (possCol[0]);
             } else {
                 reject("There is no more possible move!");
@@ -131,7 +129,7 @@ export default class C4Repply extends GameRepply{
             if(possCount > 1){
                 col = possCol[Math.floor(Math.random() * possCount)];
                 resolve (col);
-            } else if (possCol === 1){
+            } else if (possCount === 1){
                 resolve (possCol[0]);
             } else {
                 reject("There is no more possible move!");
