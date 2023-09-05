@@ -1,1 +1,2 @@
-export const GAMEBOARD_CLASSES = ["game_board"];
+export const GAMEFIELD_CLASSES = ["gamefield"];
+//export const GAMEBOARD_CLASSES = ["gamedesk_board"];

@@ -1,12 +1,21 @@
-import {GAMEBOARD_CLASSES} from "../gameConfig.js"
+//import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameView { 
-    constructor(desk){
+    constructor(factory, deskE, id, gTitle, gClass){
         this._repplyPlug;
         this._statusM;
+
+        this._factory = factory;
+        this._id = id;
+        this._gameTitle = gTitle;
+        this._gameClass = gClass;
+
+        this._main = false;
         
-        this._desk = desk;
-        this._board = document.createElement("div");
+        this._deskE = deskE;
+        this._fragmentF = document.createDocumentFragment();
+        this._titleE = document.createElement("div");
+        this._boardE = document.createElement("div");
 
         this._resultModal;
         this._endResult = "";
@@ -17,26 +26,51 @@ export default class GameView {
         this._initBoard();
       }
 
-    _initBoard(){
-        this._board.classList.add("game_board");
-        this._board.addEventListener('click', this._boardClick.bind(this));
+    get class (){
+        return this._gameClass;
     }
 
+    get factory (){
+        return this._factory;
+    }
+
+    /**
+     * @param {GameRepply} repply
+     */
     set repplyPlug(repply){
         this._repplyPlug = repply;
+    }
+
+    /**
+     * @param {boolean} main
+     */
+    set main(main){
+        this._main = main;
     }
 
     setStatusM(){
         this._statusM = this._repplyPlug._statusM;
     }
 
-/*     _cleanBoardClasses(){
-        [...this._board.classList].forEach(cl => {
-            if(!GAMEBOARD_CLASSES.includes(cl)) this._board.classList.remove(cl);
-        });
-    } */
-
     _boardClick(ev){}/*abstract method*/
+
+    _deskClick(ev){
+        if (this._main) this._boardClick(ev);
+        else this._factory.gameClick(this._id);
+    }
+
+    _initBoard(){
+        this._titleE.innerHTML = "<h3>" + this._gameTitle + "</h3>";
+        this._titleE.classList.add("gamedesk_title");
+        this._boardE.classList.add("gamedesk_board", this._gameClass);
+        this._fragmentF.appendChild(this._titleE);
+        this._fragmentF.appendChild(this._boardE);
+        this._boardE.addEventListener('click', this._deskClick.bind(this));
+    }
+
+    _applyDesk(){
+        this._deskE.appendChild(this._fragmentF);
+    }
 
     _setResult(result){
         if (this._resultModal && result !== this._endResult){
@@ -86,6 +120,9 @@ export default class GameView {
     dispo(){
         this._desk.innerHTML = "";
         //this._board.removeEventListener('click', this._boardClick.bind(this));
+        this._repplyPlug.dispo();
+        this._repplyPlug = null;
+        this._statusM = null;
     }
 
     bitToArray(bit){

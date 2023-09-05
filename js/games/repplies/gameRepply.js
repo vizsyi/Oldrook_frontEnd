@@ -1,10 +1,10 @@
 //import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameRepply { 
-    constructor(view, factory){
+    constructor(view){
         this._viewPlug = view;
-        //this._statusM = view.statusM;
-        this._factory = factory;
+        this._factory = view.factory;
+        this._statusM;
 
         view.repplyPlug = this;
 
@@ -41,6 +41,12 @@ export default class GameRepply {
         else {
             this._difficultyHandler(ev.target.closest("#difficultyForm input"));
         }
+    }
+
+    dispo(){
+        this._viewPlug = null;
+        this._statusM = null;
+        this._factory = null;
     }
 
 }

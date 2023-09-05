@@ -2,16 +2,20 @@ import MCardsView from "./views/mcardsView.js";
 import MCardsRepply from "./repplies/mcardsRepply.js";
 import C4View from "./views/c4View.js";
 import C4Repply from "./repplies/c4Repply.js";
+import {GAMEFIELD_CLASSES} from "./gameConfig.js"
 
 class GameFactory {
     constructor (){
         this._game;
         this._mainView;
-        this._mainRepply;
+        //this._mainRepply;
+        this._views = [];
 
         this._labelSelect = document.getElementById("gameLabel");
+        this._fieldE = document.getElementById("gameField");
 
-        this._desk = document.getElementById("gameDesk-main");
+        this._desks = this._fieldE?.querySelectorAll(".gamedesk");
+        //this._desk = document.getElementById("gameDesk-main");
         //this._board = document.querySelector("#gameDesk-main .game_board");
 
         this._control = document.getElementById("controlBoard");
@@ -38,7 +42,8 @@ class GameFactory {
         this._control.addEventListener('click'
             , ev => this._mainRepply?.controlClick(ev));
 
-        this.addNewView(game);
+        //this.addNewView(game);
+        this.addNewViews();
     }
 
     _labelChange (){
@@ -49,7 +54,6 @@ class GameFactory {
     }
 
     difficultyShow (show = false){
-        console.log("diffShow", this, this.difficultyForm);
         if (this._difficultyShow !== show){
             if(show){
                 this.difficultyForm?.classList.add("show");
@@ -60,8 +64,39 @@ class GameFactory {
             this._difficultyShow = show;
         }
     }
+
+    /**
+     * 
+     * @param {int} id 
+     */
+    gameClick(id){
+        if (id < 0 || id >= this._views.length) throw RangeError("Invalid desk index");
+        if(this._mainView) this._mainView.main = false;
+        // Class Cleaning
+        [...this._fieldE.classList].forEach(cl => {
+            if(!GAMEFIELD_CLASSES.includes(cl)) this._fieldE.classList.remove(cl);
+        });
+
+        this._mainView = this._views[id];
+        this._fieldE.classList.add("gf-" + this._mainView.class)
+        this._mainView.main = true;
+
+    }
     
-    addNewView (game = "mcard"){
+    addNewViews (){
+        let view;
+        if (this._desks.length < 2) throw RangeError("Too less game desks");
+        // MCards
+        view = new MCardsView(this, this._desks[0], 0);
+        new MCardsRepply(view);
+        this._views.push(view);
+        // C4
+        view = new C4View(this, this._desks[1], 1);
+        new C4Repply(view);
+        this._views.push(view);
+    }
+
+/*  addNewView (game = "mcard"){
         if (this._game !== game){
             this._game = game;
             this.difficultyShow (false);
@@ -78,7 +113,7 @@ class GameFactory {
         }
 
         return this._mainView;
-    }
+    }*/
     
  }
 
