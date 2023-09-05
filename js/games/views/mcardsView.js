@@ -28,9 +28,9 @@ class CardItem {
 }
 
 export default class MCardsView extends GameView {
-    constructor(board)
+    constructor(factory, deskE, id)
     {
-        super(board);
+        super(factory, deskE, id, "Memory cards", "mcards30_board");
 
         this._pieces = 30;
         this._cards = [];
@@ -44,7 +44,7 @@ export default class MCardsView extends GameView {
         //this._isFinished = false;
 
         /* Settings */
-        this.celebImgPath = "/img/celebs/";
+        this.celebImgPath = "./img/celebs/";
         
         /* View status */
         this._upCards = [];
@@ -124,12 +124,10 @@ export default class MCardsView extends GameView {
     }
 
     _initGame(pieces) {
-        const frag = document.createDocumentFragment(),
-            board = this._board,
+        const //frag = this._fragmentF,
+            board = this._boardE,
             resultModal = this._jsTemplates.querySelector(".mcardresult").cloneNode(true),
             tempcard = this._jsTemplates.querySelector(".mcard");
-
-        board.classList.add("mcards" + pieces + "_board");
 
         //Creating the cards
         for (let i = 0; i < pieces; i++) {
@@ -145,13 +143,14 @@ export default class MCardsView extends GameView {
             board.appendChild(card);
         }
 
-        frag.appendChild(board);
-        frag.appendChild(resultModal);
-        this._desk.appendChild(frag);
+        //frag.appendChild(board);
+        this._fragmentF.appendChild(resultModal);
+        //this._desk.appendChild(frag);
 
         this._resultOutputs = resultModal.querySelectorAll("output");
         this._setResultModal(resultModal, false);
 
+        this._applyDesk();
     }
 
     newGame(){
