@@ -32,9 +32,9 @@ class C4Brick {
 }
 
 export default class C4View extends GameView {
-    constructor(board)
+    constructor(factory, deskE, id)
     {
-        super(board);
+        super(factory, deskE, id, "Connect 4", "c4_board");
 
         /*Status*/
         //this._statusM = new C4SM();
@@ -98,8 +98,8 @@ export default class C4View extends GameView {
     }
 
     _initGame() {
-        const frag = document.createDocumentFragment(),
-            board = this._board,
+        const //frag = this._fragmentF,
+            board = this._boardE,
             tempbrick = this._jsTemplates.querySelector(".c4_brick");
         let col, rowCl; 
 
@@ -130,10 +130,13 @@ export default class C4View extends GameView {
             }
         }
 
-        board.classList.add("c4_board");
-        frag.appendChild(board);
-        this._appendResultModal(frag);
-        this._desk.appendChild(frag);
+        //board.classList.add("c4_board");
+        //frag.appendChild(board);
+        this._appendResultModal(this._fragmentF);
+        //this._deskE.appendChild(frag);
+
+        this._applyDesk();
+
     }
 
     newGame(){
