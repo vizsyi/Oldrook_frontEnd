@@ -21,6 +21,16 @@
                 }
             }
         }
+
+        &.gf-show {
+            .gamedesk {
+                height: fit-content;
+                width: fit-content;
+                opacity: 1;
+                transform: scale(1);
+            }
+            
+        }
     }
 
     &_label {
@@ -49,12 +59,46 @@
 
     &desk {
         position: relative;
+        display: inline-block;
+        //margin: torem(40);
+        height: 0;
+        width: 0;
+        opacity: 0;
+        transform: scale(0);
+        border: solid 2px darkblue;
+
+        & > div:first-of-type {
+            //width: 100%;
+            min-width: 68rem;
+            margin: -10rem -15rem;
+            border: solid 2px cadetblue;
+            transform: scale(.5);
+        }
+
+        &_board {
+            min-width: torem(480);
+            //transform: scale(.5);
+            //test border: 1px solid red;
+        }
+
+        &.gd-active {
+            height: fit-content;
+            width: fit-content;
+            opacity: 1;
+            transform: scale(1);
+
+            & > div:first-of-type {
+                margin: 0 0;
+                transform: scale(1);
+            }
+
+            .gamedesk_board {
+
+            }
+        }
+
     }
 
-    &_board {
-        min-width: torem(480);
-        //test border: 1px solid red;
-    }
 }
 
 /*#gameBoard-main {
