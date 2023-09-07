@@ -1,14 +1,18 @@
 //import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameRepply { 
-    constructor(view){
+    constructor(view, usesDifficulty = false){
         this._viewPlug = view;
         this._factory = view.factory;
         this._statusM;
 
         view.repplyPlug = this;
 
+        this._usesDifficulty = usesDifficulty;
+        this._difficultyIsShown = false;
         this._difficultyName = "";
+
+        if (this._viewPlug.main) this.setMain();
     }
 
     _difficultyHandler(inputElem){
@@ -25,10 +29,20 @@ export default class GameRepply {
     _difficultyShow(show = true){
         if (this._factory){
             this._factory.difficultyShow(show);
+            this._difficultyIsShown = show;
             this._difficultyHandler(
                 this._factory.difficultyForm?.querySelector("input:checked"));
         }
         
+    }
+
+    setMain(){
+        console.log("repply set", this._usesDifficulty, this._difficultyIsShown);
+        if (this._usesDifficulty && !this._difficultyIsShown) this._difficultyShow(true);
+    }
+
+    resetMain(){
+        if (this._difficultyIsShown) this._difficultyShow(false);
     }
 
     controlClick(ev){

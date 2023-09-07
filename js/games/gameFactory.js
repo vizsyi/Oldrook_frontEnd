@@ -8,7 +8,7 @@ class GameFactory {
     constructor (){
         this._game;
         this._mainView;
-        //this._mainRepply;
+        this._mainRepply;
         this._views = [];
 
         this._labelSelect = document.getElementById("gameLabel");
@@ -71,15 +71,17 @@ class GameFactory {
      */
     gameClick(id){
         if (id < 0 || id >= this._views.length) throw RangeError("Invalid desk index");
-        if(this._mainView) this._mainView.main = false;
-        // Class Cleaning
-        [...this._fieldE.classList].forEach(cl => {
-            if(!GAMEFIELD_CLASSES.includes(cl)) this._fieldE.classList.remove(cl);
-        });
+        this._mainView?.resetMain();
 
         this._mainView = this._views[id];
-        this._fieldE.classList.add("gf-" + this._mainView.class)
-        this._mainView.main = true;
+        this._mainRepply = this._mainView.repplyPlug;
+        this._mainView.setMain();
+
+        // Class Cleaning
+        this._fieldE.classList.remove("gf-show");
+        // [...this._fieldE.classList].forEach(cl => {
+        //     if(!GAMEFIELD_CLASSES.includes(cl)) this._fieldE.classList.remove(cl);
+        // });
 
     }
     

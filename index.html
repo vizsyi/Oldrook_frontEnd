@@ -15,7 +15,7 @@
             <a href="index1.html">Az Egyes</a>
             <hr>
         </header>
-        <main id="gameField" class="gamefield chooseadesk"><!-- id="gameContainer" -->
+        <main id="gameField" class="gamefield gf-show"><!-- id="gameContainer" -->
     
             <select id="gameLabel" class="form-select select-game-label mb-3">
                 <option selected value="-"> - Choose a game - </option>
@@ -25,8 +25,10 @@
               
             <div class="gamefield_main"><!-- game-content -->
                 <div>
-                    <section id="gameDesk-1" class="gamedesk"></section>
-                    <section id="gameDesk-2" class="gamedesk"></section>
+                    <section class="gamefield_deskholder">
+                        <div class="gamedesk"></div>
+                        <div class="gamedesk"></div>
+                    </section>
         
                     <section id="controlBoard">
                         <button id="cbNewGame" class="btn btn-primary">New game</button>

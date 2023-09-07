@@ -14,7 +14,7 @@ export default class GameView {
         
         this._deskE = deskE;
         this._fragmentF = document.createDocumentFragment();
-        this._titleE = document.createElement("div");
+        this._titleE = document.createElement("h3");
         this._boardE = document.createElement("div");
 
         this._resultModal;
@@ -34,6 +34,14 @@ export default class GameView {
         return this._factory;
     }
 
+    get main (){
+        return this._main;
+    }
+
+    get repplyPlug (){
+        return this._repplyPlug;
+    }
+
     /**
      * @param {GameRepply} repply
      */
@@ -41,11 +49,20 @@ export default class GameView {
         this._repplyPlug = repply;
     }
 
-    /**
-     * @param {boolean} main
-     */
-    set main(main){
-        this._main = main;
+    setMain(){
+        if (!this._main){
+            this._deskE.classList.add("gd-active");
+            this._repplyPlug.setMain();
+            this._main = true;
+        }
+    }
+
+    resetMain(){
+        if (this._main){
+            this._deskE.classList.remove("gd-active");
+            this._repplyPlug.resetMain();
+            this._main = false;
+        }
     }
 
     setStatusM(){
@@ -60,11 +77,14 @@ export default class GameView {
     }
 
     _initBoard(){
-        this._titleE.innerHTML = "<h3>" + this._gameTitle + "</h3>";
+        let dE;
+        this._titleE.innerText = this._gameTitle;
         this._titleE.classList.add("gamedesk_title");
         this._boardE.classList.add("gamedesk_board", this._gameClass);
+        dE = document.createElement("div");
         this._fragmentF.appendChild(this._titleE);
-        this._fragmentF.appendChild(this._boardE);
+        this._fragmentF.appendChild(dE);
+        dE.appendChild(this._boardE);
         this._boardE.addEventListener('click', this._deskClick.bind(this));
     }
 
