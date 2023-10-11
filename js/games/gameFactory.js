@@ -2,6 +2,7 @@ import MCardsView from "./views/mcardsView.js";
 import MCardsRepply from "./repplies/mcardsRepply.js";
 import C4View from "./views/c4View.js";
 import C4Repply from "./repplies/c4Repply.js";
+import MorrisView from "./views/morrisView.js";
 //import {GAMEFIELD_CLASSES} from "./gameConfig.js"
 import RLOG from "../log/rookLog.js";
 
@@ -99,6 +100,10 @@ class GameFactory {
         view = new C4View(this, this._desks[1], 1);
         new C4Repply(view);
         this._views.push(view);
+        // Morris
+        if (this._desks.length > 2){
+            view = new MorrisView(this, this._desks[2], 2);
+        }
     }
 
 /*  addNewView (game = "mcard"){

@@ -15,6 +15,9 @@
         + var(--mcard-label-height)
         + var(--mcard-pad) * 2 + 3px);
     --mcard-border-radius: calc(var(--mcard-pad-border-radius) + var(--mcard-pad));
+
+    --mcard-total-height: calc((var(--mcard-img-height) + var(--mcard-label-height) + var(--mcard-pad) * 2 + 2px) * 4
+        + var(--mcard-gap) * 3);
     
     // Connect 4
     /*--c4_brick-width: 5.5rem;
@@ -22,5 +25,9 @@
     --c4_upper-gap-height: 6.5rem;
     --c4_border-gap: .9rem;*/
     --color-c4-board: rgb(0, 0, 162);
+
+    //Morris
+    --morris-web-elem: calc(var(--mcard-total-height) / 16);
+
 
 }
