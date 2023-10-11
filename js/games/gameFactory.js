@@ -2,7 +2,8 @@ import MCardsView from "./views/mcardsView.js";
 import MCardsRepply from "./repplies/mcardsRepply.js";
 import C4View from "./views/c4View.js";
 import C4Repply from "./repplies/c4Repply.js";
-import {GAMEFIELD_CLASSES} from "./gameConfig.js"
+//import {GAMEFIELD_CLASSES} from "./gameConfig.js"
+import RLOG from "../log/rookLog.js";
 
 class GameFactory {
     constructor (){
@@ -27,6 +28,8 @@ class GameFactory {
     }
 
     _init (){
+        RLOG.webStart();
+        
         let game = localStorage.getItem("rookgame");
 
         if (game &&
