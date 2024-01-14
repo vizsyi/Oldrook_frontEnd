@@ -29,5 +29,8 @@
     //Morris
     --morris-web-elem: calc(var(--mcard-total-height) / 16);
 
+}
 
+:root, [data-bs-theme=light] {
+    @include bs_form_variables
 }
