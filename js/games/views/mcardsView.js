@@ -52,7 +52,7 @@ export default class MCardsView extends GameView {
         this._upCardsTO;
         this._clickedCards = [];
   
-        this._initGame(this._pieces);
+        this._initView(this._pieces);
     }
 
     get pieces (){
@@ -123,7 +123,7 @@ export default class MCardsView extends GameView {
         }
     }
 
-    _initGame(pieces) {
+    _initView(pieces) {
         const //frag = this._fragmentF,
             board = this._boardE,
             resultModal = this._jsTemplates.querySelector(".mcardresult").cloneNode(true),
@@ -144,13 +144,13 @@ export default class MCardsView extends GameView {
         }
 
         //frag.appendChild(board);
-        this._fragmentF.appendChild(resultModal);
+        //this._fragmentF.appendChild(resultModal);
         //this._desk.appendChild(frag);
 
         this._resultOutputs = resultModal.querySelectorAll("output");
-        this._setResultModal(resultModal, false);
+        //this._setResultModal(resultModal, false);
 
-        this._applyDesk();
+        this._initDesk(resultModal, false);
     }
 
     newGame(){

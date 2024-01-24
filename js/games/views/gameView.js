@@ -1,7 +1,7 @@
 //import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameView { 
-    constructor(factory, deskE, id, gTitle, gClass){
+    constructor(factory, deskE, id, gTitle, gClass, iconButtons = 0, hasMessageBoard = true){
         this._repplyPlug;
         this._statusM;
 
@@ -10,12 +10,17 @@ export default class GameView {
         this._gameTitle = gTitle;
         this._gameClass = gClass;
 
+        this._iconButtons = iconButtons;
+        this._hasMessageBoard = hasMessageBoard;
+
         this._main = false;
         
         this._deskE = deskE;
-        this._fragmentF = document.createDocumentFragment();
+        //this._fragmentF = document.createDocumentFragment();
         this._titleE = document.createElement("h3");
         this._boardE = document.createElement("div");
+
+        this._messageBoardE;
 
         this._resultModal;
         this._endResult = "";
@@ -23,7 +28,7 @@ export default class GameView {
         this._jsTemplates = document.getElementById("jsTemplates");
 
         //this._cleanBoardClasses();
-        this._initBoard();
+        //this._initView();
       }
 
     get class (){
@@ -76,21 +81,8 @@ export default class GameView {
         else this._factory.gameClick(this._id);
     }
 
-    _initBoard(){
-        let dE;
-        this._titleE.innerText = this._gameTitle;
-        this._titleE.classList.add("gamedesk_title");
-        this._boardE.classList.add("gamedesk_board", this._gameClass);
-        dE = document.createElement("div");
-        this._fragmentF.appendChild(this._titleE);
-        this._fragmentF.appendChild(dE);
-        dE.appendChild(this._boardE);
-        this._boardE.addEventListener('click', this._deskClick.bind(this));
-    }
-
-    _applyDesk(){
-        this._deskE.appendChild(this._fragmentF);
-    }
+    //_initBoard(){
+    //}
 
     _setResult(result){
         if (this._resultModal && result !== this._endResult){
@@ -126,15 +118,34 @@ export default class GameView {
         }
     }
 
-    _setResultModal(modal, hasBtns = true){
-        if (hasBtns) modal.addEventListener('click', this._resultModalClick.bind(this));
-        this._resultModal = modal;
-    }
+    _initDesk(resultModal = null, hasResultCloseBtns = true){
+        const divE =document.createElement("div")
+            , fragmentF = document.createDocumentFragment();
 
-    _appendResultModal(parent){
-        const modal = this._jsTemplates.querySelector(".gameresult")?.cloneNode(true);
-        parent.appendChild(modal);
-        this._setResultModal(modal);
+        this._titleE.innerText = this._gameTitle;
+        this._titleE.classList.add("gamedesk_title");
+        fragmentF.appendChild(this._titleE);
+
+        fragmentF.appendChild(divE);
+        this._boardE.classList.add("gamedesk_board", this._gameClass);
+        divE.appendChild(this._boardE);
+
+        if (this._hasMessageBoard){
+            this._messageBoardE = document.createElement("div");
+            this._messageBoardE.classList.add("gamedesk_message");
+            divE.appendChild(this._messageBoardE);
+        }
+        else {
+            this._messageE = null;
+        }
+
+        this._resultModal = resultModal || this._jsTemplates.querySelector(".gameresult")?.cloneNode(true);
+        fragmentF.appendChild(this._resultModal);
+        if (hasResultCloseBtns) this._resultModal.addEventListener('click', this._resultModalClick.bind(this));
+
+        this._boardE.addEventListener('click', this._deskClick.bind(this));
+
+        this._deskE.appendChild(fragmentF);
     }
 
     dispo(){

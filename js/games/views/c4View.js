@@ -34,7 +34,7 @@ class C4Brick {
 export default class C4View extends GameView {
     constructor(factory, deskE, id)
     {
-        super(factory, deskE, id, "Connect 4", "c4_board");
+        super(factory, deskE, id, "Connect 4", "c4_board", 0, false);
 
         /*Status*/
         //this._statusM = new C4SM();
@@ -44,7 +44,7 @@ export default class C4View extends GameView {
         this._nextColBricks = [];
         this._nextColBricks.length = 7;
   
-        this._initGame();
+        this._initView();
     }
 
  
@@ -88,8 +88,7 @@ export default class C4View extends GameView {
     _boardClick(ev){
         const elem = ev.target.closest(".c4_touch")?.closest(".c4_brick.c4-empty");
         if (elem){
-            const col = Number.parseInt(
-                elem.getAttribute("data-col"));
+            const col = Number.parseInt(elem.getAttribute("data-col"));
 
             // Intend
             this._repplyPlug.intend(col);
@@ -97,7 +96,7 @@ export default class C4View extends GameView {
         }
     }
 
-    _initGame() {
+    _initView() {
         const //frag = this._fragmentF,
             board = this._boardE,
             tempbrick = this._jsTemplates.querySelector(".c4_brick");
@@ -132,10 +131,10 @@ export default class C4View extends GameView {
 
         //board.classList.add("c4_board");
         //frag.appendChild(board);
-        this._appendResultModal(this._fragmentF);
+        //this._appendResultModal(this._fragmentF);
         //this._deskE.appendChild(frag);
 
-        this._applyDesk();
+        this._initDesk();
 
     }
 
