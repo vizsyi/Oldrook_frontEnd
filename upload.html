@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File upload</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
+    <link rel="stylesheet" href="src/index.css">
+</head>
+<body class="upload">
+    <div class="wrapper">
+        <div class="uploadconsole">
+            <h2 class="uploadconsole_header">Upload</h2>
+
+            <div class="uploadconsole_body">
+                <h3>Select files from your computer</h3>
+                <form action="upload.php" method="post" enctype="multipart/form-data">
+                    <input type="file" name="files[]" id="upload_files">
+                    <input type="submit" value="Upload files" id="upload_submit">
+                </form>
+
+                <h3>Or drag and drop files below</h3>
+                <div class="uploadconsole_dropzone" id="upload_dropzone">
+                    Just drag and drop files here
+                </div>
+
+                <div class="uploadconsole_bar">
+                    <div class="uploadconsole_bar_fill" id="upload_bar_fill">
+                        <div class="uploadconsole_bar_fill_text" id="upload_bar_fill_text"></div>
+                    </div>
+                </div>
+
+                <div class="hidden" id="uploads-finished">
+                    <h3>Processed files</h3>
+                    <!-- <div class="uploadconsole_uploaded">
+                        <a href="#">filename.jpg</a>
+                        <span>Success</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        Hello
+
+    </div>
+    <script src="js/upload/global.js"></script>
+</body>
+</html>
