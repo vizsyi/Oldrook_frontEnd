@@ -126,8 +126,8 @@ export default class MCardsView extends GameView {
     _initView(pieces) {
         const //frag = this._fragmentF,
             board = this._boardE,
-            resultModal = this._jsTemplates.querySelector(".mcardresult").cloneNode(true),
-            tempcard = this._jsTemplates.querySelector(".mcard");
+            resultModal = this._gameTemplates.querySelector(".mcardresult").cloneNode(true),
+            tempcard = this._gameTemplates.querySelector(".mcard");
 
         //Creating the cards
         for (let i = 0; i < pieces; i++) {

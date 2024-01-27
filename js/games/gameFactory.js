@@ -14,18 +14,17 @@ class GameFactory {
         this._views = [];
 
         this._labelSelect = document.getElementById("gameLabel");
-        this._fieldE = document.getElementById("gameField");
+        //this._fieldE = document.getElementById("gameField");
 
-        this._desks = this._fieldE?.querySelectorAll(".gamedesk");
-        //this._desk = document.getElementById("gameDesk-main");
-        //this._board = document.querySelector("#gameDesk-main .game_board");
+        this._desks = document.querySelectorAll(".gamedesk");
 
         this._control = document.getElementById("controlBoard");
         this.difficultyForm = this._control?.querySelector("#difficultyForm");
 
         this._difficultyShow = false;
 
-        this._init();
+        //this._init();
+        this.addNewViews();
     }
 
     _init (){

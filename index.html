@@ -16,76 +16,11 @@
             <hr>
         </header>
         <main id="gameField" class="gamefield gf-show"><!-- id="gameContainer" -->
-    
-            <select id="gameLabel" class="form-select select-game-label mb-3">
-                <option selected value="-"> - Choose a game - </option>
-                <option value="mcard">Memory cards</option>
-                <option value="connect4">Connect 4</option>
-            </select>
-              
-            <div class="gamefield_main"><!-- game-content -->
-                <div>
-                    <section class="gamefield_deskholder">
-                        <div class="gamedesk"></div>
-                        <div class="gamedesk"></div>
-                        <div class="gamedesk"></div>
-                    </section>
-        
-                    <section id="controlBoard">
-                        <button id="cbNewGame" class="btn btn-primary">New game</button>
-                        <form class="form_group nondisplay" id="difficultyForm">
-                            <div class="form_radio">
-                                <input type="radio" id="difficulty_easy" name="difficulty">
-                                <label for="difficulty_easy">
-                                    <span class="form_radio_button"></span>
-                                    Easy
-                                </label>
-                            </div>
-                            <div class="form_radio">
-                                <input type="radio" id="difficulty_med" name="difficulty" value="me" checked="checked">
-                                <label for="difficulty_med">
-                                    <span class="form_radio_button"></span>
-                                    Medium
-                                </label>
-                            </div>
-                            <div class="form_radio">
-                                <input type="radio" id="difficulty_hard" name="difficulty">
-                                <label for="difficulty_hard">
-                                    <span class="form_radio_button"></span>
-                                    Hard
-                                </label>
-                            </div>
-                            <div class="form_radio">
-                                <input type="radio" id="difficulty_robin" name="difficulty">
-                                <label for="difficulty_robin">
-                                    <span class="form_radio_button"></span>
-                                    Like Robin
-                                </label>
-                            </div>
-                        </form>
-    
-                        <div class="btn btn-rook">Test</div>
-        <!--                 <button id="cbDraw" class="btn">Offer a draw</button>
-                        <button id="cbGiveUp" class="btn">Give up</button>
-                        <button id="cbAccept" class="btn">Accept the draw</button>
-                        <button id="cbAccept" class="btn">Accept the draw</button> -->
-                    </section>
-                </div>
-                <section class="chat_board">
-                </section>
-            </div>
-    
+            <div class="gamedesk"></div>
+            <div class="gamedesk"></div>
+            <div class="gamedesk"></div>
         </main>
     
-    <!--     <section class="testpanel" class="nondisplay">
-            <hr>
-            <button onclick="test-down()">Down</button>
-            <button onclick="test-cliked()">Clicked</button>
-            <button onclick="test-up()">Up</button>
-            <button onclick="test-solved()">Solved</button>
-            <button onclick="test-disconnected()">Disconnected</button>
-            <button onclick="testconnected()">Connected</button>
-        </section> -->
         <footer class="footer text-muted">
             <div class="container">
                 &copy; Oldrook - 2023 <a onclick="aboutUs()">About us</a>
@@ -97,8 +32,8 @@
 
         <div id="modalfade" class="mmodal_fade"></div>
     </section>
-    <!-- Templates -->
-    <aside id="jsTemplates" class="nondisplay">
+    <!-- Rook game templates -->
+    <aside id="gameTemplates" class="nondisplay">
         <div class="mcard">
             <div>
                 <div class="mcard_front">

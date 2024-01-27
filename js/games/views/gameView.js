@@ -25,7 +25,7 @@ export default class GameView {
         this._resultModal;
         this._endResult = "";
 
-        this._jsTemplates = document.getElementById("jsTemplates");
+        this._gameTemplates = document.getElementById("gameTemplates");
 
         //this._cleanBoardClasses();
         //this._initView();
@@ -139,7 +139,7 @@ export default class GameView {
             this._messageE = null;
         }
 
-        this._resultModal = resultModal || this._jsTemplates.querySelector(".gameresult")?.cloneNode(true);
+        this._resultModal = resultModal || this._gameTemplates.querySelector(".gameresult")?.cloneNode(true);
         fragmentF.appendChild(this._resultModal);
         if (hasResultCloseBtns) this._resultModal.addEventListener('click', this._resultModalClick.bind(this));
 

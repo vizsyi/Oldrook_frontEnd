@@ -50,8 +50,10 @@ export default class MorrisView extends GameView {
             board.appendChild(elem);
         }
 
-        this._appendResultModal();
-        this._applyDesk();
+        //this._appendResultModal();
+        //this._applyDesk();
+        this._initDesk();
+
     }
 
     newGame(){

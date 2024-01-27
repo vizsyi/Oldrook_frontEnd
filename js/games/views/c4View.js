@@ -99,7 +99,7 @@ export default class C4View extends GameView {
     _initView() {
         const //frag = this._fragmentF,
             board = this._boardE,
-            tempbrick = this._jsTemplates.querySelector(".c4_brick");
+            tempbrick = this._gameTemplates.querySelector(".c4_brick");
         let col, rowCl; 
 
         // The border

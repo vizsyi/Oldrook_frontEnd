@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory cards</title>
+    <link rel="stylesheet" href="src/index.css">
+    <script src="js/script.js" type="module"></script>
+</head>
+<body>
+    <div class="bodycontainer">
+        <header class="navbar-peach">
+            <h2 class="leftheader navbar-brand">Oldrook.com</h2>
+            <hr>
+        </header>
+        <main id="gameField" class="gamefield"><!-- id="gameContainer" -->
+    
+            <select id="gameLabel" class="form-select select-game-label mb-3">
+                <option selected value="-"> - Choose a game - </option>
+                <option value="mcard">Memory cards</option>
+                <option value="connect4">Connect 4</option>
+            </select>
+              
+            <div class="gamefield_main"><!-- game-content -->
+                <div>
+                    <section class="gamedesk gd-active"></section>
+        
+                    <section id="controlBoard">
+                        <button id="cbNewGame" class="btn btn-primary">New game</button>
+                        <form class="form_group nondisplay" id="difficultyForm">
+                            <div class="form_radio">
+                                <input type="radio" id="difficulty_easy" name="difficulty">
+                                <label for="difficulty_easy">
+                                    <span class="form_radio_button"></span>
+                                    Easy
+                                </label>
+                            </div>
+                            <div class="form_radio">
+                                <input type="radio" id="difficulty_med" name="difficulty" value="me" checked="checked">
+                                <label for="difficulty_med">
+                                    <span class="form_radio_button"></span>
+                                    Medium
+                                </label>
+                            </div>
+                            <div class="form_radio">
+                                <input type="radio" id="difficulty_hard" name="difficulty">
+                                <label for="difficulty_hard">
+                                    <span class="form_radio_button"></span>
+                                    Hard
+                                </label>
+                            </div>
+                            <div class="form_radio">
+                                <input type="radio" id="difficulty_robin" name="difficulty">
+                                <label for="difficulty_robin">
+                                    <span class="form_radio_button"></span>
+                                    Like Robin
+                                </label>
+                            </div>
+                        </form>
+    
+                        <div class="btn btn-rook">Test</div>
+        <!--                 <button id="cbDraw" class="btn">Offer a draw</button>
+                        <button id="cbGiveUp" class="btn">Give up</button>
+                        <button id="cbAccept" class="btn">Accept the draw</button>
+                        <button id="cbAccept" class="btn">Accept the draw</button> -->
+                    </section>
+                </div>
+                <section class="chat_board">
+                </section>
+            </div>
+    
+        </main>
+    
+    <!--     <section class="testpanel" class="nondisplay">
+            <hr>
+            <button onclick="test-down()">Down</button>
+            <button onclick="test-cliked()">Clicked</button>
+            <button onclick="test-up()">Up</button>
+            <button onclick="test-solved()">Solved</button>
+            <button onclick="test-disconnected()">Disconnected</button>
+            <button onclick="testconnected()">Connected</button>
+        </section> -->
+        <footer class="footer text-muted">
+            <div class="container">
+                &copy; Oldrook - 2023 <a onclick="aboutUs()">About us</a>
+            </div>
+        </footer>
+    </div>
+    <!-- Modals -->
+    <section class="nondisplay">
+
+        <div id="modalfade" class="mmodal_fade"></div>
+    </section>
+    <!-- Rook game templates -->
+    <aside id="gameTemplates" class="nondisplay">
+        <div class="mcard">
+            <div>
+                <div class="mcard_front">
+                    <div>
+                        <div class="mcard_img">
+                            <img>
+                        </div>
+                        <div class="mcard_label">
+                            <span></span>
+                        </div>
+                        <svg class="mcard_heart_icon">
+                            <use xlink:href="img/sprite.svg#icon-heart"></use>
+                        </svg>
+                        <svg class="mcard_check_icon">
+                            <use xlink:href="img/sprite.svg#icon-checkmark"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mcard_back">
+                </div>
+            </div>
+        </div>
+        <div class="gamemodal gameresult">
+            <h2 class="gameresult_label-won">You have won!</h2>
+            <h2 class="gameresult_label-lost">Sorry, you have lost!</h2>
+            <h2 class="gameresult_label-draw">It is a draw.</h2>
+            <hr>
+            <div>
+                <button class="btn btn-secondary btn-close">Close</button>
+            </div>
+        </div>
+        <div class="gamemodal mcardresult">
+            <h2>You have found all the pairs</h2>
+            <br>
+            <p>Time used: <output id="mcardResultTime"></p>
+            <p>Card turn over: <output></p>
+            <p>Points: <output></p>
+        </div>
+        <div class="c4_brick">
+            <div class="c4_chip"></div>
+            <div>
+                <div class="c4_touch"></div>
+            </div>
+        </div>
+    </aside>
+</body>
+</html>
