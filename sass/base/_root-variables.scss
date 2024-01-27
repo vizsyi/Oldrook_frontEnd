@@ -3,12 +3,12 @@
     --color-background-2: #ffe9c0;
 
     // Mcard
-    --mcard-net-width: 7.1rem;// 113.6px
-    --mcard-img-height: 7.5rem;// 120.0px
-    --mcard-label-height: 2.75rem;// 40px
-    --mcard-pad: .3rem;// 4.8px
-    --mcard-gap: .7rem;// 9.6px
-    --mcard-pad-border-radius: .4rem;// 6.4px
+    --mcard-net-width: 7.1em;// 113.6px
+    --mcard-img-height: 7.5em;// 120.0px
+    --mcard-label-height: 2.75em;// 40px
+    --mcard-pad: .3em;// 4.8px
+    --mcard-gap: .7em;// 9.6px
+    --mcard-pad-border-radius: .4em;// 6.4px
     /*calculations*/
     --mcard-width: calc(var(--mcard-net-width) + var(--mcard-pad) * 2 + 2px);
     --mcard-height: calc(var(--mcard-img-height)
@@ -20,10 +20,10 @@
         + var(--mcard-gap) * 3);
     
     // Connect 4
-    /*--c4_brick-width: 5.5rem;
-    --c4_brick-height: 5rem;
-    --c4_upper-gap-height: 6.5rem;
-    --c4_border-gap: .9rem;*/
+    /*--c4_brick-width: 5.5em;
+    --c4_brick-height: 5em;
+    --c4_upper-gap-height: 6.5em;
+    --c4_border-gap: .9em;*/
     --color-c4-board: rgb(0, 0, 162);
 
     //Morris

@@ -6,11 +6,11 @@
     grid-template-rows: $c4_upper-gap-height
         $c4_border-gap
         repeat(6, $c4_brick-height)
-        1rem;
+        1em;
     gap: 0;
     position: relative;
-    top: -1.2rem;
-    //margin-top: -1.1rem;
+    top: -1.2em;
+    //margin-top: -1.1em;
 
     .c4_border {
         background-color: var(--color-c4-board);
