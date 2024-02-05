@@ -1,0 +1,11 @@
+.morris_piece {
+    height: toem(80);
+    width: toem(80);
+    border-radius: 50%;
+    background-color: coral;
+
+    &.piece-dark {
+        background-color: brown;
+    }
+
+}
