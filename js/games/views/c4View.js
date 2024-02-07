@@ -32,9 +32,9 @@ class C4Brick {
 }
 
 export default class C4View extends GameView {
-    constructor(factory, deskE, id)
+    constructor(factory, deskE, active, id)
     {
-        super(factory, deskE, id, "Connect 4", "c4_board", 0, false);
+        super(factory, deskE, active, id, "Connect 4", "c4_board", 0, false);
 
         /*Status*/
         //this._statusM = new C4SM();

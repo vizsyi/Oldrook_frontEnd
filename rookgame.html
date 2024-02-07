@@ -19,12 +19,13 @@
             <select id="gameLabel" class="form-select select-game-label mb-3">
                 <option selected value="-"> - Choose a game - </option>
                 <option value="mcard">Memory cards</option>
-                <option value="connect4">Connect 4</option>
+                <option value="c4">Connect 4</option>
+                <option value="morris">Morris</option>
             </select>
               
             <div class="gamefield_main"><!-- game-content -->
                 <div>
-                    <section class="gamedesk gd-active"></section>
+                    <section id="activeGameDesk" class="gamedesk gd-active"></section>
         
                     <section id="controlBoard">
                         <button id="cbNewGame" class="btn btn-primary">New game</button>

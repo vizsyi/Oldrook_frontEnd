@@ -1,7 +1,9 @@
 //import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameView { 
-    constructor(factory, deskE, id, gTitle, gClass, iconButtons = 0, hasMessageBoard = true){
+    constructor(factory, deskE, active = false, id
+        ,gTitle, gClass, iconButtons = 0, hasMessageBoard = true){
+
         this._repplyPlug;
         this._statusM;
 
@@ -13,7 +15,7 @@ export default class GameView {
         this._iconButtons = iconButtons;
         this._hasMessageBoard = hasMessageBoard;
 
-        this._main = false;
+        this._active = active;
         
         this._deskE = deskE;
         //this._fragmentF = document.createDocumentFragment();
@@ -39,9 +41,10 @@ export default class GameView {
         return this._factory;
     }
 
+    /*
     get main (){
         return this._main;
-    }
+    }*/
 
     get repplyPlug (){
         return this._repplyPlug;
@@ -54,6 +57,7 @@ export default class GameView {
         this._repplyPlug = repply;
     }
 
+    /*
     setMain(){
         if (!this._main){
             this._deskE.classList.add("gd-active");
@@ -69,6 +73,7 @@ export default class GameView {
             this._main = false;
         }
     }
+    */
 
     setStatusM(){
         this._statusM = this._repplyPlug._statusM;
@@ -76,9 +81,8 @@ export default class GameView {
 
     _boardClick(ev){}/*abstract method*/
 
-    _deskClick(ev){
-        if (this._main) this._boardClick(ev);
-        else this._factory.gameClick(this._id);
+    _deskClick(){
+        if (!this._active) this._factory.gameClick(this._id);
     }
 
     //_initBoard(){
@@ -89,7 +93,6 @@ export default class GameView {
             this._endResult = result;
             this._resultModal.classList.add(result);
         }
-    
     }
 
     _clearResult(){
@@ -143,15 +146,21 @@ export default class GameView {
         fragmentF.appendChild(this._resultModal);
         if (hasResultCloseBtns) this._resultModal.addEventListener('click', this._resultModalClick.bind(this));
 
-        this._boardE.addEventListener('click', this._deskClick.bind(this));
+        if (this._active){
+            this._boardE.addEventListener('click', this._boardClick.bind(this));
+            //todo: drag events
+        }
+        else {
+            this._deskE.addEventListener('click', this._deskClick.bind(this));
+        }
 
         this._deskE.appendChild(fragmentF);
     }
 
     dispo(){
-        this._desk.innerHTML = "";
+        this._deskE.innerHTML = "";
         //this._board.removeEventListener('click', this._boardClick.bind(this));
-        this._repplyPlug.dispo();
+        this._repplyPlug?.dispo();
         this._repplyPlug = null;
         this._statusM = null;
     }

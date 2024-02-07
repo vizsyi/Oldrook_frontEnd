@@ -10,9 +10,9 @@ class MorrisPiece {
 }
 
 export default class MorrisView extends GameView {
-    constructor(factory, deskE, id)
+    constructor(factory, deskE, active, id)
     {
-        super(factory, deskE, id, "Morris", "morris_board");
+        super(factory, deskE, active, id, "Morris", "morris_board");
 
         /*Status*/
         //this._statusM = new C4SM();
