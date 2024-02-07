@@ -7,6 +7,13 @@
         console.log(files);
     }
 
+    //Standard form upload
+    document.getElementById("upload_files").addEventListener("click", function(e){
+        let uploadFiles = document.getElementById("upload_files").files;
+        e.preventDefault();
+        startUpload(uploadFiles);
+    });
+    
     //Drop functionality
     dropZone.ondrop = function(e){
         e.preventDefault();
