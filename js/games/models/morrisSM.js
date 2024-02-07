@@ -37,13 +37,90 @@ export default class MorrisSM{
                 | b | (b << 1) | (b >>> 6)
                 | c | (c << 8) | (c << 16);
 
-        x = this._bits & ~mill;
+        x = this._bits & ~mill; // Pieces not in mills
 
         return x ? x : this._bits[side];
     }
 
-    possibilies (){
-        //todo: implement
+    _possibilities (){
+        const possies = [];
+        let b, fr, to, possL;
+        if (this._shootingStep || this._toPlacePcs > 0){
+            // Shooting
+            if (this._shootingStep){
+                fr = 28;
+                possL = this._removableMen();
+            }
+            // Placing
+            else {
+                fr = 26;
+                possL = 16777215 ^ (this._bits[0] | this._bits[1]);//Bits All
+            }
+            // Schooting & Placing
+            for (to = 0, b = 1; to < 24; to++, b <<= 1){
+                if (possL & b) possies.push([fr, to]);
+            }
+        }
+        else {
+            const emptyPls = 16777215 ^ (this._bits[0] | this._bits[1]);//Bits: All
+            // Moving
+            if (this._restPcs[this._side] > 3){
+                // Goes CW
+                b = (emptyPls & bit) >>> 1 & this._bits[this._side];//Bits: not(0, 8, 16)
+                fr = 0;
+                while (b) {
+                    if (b & 1) possies.push([fr, fr + 1]);
+                    b >>>= 1;
+                    fr++;
+                }
+                // Overflowings
+                b = ((emptyPls & ~bit) << 7 & this._bits[this._side]) >>> 7;//Bits: 0, 8, 16
+                fr = 7;
+                while (b) {
+                    if (b & 1) possies.push([fr, fr - 7]);
+                    b >>>= 8;
+                    fr += 8;
+                }
+                // Goes CCW
+                b = ((emptyPls & bit) << 1 & this._bits[this._side]) >>> 1;//Bits: not(7, 15, 23)
+                fr = 1;
+                while (b) {
+                    if (b & 1) possies.push([fr, fr - 1]);
+                    b >>>= 1;
+                    fr++;
+                }
+                // Overflowings
+                b = (emptyPls & ~bit) >>> 7 & this._bits[this._side];//Bits: 7, 15, 23
+                fr = 0;
+                while (b) {
+                    if (b & 1) possies.push([fr, fr + 7]);
+                    b >>>= 8;
+                    fr += 8;
+                }
+                // Goes Inner //todo: implement
+                b = ((emptyPls & bit) >>> 8 & this._bits[this._side]) >>> 1;//Bits: odds 9 - 23
+                fr = 1;
+                while (b) {
+                    if (b & 1) possies.push([fr, fr + 8]);
+                    b >>>= 2;
+                    fr += 2;
+                }
+                // Goes Outer //todo: implement
+                b = ((emptyPls & bit) << 8 & this._bits[this._side]) >>> 9;//Bits: odds 1 - 15
+                fr = 9;
+                while (b) {
+                    if (b & 1) possies.push([fr, fr - 8]);
+                    b >>>= 2;
+                    fr += 2;
+                }
+            }
+            // Flying
+            else {
+                //todo: implement
+            }
+        }
+
+        return possies
     }
 
     _newMill(side = this._side){
@@ -62,26 +139,25 @@ export default class MorrisSM{
     step(step){
         const from = step >>> 5, to = step & 31, toBit = 1 >>> to;
 
-        if ((from > 0) && ((this._toPlacePcs > 0) || this._shootingStep)
-            || from < 0 || from > 23 || to > 23)
-            throw new RangeError("Invalid step");
-
         if (this._shootingStep){
             this._side ^= 1;
-            if ((this._bits[this._side] & toBit) === 0) throw new RangeError("Invalid shooting step");
+            if ((from !== 28) || !(this._bits[this._side] & toBit)) throw new RangeError("Invalid shooting step");
             this._bits[this._side] ^= toBit;
+            this._restPcs[this._side]--;
             this._shootingStep = false;
             this.newMill();
         }
         else {
             const allBits = this._bits[0] | this._bits[1];
-            if (this._toPlacePcs){
-                if (allBits & toBit) throw new RangeError("Invalid placing step");
+            if (this._toPlacePcs > 0){
+                if ((from !== 26) || (allBits & toBit)) throw new RangeError("Invalid placing step");
                 this._bits[this._side] |= toBit;
+                this._toPlacePcs--;
             }
             else {
                 const fromBit = 1 >>> from;
-                if ((from === to) || ((fromBit & this._bits[this._side]) === 0) || (allBits & toBit))
+                if (from < 0 || from > 23 || to > 23 || (from === to)
+                    || !(fromBit & this._bits[this._side]) || (allBits & toBit))
                     throw new RangeError("Invalid moving step");
                 this._bits[this._side] ^= fromBit | toBit;
             }
