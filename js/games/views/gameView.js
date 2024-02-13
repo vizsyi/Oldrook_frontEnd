@@ -2,7 +2,8 @@
 
 export default class GameView { 
     constructor(factory, deskE, active = false, id
-        ,gTitle, gClass, iconButtons = 0, hasMessageBoard = true){
+        ,gTitle, gClass, iconButtons = 0, hasMessageBoard = true
+        ,dropZoneClass = null){
 
         this._repplyPlug;
         this._statusM;
@@ -28,6 +29,10 @@ export default class GameView {
         this._endResult = "";
 
         this._gameTemplates = document.getElementById("gameTemplates");
+
+        //Drag
+        this._dropZoneClass = dropZoneClass;
+        this._dragOverClasses = dropZoneClass ? ["gb_drop-potential", "gb_drop-notpot"]: null;
 
         //this._cleanBoardClasses();
         //this._initView();
@@ -83,6 +88,52 @@ export default class GameView {
 
     _deskClick(){
         if (!this._active) this._factory.gameClick(this._id);
+    }
+
+    // Drag handlers of the dragable pieces
+    _dragStart(ev){
+        const elem = ev.target;
+        if (elem.getAttribute("draggable")){
+            const id = Number.parseInt(elem.getAttribute("data-pii"));
+            ev.dataTransfer.setData("pieceId", id);
+        }
+        else {
+            ev.preventDefault();
+            //console.log("DragStart on an not draggable", ev);
+        }
+    }
+
+    _drag(ev){
+        const elem = ev.target;
+        //console.log("Dragging", ev);
+        //elem.style.transform = "translate(150px,100px) scale(1.3)";
+    }
+
+    // Drag handlers of the drop zones
+    _dragEnter(ev){
+        //ev.preventDefault();
+        ev.stopPropagation();
+
+        const elem = ev.target;
+        if (elem.classList.contains(this._dropZoneClass)){
+            //console.log("ZoneEnter", ev, elem);    
+            elem.classList.add(this._dragOverClasses[1]);
+        }
+    }
+
+    _dragLeave(ev){
+        const elem = ev.target;
+        ev.stopPropagation();
+        if (elem.classList.contains(this._dropZoneClass)){
+            //console.log("ZoneLeave", ev, elem);
+            this._dragOverClasses.forEach(cl => elem.classList.remove(cl));
+        }
+    }
+
+    _drop(ev){
+        ev.preventDefault();
+        let data = ev.dataTransfer.getData("pieceId");
+        console.log("Drop", ev, data);
     }
 
     //_initBoard(){
@@ -148,7 +199,17 @@ export default class GameView {
 
         if (this._active){
             this._boardE.addEventListener('click', this._boardClick.bind(this));
-            //todo: drag events
+            //Drag events
+            if(this._dropZoneClass){
+                this._boardE.addEventListener('dragstart', this._dragStart.bind(this));
+                this._boardE.addEventListener('drag', this._drag.bind(this));
+                //const dropZones = this._boardE.querySelectorAll("." + this._dropZoneClass);
+                //dropZones.forEach(zone => 
+                //    zone.addEventListener('dragover', this._dragOver.bind(this)));
+                this._boardE.addEventListener('dragenter', this._dragEnter.bind(this));
+                this._boardE.addEventListener('dragleave', this._dragLeave.bind(this));
+                this._boardE.addEventListener('drop', this._drop.bind(this));
+            }
         }
         else {
             this._deskE.addEventListener('click', this._deskClick.bind(this));

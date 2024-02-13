@@ -81,6 +81,27 @@
                 border-radius: 50%;
                 background-color: #333;
             }
+
+            &.gb_drop-potential {
+                .board_spot_sign {
+                    transform: scale(1.5);
+                    background-color: green;
+                }
+            }
+
+            &.gb_drop-notpot {
+                .board_spot_sign {
+                    transform: scale(.7);
+
+                    &::after {
+                        position: absolute;
+                        width: 100%;
+                        color: red;
+                        content: url(img/sprite.svg#icon-close);
+                    }
+                }
+            }
+            
         }
         
         $nch: 7;
