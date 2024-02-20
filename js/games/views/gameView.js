@@ -30,6 +30,9 @@ export default class GameView {
 
         this._gameTemplates = document.getElementById("gameTemplates");
 
+        //Keyboard
+        this._coursorKeyCodes = [33, 34, 37, 38, 39, 40];
+        
         //Drag
         this._dropZoneClass = dropZoneClass;
         this._dragOverClasses = dropZoneClass ? ["gb_drop-potential", "gb_drop-notpot"]: null;
@@ -84,6 +87,15 @@ export default class GameView {
         this._statusM = this._repplyPlug._statusM;
     }
 
+    // Keyboard handlers
+    _coursorEvent(keyC){}/*abstract method*/
+
+    keyboardEvent(ev){
+        const keyC = ev.keyCode;
+        if (this._coursorKeyCodes.contains(keyC)) this._coursorEvent(keyC);
+    }
+
+    // Click handlers
     _boardClick(ev){}/*abstract method*/
 
     _deskClick(){

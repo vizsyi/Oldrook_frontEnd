@@ -23,9 +23,48 @@ export default class MorrisView extends GameView {
         this._pieces = [];
   
         this._initGame();
+
+        //keyboard event status
+        this._coursorMoveMap = new Map([
+            [33, [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 20, 21, 22, 23, 16, 17, 18, 19]], //PageUp
+            [34, [-1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]], //PageDown
+            [37, [2, 0, 1, 11, 5, 6, 4, 3, 10, 8, 9, 19, 13, 14, 12, 7, 18, 16, 17, 23, 21, 22, 20, 15]], //ArrLeft
+            [38, [6, 5, 4, 2, 3, 13, 7, 0, 14, 1, 12, 10, 11, 21, 15, 8, 22, 9, 20, 18, 19, 17, 23, 16]], //ArrUp
+            [39, [1, 2, 0, 7, 6, 4, 5, 15, 9, 10, 8, 3, 14, 12, 13, 23, 17, 18, 16, 11, 22, 20, 21, 19]], //ArrRight
+            [40, [7, 9, 3, 4, 2, 1, 0, 6, 15, 17, 11, 12, 10, 5, 8, 14, 23, 21, 19, 20, 18, 13, 16, 22]] //ArrDown
+        ]);
+        this._keyActivated = 23;
+        this._isKeyActivatedShown = false;
     }
  
     move (col, matte, isMach){
+    }
+
+    _showCursor(IdSpot){
+        //todo: implement
+    }
+
+    _hideCursor(IdSpot){
+        //todo: implement
+    }
+
+    // Keyboard handlers
+    _coursorEvent(keyC){
+        const nextArr = this._coursorMoveMap.get(keyC);
+        if(nextArr){
+            if(this._isKeyActivatedShown){
+                const nextAct = nextArr[this._keyActivated];
+                if(nextAct >= 0){
+                    this._hideCursor(this._keyActivated);
+                    this._keyActivated = nextAct;
+                    this._showCursor(nextAct);
+                }
+            }
+            else {
+                this._isKeyActivatedShown = true;
+                this._showCursor(this._keyActivated);
+            }
+        }
     }
 
     _boardClick(ev){

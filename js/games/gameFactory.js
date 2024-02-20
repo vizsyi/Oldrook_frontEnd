@@ -57,6 +57,10 @@ class GameFactory {
         this._mainView = this._createView(game, desk, active, id);
     }
 
+    _keyboardEventHandler(ev){
+        this._mainView?.keyboardEvent(ev);
+    }
+
     _init (){
         let game;
         
@@ -84,8 +88,9 @@ class GameFactory {
                 }
     
                 this._labelSelect.addEventListener("change", this._labelChange.bind(this));
-    
             }
+
+            document.addEventListener("keydown", this._keyboardEventHandler.bind(this));
         }
         else {
             game = "index";
