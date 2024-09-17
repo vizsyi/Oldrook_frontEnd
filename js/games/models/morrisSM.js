@@ -44,21 +44,21 @@ export default class MorrisSM{
 
     _possibilities (){
         const possies = [];
-        let b, fr, to, possL;
+        let b, fr, to, possB;
         if (this._shootingStep || this._toPlacePcs > 0){
             // Shooting
             if (this._shootingStep){
                 fr = 28;
-                possL = this._removableMen();
+                possB = this._removableMen();
             }
             // Placing
             else {
                 fr = 26;
-                possL = 16777215 ^ (this._bits[0] | this._bits[1]);//Bits All
+                possB = 16777215 ^ (this._bits[0] | this._bits[1]);//Bits All
             }
             // Schooting & Placing
             for (to = 0, b = 1; to < 24; to++, b <<= 1){
-                if (possL & b) possies.push([fr, to]);
+                if (possB & b) possies.push([fr, to]);
             }
         }
         else {
@@ -116,7 +116,23 @@ export default class MorrisSM{
             }
             // Flying
             else {
-                //todo: implement
+                //Flying piece positions
+                const flyersL = [];
+                b = this._bits[this._side];
+                fr = 0;
+                while (b) {
+                    if (b & 1) flyersL.push(fr);
+                    b >>>= 1;
+                    fr ++;
+                }
+                //Multiplying with the empty places
+                b = emptyPls;//Bits: not(0, 8, 16)
+                to = 0;
+                while (b) {
+                    if (b & 1) flyersL.forEach(flyer => possies.push([flyer, to]));
+                    b >>>= 1;
+                    to++;
+                }
             }
         }
 
@@ -145,7 +161,7 @@ export default class MorrisSM{
             this._bits[this._side] ^= toBit;
             this._restPcs[this._side]--;
             this._shootingStep = false;
-            this.newMill();
+            this._newMill();
         }
         else {
             const allBits = this._bits[0] | this._bits[1];
@@ -161,7 +177,7 @@ export default class MorrisSM{
                     throw new RangeError("Invalid moving step");
                 this._bits[this._side] ^= fromBit | toBit;
             }
-            if (this.newMill()){
+            if (this._newMill()){
                 this._shootingStep = true;
             }
             else {
