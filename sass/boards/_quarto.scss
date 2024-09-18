@@ -1,0 +1,35 @@
+.quarto_board {
+    display: flex;
+    justify-content: space-around;
+
+    &_ring {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: var(--quarto-ring);
+        height: var(--quarto-ring);
+        box-sizing: content-box;
+        //background-color: hsla(180, 100%, 50%, .25);
+        border: 2px solid var(--color-quarto-ring);
+        border-radius: 50%;
+        background-color: darkgoldenrod;
+
+        & > div {
+            display: grid;
+            grid-template-columns: repeat(4, var(--quarto-spot));
+            grid-template-rows: repeat(4, var(--quarto-spot));
+            gap: .9em;
+            border: 2px solid gray;
+            transform: rotate(10deg);
+        }
+
+        .quarto_board_spot {
+            border: 2px solid var(--color-quarto-ring);
+            border-style: groove;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+    }
+
+}

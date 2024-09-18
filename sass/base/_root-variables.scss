@@ -29,6 +29,11 @@
     //Morris
     --morris-web-elem: calc(var(--mcard-total-height) / 16);
 
+    //Quarto
+    --quarto-ring: 46em;
+    --quarto-spot: calc(var(--quarto-ring) * .17);
+    --color-quarto-ring: rgb(212, 223, 114);
+
 }
 
 :root, [data-bs-theme=light] {
