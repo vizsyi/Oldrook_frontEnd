@@ -2,6 +2,8 @@ export default class quartoSM{
     constructor(origin, dummy){
         if (origin){
             this._side = origin._side;
+
+            this._nextPiece = origin._nextPiece;
     
             this._restPcs = [...origin._restPcs];
     
@@ -11,6 +13,8 @@ export default class quartoSM{
         }
         else {
             this._side = 0;
+
+            this._nextPiece = 0;
     
             this._restPcs = [];
     
@@ -43,8 +47,35 @@ export default class quartoSM{
         return matte
     }
 
+    placeStep(step){
+        const i = this._restPcs.indexOf(this._nextPiece),
+            bit = 1 >>> step;
+        let matte = 0;
+
+        for (i = 0; i < 4; i++) {
+            c = i << 1 | this._nextPiece >>> i & 1; //caracter
+            
+            matte |= this.caracMatte(this._bits[c] |= bit);
+        }
+        
+        // removing the piece from the rest ones
+        this._restPcs.splice(i, 1);
+        this._nextPiece = 0;
+
+        return matte;
+    }
+
+    pieceStep(step){
+        this._nextPiece = step;
+    }
+    
     step(step){
-        //todo: implement
+        if (this._nextPiece){
+            this.placeStep(step);
+        }
+        else {
+            this.pieceStep(step);
+        }
     }
 
     _resetBits(){
