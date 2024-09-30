@@ -4,6 +4,7 @@ import C4View from "./views/c4View.js";
 import C4Repply from "./repplies/c4Repply.js";
 import MorrisView from "./views/morrisView.js";
 import QuartoView from "./views/quartoView.js";
+import TertioView from "./views/tertioView.js";
 //import {GAMEFIELD_CLASSES} from "./gameConfig.js"
 import RLOG from "../log/rookLog.js";
 
@@ -48,6 +49,10 @@ class GameFactory {
 
             case "quarto":
                 view = new QuartoView(this, desk, active, i);
+                break;
+
+            case "tertio":
+                view = new TertioView(this, desk, active, i);
                 break;
 
             default:

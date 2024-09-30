@@ -1,0 +1,61 @@
+.tertio_board {
+    display: flex;
+    justify-content: center;
+
+    &_ring {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: var(--quarto-ring);
+        height: var(--quarto-ring);
+        box-sizing: content-box;
+        //background-color: hsla(180, 100%, 50%, .25);
+        border: 2px solid var(--color-quarto-ring);
+        border-radius: 50%;
+        background-color: darkgoldenrod;
+
+        & > div {
+            display: grid;
+            grid-template-columns: repeat(3, var(--quarto-spot));
+            grid-template-rows: repeat(3, var(--quarto-spot));
+            gap: .9em;
+            border: 2px solid gray;
+            transform: rotate(11deg);
+        }
+
+        .tertio_board_spot {
+            border: 2px solid var(--color-quarto-ring);
+            border-style: groove;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+    }
+
+    .tertio_board_side {
+        position: absolute;
+        //left: 0;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        //height: var(--quarto-ring);
+        height: 70%;
+        padding-top: 5%;
+        border: 2px solid blue;
+
+        &:not(.tertio_board_side-right){
+            left: 1em;
+        }
+
+        &.tertio_board_side-right {
+            right: 1em;
+        }
+
+        & > div {
+            min-height: var(--quarto-piece-round);
+        }
+    }
+
+}
