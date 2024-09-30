@@ -30,9 +30,19 @@
     --morris-web-elem: calc(var(--mcard-total-height) / 16);
 
     //Quarto
+    --color-quarto-piece-light: coral;
+    --color-quarto-piece-dark: brown;
+
     --quarto-ring: 46em;
     --quarto-spot: calc(var(--quarto-ring) * .17);
     --color-quarto-ring: rgb(212, 223, 114);
+
+    --quarto-piece-ratio: .7;
+    --quarto-piece-small-ratio: .7;
+    --quarto-piece-square: calc(var(--quarto-spot) * var(--quarto-piece-ratio));
+    --quarto-piece-round: calc(var(--quarto-piece-square) * 1.128);
+    --quarto-piece-small-square: calc(var(--quarto-piece-square) * var(--quarto-piece-small-ratio));
+    --quarto-piece-small-round: calc(var(--quarto-piece-round) * var(--quarto-piece-small-ratio));
 
 }
 

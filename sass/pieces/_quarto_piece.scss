@@ -1,0 +1,47 @@
+.quarto_piece {
+    height: var(--quarto-piece-square);
+    width: var(--quarto-piece-square);
+    border-radius: 5%;
+    background-color: var(--color-quarto-piece-light);
+
+    &.piece-dark {
+        background-color: var(--color-quarto-piece-dark);
+    }
+
+    &.piece-round {
+        height: var(--quarto-piece-round);
+        width: var(--quarto-piece-round);
+        border-radius: 50%;
+
+        &.piece-small {
+            height: var(--quarto-piece-small-round);
+            width: var(--quarto-piece-small-round);
+        }
+    }
+
+    &.piece-small {
+        height: var(--quarto-piece-small-square);
+        width: var(--quarto-piece-small-square);
+    }
+
+    &.piece-drill {
+
+        &::after {
+            content: "";
+            display: block;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            height: toem(50);
+            width: toem(50);
+            border-radius: 50%;
+            background-color: khaki;
+            transform: translate(-50%, -50%);
+        }
+
+        &.piece-small::after  {
+            height: toem(35);
+            width: toem(35);
+        }
+    }
+}

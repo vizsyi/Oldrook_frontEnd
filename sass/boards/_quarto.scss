@@ -1,6 +1,6 @@
 .quarto_board {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 
     &_ring {
         display: flex;
@@ -30,6 +30,37 @@
             cursor: pointer;
         }
         
+    }
+
+    .quarto_board_side {
+        position: absolute;
+        //left: 0;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        //height: var(--quarto-ring);
+        height: 85%;
+        padding-top: 3%;
+        border: 2px solid blue;
+
+        &:not(.quarto_board_side-right){
+            left: 0;
+        }
+
+        &.quarto_board_side-right {
+            right: 0;
+            flex-wrap: wrap-reverse;
+        }
+
+        & > div {
+            min-height: var(--quarto-piece-round);
+        }
+
+        & > div:nth-child(-n+4) {
+            min-height: var(--quarto-piece-small-round);
+        }
     }
 
 }
