@@ -14,6 +14,9 @@ npm install autoprefixer --save-dev
 npm install postcss-cli --save-dev
 npm install npm-run-all --save-dev
 
+## Installing dependencies
+npm install
+
 ## Init Express
 npm init -y
 npm install express
