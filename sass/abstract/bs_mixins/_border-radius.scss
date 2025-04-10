@@ -1,3 +1,5 @@
+@use "./../bs_variables" as v;
+
 /// Copy from TW Bootstrap 5.2.3 ///
 
 // stylelint-disable property-disallowed-list
@@ -13,12 +15,12 @@
         $return: append($return, $value);
       }
     }
-    @return $return;
+    @return $return;  
   }
   
   // scss-docs-start border-radius-mixins
   @mixin border-radius($radius: $border-radius, $fallback-border-radius: false) {
-    @if $enable-rounded {
+    @if v.$enable-rounded {
       border-radius: valid-radius($radius);
     }
     @else if $fallback-border-radius != false {

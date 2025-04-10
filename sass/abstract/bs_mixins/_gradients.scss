@@ -1,3 +1,5 @@
+@use "./../bs_variables" as v;
+
 /// Copy from TW Bootstrap 5.2.3 ///
 
 // Gradients
@@ -6,7 +8,7 @@
 @mixin gradient-bg($color: null) {
     background-color: $color;
   
-    @if $enable-gradients {
+    @if v.$enable-gradients {
       background-image: var(--#{$prefix}gradient);
     }
   }

@@ -1,3 +1,5 @@
+@use "./../abstract/mixins" as m;
+
 /*Game*/
 #gameField {
     //position: relative;
@@ -16,7 +18,7 @@
                 flex-direction: row-reverse;
                 flex-wrap: wrap;
     
-                @include respond(small-or-port){
+                @include m.respond(small-or-port){
                     flex-direction: column;
                 }
             }
@@ -24,10 +26,13 @@
 
         &.gf-show {
             .gamedesk {
+                //font-size: 60%;
+                
                 height: fit-content;
                 width: fit-content;
                 opacity: 1;
                 transform: scale(1);
+                
             }
             
         }
@@ -51,7 +56,7 @@
             flex-direction: row-reverse;
             flex-wrap: wrap;
 
-            @include respond(small-or-port){
+            @include m.respond(small-or-port){
                 flex-direction: column;
             }
         }
@@ -115,7 +120,7 @@
     /*justify-content: space-evenly;*/
     /*padding: 0px 10px;*/
 
-    @include respond(small-or-port){
+    @include m.respond(small-or-port){
         flex-direction: row;
         justify-content: space-around;
         align-items: flex-start;

@@ -1,7 +1,9 @@
+@use "./../bs_variables" as v;
+
 /// Copy from TW Bootstrap 5.2.3 ///
 
 @mixin box-shadow($shadow...) {
-    @if $enable-shadows {
+    @if v.$enable-shadows {
       $result: ();
   
       @each $value in $shadow {

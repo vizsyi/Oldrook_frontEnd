@@ -1,3 +1,5 @@
+@use "./../abstract/bs_mixins/bs_form_variables" as bfv;
+
 :root {
     --color-background-1: #ffe9d0;
     --color-background-2: #ffe9c0;
@@ -47,5 +49,5 @@
 }
 
 :root, [data-bs-theme=light] {
-    @include bs_form_variables
+    @include bfv.bs_form_variables
 }

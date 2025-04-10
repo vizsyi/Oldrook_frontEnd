@@ -1,3 +1,5 @@
+@use "./../../abstract/abstract" as *;
+
 .gamemodal {
     display: none;
     @include absCenter;
@@ -15,7 +17,7 @@
     &.result-lost,
     &.result-draw {
         display: block;
-        animation: fade-93 .25s 1.7s forwards;
+        animation: fade-93 .25s 2.1s forwards;
     }
     
     &.mcardresult {
