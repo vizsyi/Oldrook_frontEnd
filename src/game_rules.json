@@ -1,0 +1,7 @@
+{
+    "mcard": "<p>Lorem Ipsum is simply memory game text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>",
+    "morris": "<p>Lorem Ipsum is simply Morris of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>",
+     "c4": "<p>Connect 4 is a classic two-player strategy game where the goal is to be the first to get four of your own colored discs in a row — either horizontally, vertically, or diagonally.</p><ol>Gameplay:</ol><li>Players take turns dropping one disc at a time into any of the 7 columns.</li><li>A disc always falls to the lowest available space in the column.</li><li>You can’t place a disc in a full column.</li>",
+    "c3": "<p>Connect 3 is a classic two-player strategy game where the goal is to be the first to get three of your own colored discs in a row — either horizontally, vertically, or diagonally.</p><ol>Gameplay:</ol><li>Players take turns dropping one disc at a time into any of the 4 columns.</li><li>A disc always falls to the lowest available space in the column.</li><li>You can’t place a disc in a full column.</li>"
+}
+  
