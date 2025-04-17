@@ -12,7 +12,7 @@ export default class GameRepply {
         this._difficultyIsShown = false;
         this._difficultyName = "";
 
-        if (this._viewPlug.main) this.setMain();
+        if (this._viewPlug.active) this.activate();
     }
 
     _difficultyHandler(inputElem){
@@ -23,7 +23,7 @@ export default class GameRepply {
                 this._setDifficulty(diff);
             }
         }
-        
+
     }
 
     _difficultyShow(show = true){
@@ -33,15 +33,15 @@ export default class GameRepply {
             this._difficultyHandler(
                 this._factory.difficultyForm?.querySelector("input:checked"));
         }
-        
+
     }
 
-    setMain(){
+    activate(){
         console.log("repply set", this._usesDifficulty, this._difficultyIsShown);
         if (this._usesDifficulty && !this._difficultyIsShown) this._difficultyShow(true);
     }
 
-    resetMain(){
+    deactivate(){
         if (this._difficultyIsShown) this._difficultyShow(false);
     }
 

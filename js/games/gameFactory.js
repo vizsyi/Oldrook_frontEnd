@@ -11,8 +11,8 @@ import RLOG from "../log/rookLog.js";
 class GameFactory {
     constructor (){
         this._game;
-        this._mainView;
-        //this._mainRepply;
+        this._activeView;
+        this._activeRepply;
         this._views = [];
 
         this._labelSelect = document.getElementById("gameLabel");
@@ -56,19 +56,21 @@ class GameFactory {
                 break;
 
             default:
+                game = "BadC/UkG_" + game;
                 throw new RangeError("Unknown game");
         }
 
-        return view;
+        return [view, game];
     }
 
-    _addNewView(game, desk, active, id){
-        this._mainView?.dispo();
-        this._mainView = this._createView(game, desk, active, id);
+    _addActiveView(game, desk, active, id){
+        this._activeView?.dispo();
+        [this._activeView, game] = this._createView(game, desk, active, id);
+        return game;
     }
 
     _keyboardEventHandler(ev){
-        this._mainView?.keyboardEvent(ev);
+        this._activeView?.keyboardEvent(ev);
     }
 
     _init (){
@@ -81,10 +83,10 @@ class GameFactory {
             console.log(urlParams, "UrlParam:", game);
 
             if (game){
-                this._addNewView(game, this._activeDesk, true, 0);
+                game = this._addActiveView(game, this._activeDesk, true, 0);
             }
             else {
-                game = "actg error";
+                game = "BadC/NoRGame";
             }
             //let game = localStorage.getItem("rookgame");
 
@@ -110,7 +112,7 @@ class GameFactory {
         //todo: replace addNewViews with a block using createView
 
         this._control?.addEventListener('click'
-            , ev => this._mainRepply?.controlClick(ev));
+            , ev => this._activeRepply?.controlClick(ev));
 
         RLOG.webStart(game);//todo: webStart must accept game parameter
     }
@@ -121,7 +123,7 @@ class GameFactory {
         this._labelSelect.blur();
         if (game !== this._game){
             this._game = game;
-            this._addNewView(game, this._activeDesk, true, 0);
+            this._addActiveView(game, this._activeDesk, true, 0);
         }
         //localStorage.setItem("rookgame", game);
     }
@@ -145,11 +147,11 @@ class GameFactory {
     gameClick(id){
         //todo: must rework
         if (id < 0 || id >= this._views.length) throw new RangeError("Invalid desk index");
-        this._mainView?.resetMain();
+        this._activeView?.deactivate();
 
-        this._mainView = this._views[id];
-        this._mainRepply = this._mainView.repplyPlug;
-        this._mainView.setMain();
+        this._activeView = this._views[id];
+        this._activeRepply = this._activeView.repplyPlug;
+        this._activeView.activate();
 
         // Class Cleaning
         this._fieldE.classList.remove("gf-show");
@@ -180,19 +182,19 @@ class GameFactory {
         if (this._game !== game){
             this._game = game;
             this.difficultyShow (false);
-            this._mainView?.dispo();
+            this._activeView?.dispo();
             switch(game){
                 case "connect4":
-                    this._mainView = new C4View(this._desk);
-                    this._mainRepply = new C4Repply(this._mainView, this);
+                    this._activeView = new C4View(this._desk);
+                    this._activeRepply = new C4Repply(this._activeView, this);
                     break;
                 default:
-                    this._mainView = new MCardsView(this._desk);
-                    this._mainRepply = new MCardsRepply(this._mainView, this);
+                    this._activeView = new MCardsView(this._desk);
+                    this._activeRepply = new MCardsRepply(this._activeView, this);
             }
         }
 
-        return this._mainView;
+        return this._activeView;
     }*/
     
  }

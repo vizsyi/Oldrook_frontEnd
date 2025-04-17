@@ -49,10 +49,9 @@ export default class GameView {
         return this._factory;
     }
 
-    /*
-    get main (){
-        return this._main;
-    }*/
+    get active (){
+        return this._active;
+    }
 
     get repplyPlug (){
         return this._repplyPlug;
@@ -66,19 +65,19 @@ export default class GameView {
     }
 
     /*
-    setMain(){
-        if (!this._main){
+    activate(){
+        if (!this._active){
             this._deskE.classList.add("gd-active");
-            this._repplyPlug.setMain();
-            this._main = true;
+            this._repplyPlug.activate();
+            this._active = true;
         }
     }
 
-    resetMain(){
-        if (this._main){
+    deactivate(){
+        if (this._active){
             this._deskE.classList.remove("gd-active");
-            this._repplyPlug.resetMain();
-            this._main = false;
+            this._repplyPlug.deactivate();
+            this._active = false;
         }
     }
     */
