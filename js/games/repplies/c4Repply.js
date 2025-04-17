@@ -3,32 +3,19 @@ import C4SM from "../models/c4SM.js";
 
 export default class C4Repply extends GameRepply{ 
     constructor(view){
-        super(view, true);
+        super(view,
+            new Map([
+                ["easy", 2],
+                ["med", 4],
+                ["hard", 8],
+                ["albert", 12]
+            ])
+        );
 
         this._statusM = new C4SM();
         view.setStatusM();
 
-        this._difficultyDepthMap = new Map([
-            ["easy", 2],
-            ["med", 4],
-            ["hard", 6],
-            ["robin", 8]
-        ]);
-        this._negamaxDepth = 2;
-
         this._newGame();
-
-    }
-
-    _setDifficulty(diffName){
-        let depth = this._difficultyDepthMap.get(diffName);
-        if (depth){
-            this._negamaxDepth = depth;
-        }
-        else {
-            throw new RangeError("Invalid difficulty id");
-        }
-        console.log("depth: ", this._negamaxDepth);
     }
 
     _repply (){

@@ -12,7 +12,7 @@ class GameFactory {
     constructor (){
         this._game;
         this._activeView;
-        this._activeRepply;
+        //this._activeRepply;
         this._views = [];
 
         this._labelSelect = document.getElementById("gameLabel");
@@ -112,7 +112,7 @@ class GameFactory {
         //todo: replace addNewViews with a block using createView
 
         this._control?.addEventListener('click'
-            , ev => this._activeRepply?.controlClick(ev));
+            , ev => this._activeView?.repplyPlug?.controlClick(ev));
 
         RLOG.webStart(game);//todo: webStart must accept game parameter
     }

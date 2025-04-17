@@ -1,18 +1,32 @@
 //import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
 export default class GameRepply { 
-    constructor(view, usesDifficulty = false){
+    constructor(view, difficultyDepthMap = null){
         this._viewPlug = view;
         this._factory = view.factory;
         this._statusM;
 
         view.repplyPlug = this;
 
-        this._usesDifficulty = usesDifficulty;
-        this._difficultyIsShown = false;
+        //Negamax depth & difficulty form
+        this._difficultyDepthMap = difficultyDepthMap;
+
+        this._useDifficulty = difficultyDepthMap !== null;
+        this._negamaxDepth = this._useDifficulty ? difficultyDepthMap.values().next().value : 0;
         this._difficultyName = "";
 
         if (this._viewPlug.active) this.activate();
+    }
+
+    _setDifficulty(diffName){
+        let depth = this._difficultyDepthMap.get(diffName);
+        if (depth){
+            this._negamaxDepth = depth;
+        }
+        else {
+            throw new RangeError("Invalid difficulty id");
+        }
+        console.log("Diff setDiff: ", this._negamaxDepth);
     }
 
     _difficultyHandler(inputElem){
@@ -23,29 +37,27 @@ export default class GameRepply {
                 this._setDifficulty(diff);
             }
         }
-
     }
 
     _difficultyShow(show = true){
         if (this._factory){
             this._factory.difficultyShow(show);
-            this._difficultyIsShown = show;
             this._difficultyHandler(
                 this._factory.difficultyForm?.querySelector("input:checked"));
         }
-
     }
 
     activate(){
-        console.log("repply set", this._usesDifficulty, this._difficultyIsShown);
-        if (this._usesDifficulty && !this._difficultyIsShown) this._difficultyShow(true);
+        // Show difficulty form
+        if (this._useDifficulty) this._difficultyShow(true);
     }
 
     deactivate(){
-        if (this._difficultyIsShown) this._difficultyShow(false);
+        this._difficultyShow(false);
     }
 
     controlClick(ev){
+        console.log("Control click");
         const elem = ev.target.closest(".btn");
         if (elem){
             //const id = Number.parseInt(elem.getAttribute("data-id"));
