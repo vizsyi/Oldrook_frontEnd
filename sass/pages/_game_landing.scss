@@ -1,0 +1,50 @@
+.gamecard {
+    width: 100rem;
+    margin: 2rem;
+    border: 1px solid #444;
+    border-radius: 1.1rem;
+    box-shadow: 10px 10px 15px #ccc;
+    cursor: pointer;
+
+    &:nth-child(2n){
+        & > div{
+            flex-direction: row-reverse;
+        }
+    }
+
+    &:hover {
+        border-color: blue;
+        box-shadow: 10px 10px 15px lightblue;
+    }
+
+    /* The row of the gamedesk and the rules */
+    & > div {
+        display: flex;
+        justify-content: space-between;
+
+        & > div {
+            margin: 2rem;
+
+            /* The separator */
+            &:nth-child(2) {
+                width: 0px;
+                border-left: 1px solid #444;
+            }
+
+            /* The rules */
+            &:last-child {
+                text-align: left;
+            }
+        }
+    }
+
+    .gamedesk {
+        font-size: 40%;
+        
+        height: fit-content;
+        width: fit-content;
+        opacity: 1;
+        //transform: scale(.5);
+        
+    }
+}

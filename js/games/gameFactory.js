@@ -12,7 +12,7 @@ class GameFactory {
     constructor (){
         // Landing part
         this._landing_games = ["mcard", "c4", "morris"];
-        this._landingDiv = document.getElementById("gameLanding");
+        this._landingE = document.getElementById("gameLanding");
 
         // Active part
         this._game;
@@ -38,9 +38,9 @@ class GameFactory {
         //this.addNewViews();
     }
 
-    _createView (game, desk, active = false, i=0){
+    _createView (gname, desk, active = false, i=0){
         let view;
-        switch(game){
+        switch(gname){
             case "mcard":
                 view = new MCardsView(this, desk, active, i);
                 new MCardsRepply(view);
@@ -64,14 +64,61 @@ class GameFactory {
                 break;
 
             default:
-                game = "BadC/UkG_" + game;
+                gname = "BadC/UkG_" + gname;
                 throw new RangeError("Unknown game");
         }
 
-        return [view, game];
+        return [view, gname];
+    }
+
+    _gameCardClick (ev){
+        const cardE = ev.target.closest(".gamecard");
+        if (cardE){
+            //const id = cardE.getAttribute("data-game");
+            const gname = cardE.dataset.game
+            sessionStorage.setItem("rgame", gname);
+            console.log("dff")
+            window.location.href = "rookgame.html";
+        }
     }
 
     _landing (rules){
+        const fragmentF = document.createDocumentFragment();
+        let cardE, deskE, divE, rowE, titleE, view, rule;
+        
+        this._landing_games.forEach(gname =>{
+            cardE =document.createElement("div");
+            cardE.classList.add("gamecard");
+            titleE =document.createElement("h2");
+            cardE.appendChild(titleE);
+            rowE =document.createElement("div");
+            cardE.appendChild(rowE);
+            //drawing the row
+            //anchE =document.createElement("a");
+            //rowE.appendChild(anchE);
+            deskE =document.createElement("div");
+            deskE.classList.add("gamedesk");
+            rowE.appendChild(deskE);
+            rowE.appendChild(document.createElement("div"));
+            divE =document.createElement("div");
+            rowE.appendChild(divE);
+            //drawing the desk
+            view = this._createView(gname, deskE)[0];
+            //setting the properties
+            //anchE.href = "rookgame.html?rg=" + gname;
+            cardE.dataset.game = gname;
+            titleE.textContent = view.gameTitle;
+            if (rules !== null){
+                rule = rules[gname];
+                if (rule){
+                    divE.innerHTML = rule;
+                }
+            }
+
+            fragmentF.appendChild(cardE);
+        })
+
+        this._landingE.appendChild(fragmentF);
     }
 
     _addActiveView(game, desk, active, id){
@@ -108,11 +155,11 @@ class GameFactory {
     }
 
     _init (){
-        let game;
+        let gname;
 
         // Landing page init
-        if (this._landingDiv){
-            game = "index";
+        if (this._landingE){
+            gname = "index";
 
             fetch('./src/game_rules.json')
             .then(response => response.json())
@@ -123,30 +170,34 @@ class GameFactory {
                 console.error("Error loading the JSON file: ", error);
                 this._landing(null);
             });
+
+            this._landingE.addEventListener('click', this._gameCardClick);
         }
         
         // Activedesk init
         if (this._activeDesk){
-            const urlParams = new URLSearchParams(window.location.search);
-            game = urlParams.get('rg');//todo: must be lowercase
-            console.log(urlParams, "UrlParam:", game);
-
             this._labelSelect = document.getElementById("gameLabel");
 
             this._control = document.getElementById("controlBoard");
             this.difficultyForm = this._control?.querySelector("#difficultyForm");
 
-            if (game){
-                game = this._addActiveView(game.toLowerCase(), this._activeDesk, true, 0);
+            const urlParams = new URLSearchParams(window.location.search);
+            gname = urlParams.get('rg');//todo: must be lowercase
+            //console.log(urlParams, "UrlParam:", gname);
+
+            if(!gname) gname = sessionStorage.getItem("rgame");
+
+            if (gname){
+                gname = this._addActiveView(gname.toLowerCase(), this._activeDesk, true, 0);
             }
             else {
-                game = "BadC/NoRGame";
+                gname = "BadC/NoRGame";
             }
 
             if(this._labelSelect){
-                if (game &&
-                    [...this._labelSelect.options].some(op => op.value === game)){
-                    this._labelSelect.value = game;
+                if (gname &&
+                    [...this._labelSelect.options].some(op => op.value === gname)){
+                    this._labelSelect.value = gname;
                 }
                 else {
                     this._labelSelect.value = "-";
@@ -162,17 +213,17 @@ class GameFactory {
         }
         /*
         else {
-            game = "index";
+            gname = "index";
             this.addNewViews();
         }*/
         
-        if (game !== null){
-            game = "BadC/NoGameE";
+        if (!gname){
+            gname = "BadC/NoGElem";
         }
 
         //todo: replace addNewViews with a block using createView
 
-        RLOG.webStart(game);//todo: webStart must accept game parameter
+        RLOG.webStart(gname);//todo: webStart must accept gname parameter
     }
 
     /**

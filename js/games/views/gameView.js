@@ -9,7 +9,7 @@ export default class GameView {
         this._statusM;
 
         this._factory = factory;
-        this._id = id;
+        //this._id = id;
         this._gameTitle = gTitle;
         this._gameClass = gClass;
 
@@ -57,6 +57,10 @@ export default class GameView {
         return this._repplyPlug;
     }
 
+    get gameTitle (){
+        return this._gameTitle;
+    }
+
     /**
      * @param {GameRepply} repply
      */
@@ -97,9 +101,11 @@ export default class GameView {
     // Click handlers
     _boardClick(ev){}/*abstract method*/
 
+   /*
     _deskClick(){
         if (!this._active) this._factory.gameClick(this._id);
     }
+    */
 
     // Drag handlers of the dragable pieces
     _dragStart(ev){
@@ -222,9 +228,10 @@ export default class GameView {
                 this._boardE.addEventListener('drop', this._drop.bind(this));
             }
         }
+        /*
         else {
             this._deskE.addEventListener('click', this._deskClick.bind(this));
-        }
+        }*/
 
         this._deskE.appendChild(fragmentF);
     }

@@ -23,7 +23,7 @@
                 }
             }
         }
-
+/*
         &.gf-show {
             .gamedesk {
                 //font-size: 60%;
@@ -35,7 +35,7 @@
                 
             }
             
-        }
+        }*/
     }
 
     &_label {
@@ -66,18 +66,18 @@
         position: relative;
         display: inline-block;
         //margin: torem(40);
-        height: 0;
-        width: 0;
-        opacity: 0;
-        transform: scale(0);
+        //height: 0;
+        //width: 0;
+        //opacity: 0;
+        //transform: scale(0);
         border: solid 2px darkblue;
 
         & > div:first-of-type {
             //width: 100%;
             min-width: 68rem;
-            margin: -10rem -15rem;
+            //margin: -10rem -15rem;
             border: solid 2px cadetblue;
-            transform: scale(.5);
+            //transform: scale(.5);
         }
 
         &_board {
@@ -87,6 +87,7 @@
         }
 
         &.gd-active {
+            /*
             height: fit-content;
             width: fit-content;
             opacity: 1;
@@ -100,6 +101,7 @@
             .gamedesk_board {
 
             }
+            */
         }
 
     }
