@@ -1,3 +1,5 @@
+@use "./../abstract/functions" as *;
+
 .morris_board {
     display: flex;
     justify-content: space-around;

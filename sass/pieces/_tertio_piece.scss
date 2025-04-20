@@ -1,3 +1,5 @@
+@use "./../abstract/functions" as *;
+
 .tertio_piece {
     height: var(--quarto-piece-square);
     width: var(--quarto-piece-square);

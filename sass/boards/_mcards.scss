@@ -1,3 +1,5 @@
+@use "./../abstract/functions" as *;
+
 /*Grid of the memory cards wih 30 cards*/
 .mcards30_board {
     display: inline-grid;
