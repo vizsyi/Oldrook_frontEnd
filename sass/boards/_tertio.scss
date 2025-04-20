@@ -1,3 +1,5 @@
+@use "./../abstract/abstract" as *;
+
 .tertio_board {
     display: flex;
     justify-content: center;
@@ -19,7 +21,11 @@
             grid-template-columns: repeat(3, var(--quarto-spot));
             grid-template-rows: repeat(3, var(--quarto-spot));
             gap: .9em;
-            border: 2px solid gray;
+
+            @if $development {
+                border: 2px solid gray;
+            }
+            
             transform: rotate(11deg);
         }
 
@@ -43,7 +49,10 @@
         //height: var(--quarto-ring);
         height: 70%;
         padding-top: 5%;
-        border: 2px solid blue;
+
+        @if $development {
+            border: 2px solid blue;
+        }
 
         &:not(.tertio_board_side-right){
             left: 1em;

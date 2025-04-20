@@ -1,5 +1,4 @@
-@use "./../abstract/functions" as *;
-@use "./../abstract/mixins" as m;
+@use "./../abstract/abstract" as *;
 
 /*Game*/
 #gameField {
@@ -19,7 +18,7 @@
                 flex-direction: row-reverse;
                 flex-wrap: wrap;
     
-                @include m.respond(small-or-port){
+                @include respond(small-or-port){
                     flex-direction: column;
                 }
             }
@@ -57,7 +56,7 @@
             flex-direction: row-reverse;
             flex-wrap: wrap;
 
-            @include m.respond(small-or-port){
+            @include respond(small-or-port){
                 flex-direction: column;
             }
         }
@@ -66,25 +65,36 @@
     &desk {
         position: relative;
         display: inline-block;
+        padding: .5em;
         //margin: toem(40);
         //height: 0;
         //width: 0;
         //opacity: 0;
         //transform: scale(0);
-        border: solid 2px darkblue;
+        border-radius: 1em;
+        box-shadow: toem(1) toem(2) toem(5) grey;
+        @if $development {
+            //border: solid 2px darkblue;
+        }
 
         & > div:first-of-type {
             //width: 100%;
             min-width: 68em;
             //margin: -10rem -15rem;
-            border: solid 2px cadetblue;
+
+            @if $development {
+                border: solid 2px yellow;
+            }
+
             //transform: scale(.5);
         }
 
         &_board {
-            min-width: toem(480);
+            //min-width: toem(480);
             //transform: scale(.5);
-            //test border: 1px solid red;
+            @if $development {
+                border: solid 2px cadetblue;
+            }
         }
 
         &.gd-active {
@@ -123,7 +133,7 @@
     /*justify-content: space-evenly;*/
     /*padding: 0px 10px;*/
 
-    @include m.respond(small-or-port){
+    @include respond(small-or-port){
         flex-direction: row;
         justify-content: space-around;
         align-items: flex-start;

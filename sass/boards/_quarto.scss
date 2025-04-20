@@ -1,6 +1,9 @@
+@use "./../abstract/abstract" as *;
+
 .quarto_board {
     display: flex;
     justify-content: center;
+    position: relative;
 
     &_ring {
         display: flex;
@@ -19,7 +22,10 @@
             grid-template-columns: repeat(4, var(--quarto-spot));
             grid-template-rows: repeat(4, var(--quarto-spot));
             gap: .9em;
-            border: 2px solid gray;
+
+            @if $development {
+                border: 2px solid gray;
+            }
             transform: rotate(10deg);
         }
 
@@ -41,9 +47,12 @@
         justify-content: space-between;
         align-items: flex-start;
         //height: var(--quarto-ring);
-        height: 85%;
+        height: 92%;
         padding-top: 3%;
-        border: 2px solid blue;
+
+        @if $development {
+            border: 2px solid blue;
+        }
 
         &:not(.quarto_board_side-right){
             left: 0;
