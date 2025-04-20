@@ -1,3 +1,5 @@
+@use "./../abstract/functions" as *;
+
 .mcard {
     height: 100%;
     width: 100%;
@@ -9,7 +11,7 @@
         width: 100%;
         position: relative;
         transform-style: preserve-3d;
-        border-radius: torem(7.2);
+        border-radius: toem(7.2);
         //box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
     }
 
@@ -17,7 +19,7 @@
     .mcard_back {
         height: 100%;
         width: 100%;
-        border-radius: torem(7.2);
+        border-radius: toem(7.2);
         backface-visibility: hidden;
     }
 
@@ -31,7 +33,7 @@
             position: relative;
             height: 100%;
             border: 1px solid #444;
-            border-radius: torem(4.8);
+            border-radius: toem(4.8);
         }
     }
 
@@ -40,7 +42,7 @@
         width: 100%;
         display: block;
         object-fit: cover;
-        border-radius: torem(4) torem(4) 0 0;//TODO: making more punctual
+        border-radius: toem(4) toem(4) 0 0;//TODO: making more punctual
 
         img {
             height: 100%;
@@ -57,11 +59,11 @@
         align-items: center;
         justify-content: center;
         font-family: 'Courgette', cursive;
-        font-size: torem(14.8);
+        font-size: toem(14.8);
 
         & > span {
             text-align: right;
-            padding: 0 torem(4.8);
+            padding: 0 toem(4.8);
 
             &::first-line {
                 text-align: left;

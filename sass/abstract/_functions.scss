@@ -10,6 +10,6 @@
 @function toem($size, $font-size : 16px) {
     $size: $size + 0px;
     $font-size: $font-size + 0px;
-    $remSize: $size / $font-size;
-    @return #{$remSize}em;
+    $emSize: $size / $font-size;
+    @return #{$emSize}em;
     }
