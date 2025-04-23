@@ -4,6 +4,8 @@ lib
 
 # Compiled source
 src/*.css
+src/*.css.map
+src/*.js
 src/temp
 dist
 
@@ -11,7 +13,10 @@ dist
 img/*.jpg
 img/*.jpeg
 img/*.png
+img/celebs/*.jpg
+img/celebs/*.png
 
 # misc
+kuka/
+olds/
 package-lock.json
-
