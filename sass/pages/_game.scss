@@ -115,6 +115,18 @@
             */
         }
 
+        @include respond(tab-land){//<= 75em
+            font-size: 83%;  //*83% = 75%;
+        }
+    
+        @include respond(tab-port){//<= 56.25em
+            font-size: 62%; //*62% = 50%;
+        }
+    
+        @include respond(phone){//<= 37.5em
+            font-size: 60%; //*60% = 40%;
+        }
+
     }
 
 }

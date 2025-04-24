@@ -1,0 +1,25 @@
+@use "./../abstract/abstract" as *;
+
+.bodycontainer {
+    width: 94%;
+    max-width: 100em;
+    margin: 0 auto;
+
+    @include respond(tab-land){//<= 75em
+        //max-width: 85em;
+        font-size: 90%;  //*83% = 75%;
+    }
+
+    @include respond(tab-port){//<= 56.25em
+        //max-width: 85em;
+        width: 96%;
+        font-size: 80%; //*62% = 50%;
+    }
+
+    @include respond(phone){//<= 37.5em
+        //max-width: 35em;
+        width: 98%;
+        font-size: 67%; //*60% = 40%;
+    }
+
+}
