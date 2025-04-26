@@ -20,7 +20,7 @@ export default class GameView {
         
         this._deskE = deskE;
         //this._fragmentF = document.createDocumentFragment();
-        this._titleE = document.createElement("h3");
+        //this._titleE = document.createElement("h3");
         this._boardE = document.createElement("div");
 
         this._messageBoardE;
@@ -193,9 +193,9 @@ export default class GameView {
         const divE =document.createElement("div")
             , fragmentF = document.createDocumentFragment();
 
-        this._titleE.innerText = this._gameTitle;
-        this._titleE.classList.add("gamedesk_title");
-        fragmentF.appendChild(this._titleE);
+        //this._titleE.innerText = this._gameTitle;
+        //this._titleE.classList.add("gamedesk_title");
+        //fragmentF.appendChild(this._titleE);
 
         fragmentF.appendChild(divE);
         this._boardE.classList.add("gamedesk_board", this._gameClass);
