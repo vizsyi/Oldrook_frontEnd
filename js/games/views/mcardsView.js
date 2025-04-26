@@ -30,7 +30,7 @@ class CardItem {
 export default class MCardsView extends GameView {
     constructor(factory, deskE, active, id)
     {
-        super(factory, deskE, active, id, "Memory cards", "mcards30_board");
+        super(factory, deskE, active, id, "Matching pairs", "mcards30_board");
 
         this._pieces = 30;
         this._cards = [];

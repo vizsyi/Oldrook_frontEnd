@@ -1,9 +1,26 @@
 @use "./../abstract/abstract" as *;
 
+.gamesummary {
+    max-width: 60em;
+    margin: 0 auto;
+
+    p {
+        text-align: left;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+}
+
+.justforopt {
+    display: none;
+}
+
 .gamecard {
     width: 64em;
     padding-top: 1em;
-    margin: 2em;
+    margin: 2em auto;
     border: 1px solid #444;
     border-radius: 1.1em;
     box-shadow: .6em .6em 1em #ccc;
@@ -20,6 +37,9 @@
         box-shadow: .6em .6em 1em lightblue;
     }
 
+    h2 {
+        font-size: 2em;
+    }
     /* The row of the gamedesk and the rules */
     & > div {
         display: flex;

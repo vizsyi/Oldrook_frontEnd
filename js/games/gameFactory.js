@@ -11,7 +11,7 @@ import RLOG from "../log/rookLog.js";
 class GameFactory {
     constructor (){
         // Landing part
-        this._landing_games = ["mcard", "c4", "morris"];
+        this._landing_games = ["matching-players", "tertio", "connect-4"];
         this._landingE = document.getElementById("gameLanding");
 
         // Active part
@@ -41,12 +41,12 @@ class GameFactory {
     _createView (gname, desk, active = false, i=0){
         let view;
         switch(gname){
-            case "mcard":
+            case "matching-players":
                 view = new MCardsView(this, desk, active, i);
                 new MCardsRepply(view);
                 break;
 
-            case "c4":
+            case "connect-4":
                 view = new C4View(this, desk, active, i);
                 new C4Repply(view);
                 break;
@@ -124,6 +124,11 @@ class GameFactory {
     _addActiveView(game, desk, active, id){
         this._activeView?.dispo();
         [this._activeView, game] = this._createView(game, desk, active, id);
+
+        document.title = this._activeView
+            ? this._activeView.gameTitle + " at Oldrook"
+            : "Oldrook";
+
         return game;
     }
 
@@ -182,7 +187,7 @@ class GameFactory {
             this.difficultyForm = this._control?.querySelector("#difficultyForm");
 
             const urlParams = new URLSearchParams(window.location.search);
-            gname = urlParams.get('rg');//todo: must be lowercase
+            gname = urlParams.get('game');//todo: must be lowercase
             //console.log(urlParams, "UrlParam:", gname);
 
             if(!gname) gname = sessionStorage.getItem("rgame");
