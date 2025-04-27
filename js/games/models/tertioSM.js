@@ -1,9 +1,9 @@
 import Helper from "./../helper"
 
-export default class quartoSM{ 
+export default class tertioSM{ 
     constructor(origin, nextPiece, dummy){
         if (origin){
-            this._side = origin._side;
+            //this._side = origin._side;
 
             this._nextPiece = nextPiece;
     
@@ -24,6 +24,7 @@ export default class quartoSM{
     
             this._bits;
 
+            this._phase = 1;
             this.finished = false;
 
             this.reset(dummy)
@@ -31,31 +32,31 @@ export default class quartoSM{
 
     }
 
-    caracMatte(bit){
-        let neigh, matte;
+    nextPhase(){
+        this._phase = this._phase + 1 & 3;
+        return this._phase;
+    }
+
+    _matte(bit){
+        let matte;
 
         // Horizontal
-        matte = bit & (bit >>> 1);
-        matte &= (matte >>> 2) & 4369;//Begining of the rows
+        matte = bit & (bit >>> 1) & (bit >>> 1) & 73;//Begining of the rows
         // Vertical
-        neigh = bit & (bit >>> 4);
-        matte |= neigh & (neigh >>> 8) & 15;//Begining of the columns
+        matte |= bit & (bit >>> 3) & (bit >>> 6) & 7;//Begining of the columns
         // Diagonal+
-        neigh = bit & (bit >>> 5);
-        matte |= neigh & (neigh >>> 10) & 1;//Position 0
+        matte |= bit & (bit >>> 4) & (bit >>> 8) & 1;//Position 0
         // Diagonal-
-        neigh = bit & (bit >>> 3);
-        matte |= neigh & (neigh >>> 6) & 8;//Position 3
+        matte |= bit & (bit >>> 2) & (bit >>> 4) & 4;//Position 2
 
-        // Return
-        return matte
+        return matte;
     }
 
     placeStep(spot){
         const bit = 1 >>> spot;
-        let matte = 0;
+        let i, matte = 0;
 
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 3; i++) {
             c = i << 1 | this._nextPiece >>> i & 1; //caracter
             
             matte |= this.caracMatte(this._bits[c] |= bit);
@@ -83,28 +84,32 @@ export default class quartoSM{
         }
     }
 
+    _resetBits(){
+        //todo: implement
+    }
+
     reset(dummy){
-        
+
         if(dummy){
             //todo: handling dummy parameter
-            throw new ReferenceError("Not implemented yet. (16201)");
+            throw new ReferenceError("Not implemented yet. (17201)");
         }
 
         this._side = 0;
 
         this._nextPiece = -1;
 
-        for (let i=0; i<16; i++){
+        for (let i=0; i<8; i++){
             this._restPcs.push(i);
         }
 
-        this._restSpots = [...this._restPcs];
+        this._restSpots = [...this._restPcs, 8];
 
         if (this._bits) {
             this._bits.fill(0);
         }
         else {
-            this._bits = Array(8).fill(0);
+            this._bits = Array(6).fill(0);
         }
 
         this.finished = false;
