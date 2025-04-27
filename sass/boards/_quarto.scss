@@ -13,7 +13,7 @@
         height: var(--quarto-ring);
         box-sizing: content-box;
         //background-color: hsla(180, 100%, 50%, .25);
-        border: 2px solid var(--color-quarto-ring);
+        border: 2px solid var(--color-quarto-spot);
         border-radius: 50%;
         background-color: darkgoldenrod;
 
@@ -30,7 +30,7 @@
         }
 
         .quarto_board_spot {
-            border: 2px solid var(--color-quarto-ring);
+            border: 2px solid var(--color-quarto-spot);
             border-style: groove;
             border-radius: 50%;
             cursor: pointer;

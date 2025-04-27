@@ -1,4 +1,10 @@
 @use "./../abstract/bs_mixins/bs_form_variables" as bfv;
+@use "./../abstract/bs_variables" as bsv;
+
+//Quarto
+$quarto-spot-color: hsl(66, 63%, 66%);
+$quarto-spot-last-color:  hsl(66, 100%, 88%);
+$quarto-spot-win-color: mix(darkgoldenrod, $quarto-spot-color, 20%);
 
 :root {
     --color-background-1: #ffe9d0;
@@ -37,7 +43,9 @@
 
     --quarto-ring: 46em;
     --quarto-spot: calc(var(--quarto-ring) * .17);
-    --color-quarto-ring: rgb(212, 223, 114);
+    --color-quarto-spot: #{$quarto-spot-color};
+    --color-quarto-spot-last: #{$quarto-spot-last-color};
+    --color-quarto-spot-win: #{$quarto-spot-win-color};
 
     --quarto-piece-ratio: .7;
     --quarto-piece-small-ratio: .7;
