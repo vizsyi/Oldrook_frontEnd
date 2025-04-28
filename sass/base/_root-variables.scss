@@ -4,7 +4,7 @@
 //Quarto
 $quarto-spot-color: hsl(66, 63%, 66%);
 $quarto-spot-last-color:  hsl(66, 100%, 88%);
-$quarto-spot-win-color: mix(darkgoldenrod, $quarto-spot-color, 20%);
+$quarto-spot-win-color: mix(darkgoldenrod, $quarto-spot-color, 80%);
 
 :root {
     --color-background-1: #ffe9d0;
@@ -40,13 +40,14 @@ $quarto-spot-win-color: mix(darkgoldenrod, $quarto-spot-color, 20%);
     //Quarto
     --color-quarto-piece-light: coral;
     --color-quarto-piece-dark: brown;
+    --color-quarto-piece-select: lightblue;
 
     --quarto-ring: 46em;
     --quarto-spot: calc(var(--quarto-ring) * .17);
     --color-quarto-spot: #{$quarto-spot-color};
-    --color-quarto-spot-last: #{$quarto-spot-last-color};
+    //--color-quarto-spot-last: #{$quarto-spot-last-color};
     --color-quarto-spot-win: #{$quarto-spot-win-color};
-
+    
     --quarto-piece-ratio: .7;
     --quarto-piece-small-ratio: .7;
     --quarto-piece-square: calc(var(--quarto-spot) * var(--quarto-piece-ratio));

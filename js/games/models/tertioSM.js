@@ -1,14 +1,14 @@
-import Helper from "./../helper"
+import Helper from "./../helper.js"
 
-export default class tertioSM{ 
-    constructor(origin, nextPiece, dummy){
+export default class TertioSM{ 
+    constructor(origin, dummy){ //, selectedPc
         if (origin){
             //this._side = origin._side;
 
-            this._nextPiece = nextPiece;
+            this._selectedPc = origin._selectedPc;
     
-            this._restPcs = [...origin._restPcs];
-            this._restSpots = [...origin._restSpots];
+            this.restPcs = [...origin.restPcs];
+            this.restSpots = [...origin.restSpots];
     
             this._bits = [...origin._bits];
 
@@ -17,31 +17,52 @@ export default class tertioSM{
         else {
             this._side = 0;
 
-            this._nextPiece = 0;
+            this._selectedPc = -1;
     
-            this._restPcs = [];
-            this._restSpots = null;
+            this.restPcs = [];
+            this.restSpots = null;
     
             this._bits;
 
             this._phase = 1;
             this.finished = false;
 
-            this.reset(dummy)
+            //this.reset(dummy)
         }
 
     }
 
-    nextPhase(){
+    get nextPhase(){
         this._phase = this._phase + 1 & 3;
         return this._phase;
     }
 
-    _matte(bit){
+    get phase(){
+        return this._phase;
+    }
+
+    get restCount(){
+        return this.restPcs.length;
+    }
+
+    get selectedPc(){
+        return this._selectedPc;
+    }
+
+    isFinished() {
+        if(this.restPcs.length === 0){
+            this.finished = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    _caracMatte(bit){
         let matte;
 
         // Horizontal
-        matte = bit & (bit >>> 1) & (bit >>> 1) & 73;//Begining of the rows
+        matte = bit & (bit >>> 1) & (bit >>> 2) & 73;//Begining of the rows
         // Vertical
         matte |= bit & (bit >>> 3) & (bit >>> 6) & 7;//Begining of the columns
         // Diagonal+
@@ -52,35 +73,63 @@ export default class tertioSM{
         return matte;
     }
 
-    placeStep(spot){
-        const bit = 1 >>> spot;
-        let i, matte = 0;
-
-        for (i = 0; i < 3; i++) {
-            c = i << 1 | this._nextPiece >>> i & 1; //caracter
-            
-            matte |= this.caracMatte(this._bits[c] |= bit);
-        }
-        
-        // removing the piece and the spot from the rest ones
-        Helper.removeArrItem(this._restPcs, this._nextPiece);
-        Helper.removeArrItem(this._restSpots, place);
-
-        this._nextPiece = -1;
+    whichMatte(){
+        let matte = 0, m1;
+        this._bits.forEach(bit => {
+            // Horizontal
+            m1 = bit & (bit >>> 1) & (bit >>> 2) & 73;//Begining of the rows
+            if(m1){
+                matte |= m1 | m1 << 1 | m1 << 2;
+            }
+            // Vertical
+            m1 = bit & (bit >>> 3) & (bit >>> 6) & 7;//Begining of the columns
+            if(m1){
+                matte |= m1 | m1 << 3 | m1 << 6;
+            }
+            // Diagonal+
+            m1 = bit & (bit >>> 4) & (bit >>> 8) & 1;//Position 0
+            if(m1){
+                matte |= 273;
+            }
+            // Diagonal-
+            m1 = bit & (bit >>> 2) & (bit >>> 4) & 4;//Position 2
+            if(m1){
+                matte |= 84;
+            }
+        });
 
         return matte;
     }
 
-    pieceStep(step){
-        this._nextPiece = step;
+    placeStep(spot){
+        const bit = 1 << spot;
+        let c, i, matte = 0;
+
+        for (i = 0; i < 3; i++) {
+            c = i << 1 | this._selectedPc >>> i & 1; //caracter
+            
+            matte |= this._caracMatte(this._bits[c] |= bit);
+        }
+        
+        // removing the piece and the spot from the rest ones
+        Helper.removeArrItem(this.restPcs, this._selectedPc);
+        Helper.removeArrItem(this.restSpots, spot);
+
+        this._selectedPc = -1;// For safetyness
+
+        return matte;
+    }
+
+    select(step){
+        this._selectedPc = step;
     }
     
     step(step){
-        if (this._nextPiece){
+        if (this._selectedPc){
             this.placeStep(step);
         }
         else {
-            this.pieceStep(step);
+            this.select(step);
         }
     }
 
@@ -97,13 +146,13 @@ export default class tertioSM{
 
         this._side = 0;
 
-        this._nextPiece = -1;
+        this._selectedPc = -1;
 
         for (let i=0; i<8; i++){
-            this._restPcs.push(i);
+            this.restPcs.push(i);
         }
 
-        this._restSpots = [...this._restPcs, 8];
+        this.restSpots = [...this.restPcs, 8];
 
         if (this._bits) {
             this._bits.fill(0);

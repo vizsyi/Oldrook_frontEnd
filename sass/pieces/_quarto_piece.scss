@@ -47,11 +47,3 @@
         }
     }
 }
-
-.tertio_board_side {
-    .quarto_piece.selected {
-        outline-style: ridge;//or groove
-        outline-color:blue;
-        outline-offset: .3em;
-    }
-}

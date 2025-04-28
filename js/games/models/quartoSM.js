@@ -1,4 +1,4 @@
-import Helper from "./../helper"
+import Helper from "./../helper.js"
 
 export default class quartoSM{ 
     constructor(origin, nextPiece, dummy){

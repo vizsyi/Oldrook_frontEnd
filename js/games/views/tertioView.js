@@ -35,7 +35,7 @@ export default class TertioView extends GameView {
     }
 
     addClick(isSelect){
-        cl = isSelect ? "piece" : "spot";
+        const cl = isSelect ? "piece" : "spot";
         if(cl !== this._clickState){
             this._noClick();
             this._clickState = cl;
@@ -43,7 +43,7 @@ export default class TertioView extends GameView {
         }
     }
  
-    move (pci, spi){
+    move (pci, spi, finish, result, matte = null){
         const pieceE = this._pieces[pci],
             spotE = this._spots[spi];
 
@@ -55,17 +55,30 @@ export default class TertioView extends GameView {
         spotE.classList.remove("gspot-empty");
 
         // Moving the piece
+        console.log("PieceMove:", pci, spi);
         spotE.appendChild(pieceE);
 
         // Moving lastSpot class to the recent
-        this._lastSpotE.remove("gspot-last");
+        this._lastSpotE?.classList.remove("gspot-last");
         this._lastSpotE = spotE;
         spotE.classList.add("gspot-last");
+
+        if (finish){
+            if (result && matte){
+                for (let i = 0; i < 9; i++){
+                    if (matte & 1 << i){
+                        this._spots[i].classList.add("gspot-win");
+                    }
+                }
+            }
+
+            this.showResult(result);
+        }
 
     }
 
     select (pci){
-        const piece = _pieces[pci];
+        const piece = this._pieces[pci];
 
         this._noSelected();
         this._noClick();
@@ -79,6 +92,7 @@ export default class TertioView extends GameView {
         if(this._clickState){
 
             // Spot click
+            console.log("boardclick", this._clickState);
             if(this._clickState = "spot"){
 
                 elem = ev.target.closest(".tertio_board_spot");
@@ -109,9 +123,10 @@ export default class TertioView extends GameView {
             this._sideSpots[i].appendChild(this._pieces[i]);
         }
 
-        // Making the spots empty for cursor
+        // Making the spots empty for cursor and removing winning
         for (let i = 0; i < 9; i++){
             this._spots[i].classList.add("gspot-empty");
+            this._spots[i].classList.remove("gspot-win");
         }
     }
 
