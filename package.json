@@ -4,7 +4,7 @@
   "description": "Oldrook frontend",
   "main": "index.js",
   "scripts": {
-    "watch:sass": "sass sass/main.scss src/index.css -w",
+    "watch:sass": "sass sass/main.scss src/dev/index.css -w",
     "devserver": "live-server",
     "start": "npm-run-all --parallel devserver watch:sass",
     "compile:sass": "sass sass/main.scss src/temp/index.comp.css",

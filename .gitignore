@@ -9,6 +9,10 @@ src/*.js
 src/temp
 dist
 
+# Development
+src/dev/*.css
+src/dev/*.css.map
+
 # images
 img/*.jpg
 img/*.jpeg
