@@ -14,6 +14,15 @@ npm install autoprefixer --save-dev
 npm install postcss-cli --save-dev
 npm install npm-run-all --save-dev
 
+## Setting up development tools
+npm install eslint --save-dev
+### Prettier
+npm install --save-dev prettier
+echo {} > .prettierrc
+npm install --save-dev eslint-config-prettier eslint-plugin-prettier
+### Stylelint
+npm install --save-dev stylelint stylelint-scss stylelint-config-standard-scss
+
 ## Installing dependencies
 npm install
 
