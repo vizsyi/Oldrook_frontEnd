@@ -10,9 +10,9 @@ import TertioRepply from "./repplies/tertioRepply.js";
 import RLOG from "../log/rookLog.js";
 
 class GameFactory {
-    constructor (){
+    constructor() {
         // Landing part
-        this._landing_games = ["matching-players", "tertio", "connect-4"];
+        this._landing_games = ["matching-players", "connect-4", "tertio"];
         this._landingE = document.getElementById("gameLanding");
 
         // Active part
@@ -21,7 +21,7 @@ class GameFactory {
         //this._activeRepply;
 
         this._labelSelect;
-        
+
         this._control;
         this.difficultyForm;
 
@@ -39,29 +39,29 @@ class GameFactory {
         //this.addNewViews();
     }
 
-    _createView (gname, desk, active = false, i=0){
+    _createView(gname, desk, active = false) {
         let view;
-        switch(gname){
+        switch (gname) {
             case "matching-players":
-                view = new MCardsView(this, desk, active, i);
+                view = new MCardsView(this, desk, active);
                 new MCardsRepply(view);
                 break;
 
             case "connect-4":
-                view = new C4View(this, desk, active, i);
+                view = new C4View(this, desk, active);
                 new C4Repply(view);
                 break;
 
             case "morris":
-                view = new MorrisView(this, desk, active, i);
+                view = new MorrisView(this, desk, active);
                 break;
 
             case "quarto":
-                view = new QuartoView(this, desk, active, i);
+                view = new QuartoView(this, desk, active);
                 break;
 
             case "tertio":
-                view = new TertioView(this, desk, active, i);
+                view = new TertioView(this, desk, active);
                 new TertioRepply(view);
                 break;
 
@@ -73,9 +73,9 @@ class GameFactory {
         return [view, gname];
     }
 
-    _gameCardClick (ev){
+    _gameCardClick(ev) {
         const cardE = ev.target.closest(".gamecard");
-        if (cardE){
+        if (cardE) {
             //const id = cardE.getAttribute("data-game");
             const gname = cardE.dataset.game
             sessionStorage.setItem("rgame", gname);
@@ -84,25 +84,25 @@ class GameFactory {
         }
     }
 
-    _landing (rules){
+    _landing(rules) {
         const fragmentF = document.createDocumentFragment();
         let cardE, deskE, divE, rowE, titleE, view, rule;
-        
-        this._landing_games.forEach(gname =>{
-            cardE =document.createElement("div");
+
+        this._landing_games.forEach(gname => {
+            cardE = document.createElement("div");
             cardE.classList.add("gamecard");
-            titleE =document.createElement("h2");
+            titleE = document.createElement("h2");
             cardE.appendChild(titleE);
-            rowE =document.createElement("div");
+            rowE = document.createElement("div");
             cardE.appendChild(rowE);
             //drawing the row
             //anchE =document.createElement("a");
             //rowE.appendChild(anchE);
-            deskE =document.createElement("div");
+            deskE = document.createElement("div");
             deskE.classList.add("gamedesk");
             rowE.appendChild(deskE);
             rowE.appendChild(document.createElement("div"));
-            divE =document.createElement("div");
+            divE = document.createElement("div");
             rowE.appendChild(divE);
             //drawing the desk
             view = this._createView(gname, deskE)[0];
@@ -110,9 +110,9 @@ class GameFactory {
             //anchE.href = "rookgame.html?rg=" + gname;
             cardE.dataset.game = gname;
             titleE.textContent = view.gameTitle;
-            if (rules !== null){
+            if (rules !== null) {
                 rule = rules[gname];
-                if (rule){
+                if (rule) {
                     divE.innerHTML = rule;
                 }
             }
@@ -123,7 +123,7 @@ class GameFactory {
         this._landingE.appendChild(fragmentF);
     }
 
-    _addActiveView(game, desk, active, id){
+    _addActiveView(game, desk, active, id) {
         this._activeView?.dispo();
         [this._activeView, game] = this._createView(game, desk, active, id);
 
@@ -134,24 +134,24 @@ class GameFactory {
         return game;
     }
 
-    _keyboardEventHandler(ev){
+    _keyboardEventHandler(ev) {
         this._activeView?.keyboardEvent(ev);
     }
 
-    _labelChange (){
+    _labelChange() {
         const game = this._labelSelect.value;
         console.log(game);
         this._labelSelect.blur();
-        if (game !== this._game){
+        if (game !== this._game) {
             this._game = game;
             this._addActiveView(game, this._activeDesk, true, 0);
         }
         //localStorage.setItem("rookgame", game);
     }
 
-    difficultyShow (show = false){
-        if (this._difficultyShow !== show){
-            if(show){
+    difficultyShow(show = false) {
+        if (this._difficultyShow !== show) {
+            if (show) {
                 this.difficultyForm?.classList.add("show");
             }
             else {
@@ -161,28 +161,28 @@ class GameFactory {
         }
     }
 
-    _init (){
+    _init() {
         let gname;
 
         // Landing page init
-        if (this._landingE){
+        if (this._landingE) {
             gname = "index";
 
             fetch('./src/game_rules.json')
-            .then(response => response.json())
-            .then(data => {
-                this._landing(data);
-            })
-            .catch(error => {
-                console.error("Error loading the JSON file: ", error);
-                this._landing(null);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    this._landing(data);
+                })
+                .catch(error => {
+                    console.error("Error loading the JSON file: ", error);
+                    this._landing(null);
+                });
 
             this._landingE.addEventListener('click', this._gameCardClick);
         }
-        
+
         // Activedesk init
-        if (this._activeDesk){
+        if (this._activeDesk) {
             this._labelSelect = document.getElementById("gameLabel");
 
             this._control = document.getElementById("controlBoard");
@@ -192,24 +192,24 @@ class GameFactory {
             gname = urlParams.get('game');//todo: must be lowercase
             //console.log(urlParams, "UrlParam:", gname);
 
-            if(!gname) gname = sessionStorage.getItem("rgame");
+            if (!gname) gname = sessionStorage.getItem("rgame");
 
-            if (gname){
+            if (gname) {
                 gname = this._addActiveView(gname.toLowerCase(), this._activeDesk, true, 0);
             }
             else {
                 gname = "BadC/NoRGame";
             }
 
-            if(this._labelSelect){
+            if (this._labelSelect) {
                 if (gname &&
-                    [...this._labelSelect.options].some(op => op.value === gname)){
+                    [...this._labelSelect.options].some(op => op.value === gname)) {
                     this._labelSelect.value = gname;
                 }
                 else {
                     this._labelSelect.value = "-";
                 }
-    
+
                 this._labelSelect.addEventListener("change", this._labelChange.bind(this));
             }
 
@@ -223,8 +223,8 @@ class GameFactory {
             gname = "index";
             this.addNewViews();
         }*/
-        
-        if (!gname){
+
+        if (!gname) {
             gname = "BadC/NoGElem";
         }
 
@@ -255,46 +255,45 @@ class GameFactory {
 
     }
         */
-    
-/*
-    addNewViews (){
-        let view;
-        if (this._showDesks.length < 2) throw RangeError("Too less game desks");
-        // MCards
-        view = new MCardsView(this, this._showDesks[0], false, 0);
-        new MCardsRepply(view);
-        this._views.push(view);
-        // C4
-        view = new C4View(this, this._showDesks[1], false, 1);
-        new C4Repply(view);
-        this._views.push(view);
-        // Morris
-        if (this._showDesks.length > 2){
-            view = new MorrisView(this, this._showDesks[2], false, 2);
-        }
-    }
-*/
 
-/*  addNewView (game = "mcard"){
-        if (this._game !== game){
-            this._game = game;
-            this.difficultyShow (false);
-            this._activeView?.dispo();
-            switch(game){
-                case "connect4":
-                    this._activeView = new C4View(this._desk);
-                    this._activeRepply = new C4Repply(this._activeView, this);
-                    break;
-                default:
-                    this._activeView = new MCardsView(this._desk);
-                    this._activeRepply = new MCardsRepply(this._activeView, this);
+    /*
+        addNewViews (){
+            let view;
+            if (this._showDesks.length < 2) throw RangeError("Too less game desks");
+            // MCards
+            view = new MCardsView(this, this._showDesks[0], false, 0);
+            new MCardsRepply(view);
+            this._views.push(view);
+            // C4
+            view = new C4View(this, this._showDesks[1], false, 1);
+            new C4Repply(view);
+            this._views.push(view);
+            // Morris
+            if (this._showDesks.length > 2){
+                view = new MorrisView(this, this._showDesks[2], false, 2);
             }
         }
+    */
 
-        return this._activeView;
-    }*/
+    /*  addNewView (game = "mcard"){
+            if (this._game !== game){
+                this._game = game;
+                this.difficultyShow (false);
+                this._activeView?.dispo();
+                switch(game){
+                    case "connect4":
+                        this._activeView = new C4View(this._desk);
+                        this._activeRepply = new C4Repply(this._activeView, this);
+                        break;
+                    default:
+                        this._activeView = new MCardsView(this._desk);
+                        this._activeRepply = new MCardsRepply(this._activeView, this);
+                }
+            }
     
- }
+            return this._activeView;
+        }*/
 
- export default new GameFactory();
- 
+}
+
+export default new GameFactory();

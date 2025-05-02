@@ -10,18 +10,17 @@ class MorrisPiece {
 }
 
 export default class MorrisView extends GameView {
-    constructor(factory, deskE, active, id)
-    {
-        super(factory, deskE, active, id, "Morris", "morris_board", 0, true
-            ,"morris_board_spot");
+    constructor(factory, deskE, active) {
+        super(factory, deskE, active, "Morris", "morris_board", 0, true
+            , "morris_board_spot");
 
         /*Status*/
         //this._statusM = new C4SM();
-        
+
         /* View status */
         this._spots = [];
         this._pieces = [];
-  
+
         this._initGame();
 
         //keyboard event status
@@ -36,25 +35,25 @@ export default class MorrisView extends GameView {
         this._keyActivated = 23;
         this._isKeyActivatedShown = false;
     }
- 
-    move (col, matte, isMach){
+
+    move(col, matte, isMach) {
     }
 
-    _showCursor(IdSpot){
+    _showCursor(IdSpot) {
         //todo: implement
     }
 
-    _hideCursor(IdSpot){
+    _hideCursor(IdSpot) {
         //todo: implement
     }
 
     // Keyboard handlers
-    _coursorEvent(keyC){
+    _coursorEvent(keyC) {
         const nextArr = this._coursorMoveMap.get(keyC);
-        if(nextArr){
-            if(this._isKeyActivatedShown){
+        if (nextArr) {
+            if (this._isKeyActivatedShown) {
                 const nextAct = nextArr[this._keyActivated];
-                if(nextAct >= 0){
+                if (nextAct >= 0) {
                     this._hideCursor(this._keyActivated);
                     this._keyActivated = nextAct;
                     this._showCursor(nextAct);
@@ -67,9 +66,9 @@ export default class MorrisView extends GameView {
         }
     }
 
-    _boardClick(ev){
+    _boardClick(ev) {
         const elem = ev.target.closest(".morris_board_node");
-        if (elem){
+        if (elem) {
             const ind = Number.parseInt(
                 elem.getAttribute("data-ind"));
 
@@ -83,7 +82,7 @@ export default class MorrisView extends GameView {
         const //frag = this._fragmentF,
             board = this._boardE,
             ring = document.createElement("div");
-        let h, i, j, elem, pieceE, pclassL = ["morris_piece"], signE; 
+        let h, i, j, elem, pieceE, pclassL = ["morris_piece"], signE;
 
         // The web elements
         for (i = 0; i < 6; i++) {
@@ -91,9 +90,9 @@ export default class MorrisView extends GameView {
             elem.classList.add("morris_board_web");
             ring.appendChild(elem);
         }
-        
+
         // The spots
-        for (i = 0; i < 24; i++){
+        for (i = 0; i < 24; i++) {
             elem = document.createElement("div");
             elem.classList.add("morris_board_spot");
             elem.setAttribute("data-spi", i);
@@ -106,11 +105,11 @@ export default class MorrisView extends GameView {
         }
 
         // The pieces
-        for (h = 0; h < 24; h += 12){
+        for (h = 0; h < 24; h += 12) {
             elem = document.createElement("div");
             elem.classList.add("morris_board_spot");
             elem.setAttribute("data-spi", 28);
-            for (i = 0; i < 9; i++){
+            for (i = 0; i < 9; i++) {
                 j = h + i;
                 pieceE = document.createElement("div");
                 pieceE.classList.add(...pclassL);
@@ -122,7 +121,7 @@ export default class MorrisView extends GameView {
             }
             board.appendChild(elem);
 
-            if (h === 0){
+            if (h === 0) {
                 ring.classList.add("morris_board_ring");
                 board.appendChild(ring);
                 pclassL.push("piece-dark");
@@ -135,9 +134,9 @@ export default class MorrisView extends GameView {
 
     }
 
-    newGame(){
+    newGame() {
         this._clearResult();
-        
+
     }
 
 }

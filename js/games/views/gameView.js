@@ -1,9 +1,9 @@
 //import {GAMEBOARD_CLASSES} from "../gameConfig.js"
 
-export default class GameView { 
-    constructor(factory, deskE, active = false, id
-        ,gTitle, gClass, iconButtons = 0, hasMessageBoard = true
-        ,dropZoneClass = null){
+export default class GameView {
+    constructor(factory, deskE, active = false
+        , gTitle, gClass, iconButtons = 0, hasMessageBoard = true
+        , dropZoneClass = null) {
 
         this._repplyPlug;
         this._statusM;
@@ -17,7 +17,7 @@ export default class GameView {
         this._hasMessageBoard = hasMessageBoard;
 
         this._active = active;
-        
+
         this._deskE = deskE;
         //this._fragmentF = document.createDocumentFragment();
         //this._titleE = document.createElement("h3");
@@ -32,39 +32,39 @@ export default class GameView {
 
         //Keyboard
         this._coursorKeyCodes = [33, 34, 37, 38, 39, 40];
-        
+
         //Drag
         this._dropZoneClass = dropZoneClass;
-        this._dragOverClasses = dropZoneClass ? ["gb_drop-potential", "gb_drop-notpot"]: null;
+        this._dragOverClasses = dropZoneClass ? ["gb_drop-potential", "gb_drop-notpot"] : null;
 
         //this._cleanBoardClasses();
         //this._initView();
-      }
+    }
 
-    get class (){
+    get class() {
         return this._gameClass;
     }
 
-    get factory (){
+    get factory() {
         return this._factory;
     }
 
-    get active (){
+    get active() {
         return this._active;
     }
 
-    get repplyPlug (){
+    get repplyPlug() {
         return this._repplyPlug;
     }
 
-    get gameTitle (){
+    get gameTitle() {
         return this._gameTitle;
     }
 
     /**
      * @param {GameRepply} repply
      */
-    set repplyPlug(repply){
+    set repplyPlug(repply) {
         this._repplyPlug = repply;
     }
 
@@ -86,31 +86,32 @@ export default class GameView {
     }
     */
 
-    setStatusM(){
+    setStatusM() {
         this._statusM = this._repplyPlug._statusM;
     }
 
     // Keyboard handlers
-    _coursorEvent(keyC){}/*abstract method*/
+    _coursorEvent(keyC) { }/*abstract method*/
 
-    keyboardEvent(ev){
+    keyboardEvent(ev) {
         const keyC = ev.keyCode;
+        //console.log("keyevent", this._coursorKeyCodes);
         if (this._coursorKeyCodes.contains(keyC)) this._coursorEvent(keyC);
     }
 
     // Click handlers
-    _boardClick(ev){}/*abstract method*/
+    _boardClick(ev) { }/*abstract method*/
 
-   /*
-    _deskClick(){
-        if (!this._active) this._factory.gameClick(this._id);
-    }
-    */
+    /*
+     _deskClick(){
+         if (!this._active) this._factory.gameClick(this._id);
+     }
+     */
 
     // Drag handlers of the dragable pieces
-    _dragStart(ev){
+    _dragStart(ev) {
         const elem = ev.target;
-        if (elem.getAttribute("draggable")){
+        if (elem.getAttribute("draggable")) {
             const id = Number.parseInt(elem.getAttribute("data-pii"));
             ev.dataTransfer.setData("pieceId", id);
         }
@@ -120,34 +121,34 @@ export default class GameView {
         }
     }
 
-    _drag(ev){
+    _drag(ev) {
         const elem = ev.target;
         //console.log("Dragging", ev);
         //elem.style.transform = "translate(150px,100px) scale(1.3)";
     }
 
     // Drag handlers of the drop zones
-    _dragEnter(ev){
+    _dragEnter(ev) {
         //ev.preventDefault();
         ev.stopPropagation();
 
         const elem = ev.target;
-        if (elem.classList.contains(this._dropZoneClass)){
+        if (elem.classList.contains(this._dropZoneClass)) {
             //console.log("ZoneEnter", ev, elem);    
             elem.classList.add(this._dragOverClasses[1]);
         }
     }
 
-    _dragLeave(ev){
+    _dragLeave(ev) {
         const elem = ev.target;
         ev.stopPropagation();
-        if (elem.classList.contains(this._dropZoneClass)){
+        if (elem.classList.contains(this._dropZoneClass)) {
             //console.log("ZoneLeave", ev, elem);
             this._dragOverClasses.forEach(cl => elem.classList.remove(cl));
         }
     }
 
-    _drop(ev){
+    _drop(ev) {
         ev.preventDefault();
         let data = ev.dataTransfer.getData("pieceId");
         console.log("Drop", ev, data);
@@ -156,25 +157,25 @@ export default class GameView {
     //_initBoard(){
     //}
 
-    _setResult(result){
-        if (this._resultModal && result !== this._endResult){
+    _setResult(result) {
+        if (this._resultModal && result !== this._endResult) {
             this._endResult = result;
             this._resultModal.classList.add(result);
         }
     }
 
-    _clearResult(){
-        if (this._endResult !== ""){
+    _clearResult() {
+        if (this._endResult !== "") {
             this._resultModal.classList.remove(this._endResult);
             this._endResult = "";
         }
     }
 
-    showResult(result){
-        if (result > 0){
+    showResult(result) {
+        if (result > 0) {
             this._setResult("result-won");
         }
-        else if (result < 0){
+        else if (result < 0) {
             this._setResult("result-lost");
         }
         else {
@@ -182,15 +183,15 @@ export default class GameView {
         }
     }
 
-    _resultModalClick(ev){
+    _resultModalClick(ev) {
         const elem = ev.target.closest(".btn-close");
-        if (elem){
+        if (elem) {
             this._clearResult();
         }
     }
 
-    _initDesk(resultModal = null, hasResultCloseBtns = true){
-        const divE =document.createElement("div")
+    _initDesk(resultModal = null, hasResultCloseBtns = true) {
+        const divE = document.createElement("div")
             , fragmentF = document.createDocumentFragment();
 
         //this._titleE.innerText = this._gameTitle;
@@ -201,7 +202,7 @@ export default class GameView {
         this._boardE.classList.add("gamedesk_board", this._gameClass);
         divE.appendChild(this._boardE);
 
-        if (this._hasMessageBoard){
+        if (this._hasMessageBoard) {
             this._messageBoardE = document.createElement("div");
             this._messageBoardE.classList.add("gamedesk_message");
             divE.appendChild(this._messageBoardE);
@@ -214,10 +215,10 @@ export default class GameView {
         fragmentF.appendChild(this._resultModal);
         if (hasResultCloseBtns) this._resultModal.addEventListener('click', this._resultModalClick.bind(this));
 
-        if (this._active){
+        if (this._active) {
             this._boardE.addEventListener('click', this._boardClick.bind(this));
             //Drag events
-            if(this._dropZoneClass){
+            if (this._dropZoneClass) {
                 this._boardE.addEventListener('dragstart', this._dragStart.bind(this));
                 this._boardE.addEventListener('drag', this._drag.bind(this));
                 //const dropZones = this._boardE.querySelectorAll("." + this._dropZoneClass);
@@ -236,7 +237,7 @@ export default class GameView {
         this._deskE.appendChild(fragmentF);
     }
 
-    dispo(){
+    dispo() {
         this._deskE.innerHTML = "";
         //this._board.removeEventListener('click', this._boardClick.bind(this));
         this._repplyPlug?.dispo();
@@ -244,13 +245,13 @@ export default class GameView {
         this._statusM = null;
     }
 
-    bitToArray(bit){
+    bitToArray(bit) {
         let arr = [], i;
 
         if (bit === 0) return arr;
 
-        for (let a = 255, x = 0; a !== 0; a <<= 8, x += 8){
-            if (a & bit){
+        for (let a = 255, x = 0; a !== 0; a <<= 8, x += 8) {
+            if (a & bit) {
                 for (i = x; i < x + 8; i++) {
                     if (bit & (1 << i)) arr.push(i);
                 }

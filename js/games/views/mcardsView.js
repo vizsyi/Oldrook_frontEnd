@@ -21,16 +21,15 @@ class CardItem {
         let imgE, labelE;
         imgE = this._elem.querySelector(".mcard_img img");
         labelE = this._elem.querySelector(".mcard_label span");
-        if(imgE) imgE.setAttribute("src", this._view.celebImgPath + card.img);
-        if(labelE && labelE.innerHTML !== card.name) labelE.innerHTML = card.name;
+        if (imgE) imgE.setAttribute("src", this._view.celebImgPath + card.img);
+        if (labelE && labelE.innerHTML !== card.name) labelE.innerHTML = card.name;
         this.setStatus(status);
     }
 }
 
 export default class MCardsView extends GameView {
-    constructor(factory, deskE, active, id)
-    {
-        super(factory, deskE, active, id, "Matching pairs", "mcards30_board");
+    constructor(factory, deskE, active) {
+        super(factory, deskE, active, "Matching pairs", "mcards30_board");
 
         this._pieces = 30;
         this._cards = [];
@@ -45,30 +44,30 @@ export default class MCardsView extends GameView {
 
         /* Settings */
         this.celebImgPath = "./img/celebs/";
-        
+
         /* View status */
         this._upCards = [];
         this._upCardsStatus = "";
         this._upCardsTO;
         this._clickedCards = [];
-  
+
         this._initView(this._pieces);
     }
 
-    get pieces (){
+    get pieces() {
         return this._pieces;
     }
 
-    _upCardsBack (nextCards = null){
+    _upCardsBack(nextCards = null) {
         //console.log("this", this._upCards);
         this._upCards.forEach(card => {
-            if(!nextCards?.includes(card)) card.setStatus(this._upCardsStatus);
+            if (!nextCards?.includes(card)) card.setStatus(this._upCardsStatus);
         });
         this._upCards.length = 0;
         this._upCardsTO = null;
     }
-    
-    move (cards, isPair = false){
+
+    move(cards, isPair = false) {
         let status;
         //const indexes = cards.map(card => card.index);
         const cItems = cards.map(card => this._cards[card.index]);
@@ -76,7 +75,7 @@ export default class MCardsView extends GameView {
         // Setting back the previous selection
         if (this._upCardsTO) {
             clearTimeout(this._upCardsTO);
-            this._upCardsBack (cItems);
+            this._upCardsBack(cItems);
         }
 
         // Setting down the unselected clicked card
@@ -90,12 +89,12 @@ export default class MCardsView extends GameView {
 
         //Showing the cards
         this._upCards = cItems;
-        if (isPair){
-            status =  "pair";
+        if (isPair) {
+            status = "pair";
             this._upCardsStatus = "solved";
         }
         else {
-            status =  "up";
+            status = "up";
             this._upCardsStatus = "down";
         }
         cards.forEach(card =>
@@ -105,9 +104,9 @@ export default class MCardsView extends GameView {
             this._upCardsTO = setTimeout(this._upCardsBack.bind(this), 2000);
     }
 
-    _boardClick(ev){
+    _boardClick(ev) {
         const elem = ev.target.closest(".mcard");
-        if (elem){
+        if (elem) {
             const id = Number.parseInt(elem.getAttribute("data-id"));
             // Adding clicked class
             const card = this._cards[id];
@@ -153,16 +152,16 @@ export default class MCardsView extends GameView {
         this._initDesk(resultModal, false);
     }
 
-    newGame(){
+    newGame() {
         this._clearResult();
 
         this._cards.forEach((card, i) => {
-            if(this._statusM.unsolvedCards[i]) card.setStatus("down");
+            if (this._statusM.unsolvedCards[i]) card.setStatus("down");
         });
     }
 
-    showResult(){
-        if (this._resultOutputs.length > 2){
+    showResult() {
+        if (this._resultOutputs.length > 2) {
             this._setResult("result");
             this._resultOutputs[0].value = this._statusM.period;
             this._resultOutputs[1].value = this._statusM.stepCount;
