@@ -77,9 +77,8 @@ class GameFactory {
         const cardE = ev.target.closest(".gamecard");
         if (cardE) {
             //const id = cardE.getAttribute("data-game");
-            const gname = cardE.dataset.game
+            const gname = cardE.dataset.game;
             sessionStorage.setItem("rgame", gname);
-            console.log("dff")
             window.location.href = "rookgame.html";
         }
     }
@@ -118,7 +117,7 @@ class GameFactory {
             }
 
             fragmentF.appendChild(cardE);
-        })
+        });
 
         this._landingE.appendChild(fragmentF);
     }
@@ -168,7 +167,7 @@ class GameFactory {
         if (this._landingE) {
             gname = "index";
 
-            fetch('./src/game_rules.json')
+            fetch("./src/game_rules.json")
                 .then(response => response.json())
                 .then(data => {
                     this._landing(data);
@@ -178,7 +177,7 @@ class GameFactory {
                     this._landing(null);
                 });
 
-            this._landingE.addEventListener('click', this._gameCardClick);
+            this._landingE.addEventListener("click", this._gameCardClick);
         }
 
         // Activedesk init
@@ -189,7 +188,7 @@ class GameFactory {
             this.difficultyForm = this._control?.querySelector("#difficultyForm");
 
             const urlParams = new URLSearchParams(window.location.search);
-            gname = urlParams.get('game');//todo: must be lowercase
+            gname = urlParams.get("game"); //todo: must be lowercase
             //console.log(urlParams, "UrlParam:", gname);
 
             if (!gname) gname = sessionStorage.getItem("rgame");
@@ -215,8 +214,9 @@ class GameFactory {
 
             document.addEventListener("keydown", this._keyboardEventHandler.bind(this));
 
-            this._control?.addEventListener('click'
-                , ev => this._activeView?.repplyPlug?.controlClick(ev));
+            this._control?.addEventListener("click", ev =>
+                this._activeView?.repplyPlug?.controlClick(ev),
+            );
         }
         /*
         else {
@@ -230,7 +230,7 @@ class GameFactory {
 
         //todo: replace addNewViews with a block using createView
 
-        RLOG.webStart(gname);//todo: webStart must accept gname parameter
+        RLOG.webStart(gname); //todo: webStart must accept gname parameter
     }
 
     /**

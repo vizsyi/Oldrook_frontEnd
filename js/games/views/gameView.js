@@ -150,7 +150,7 @@ export default class GameView {
 
     _drop(ev) {
         ev.preventDefault();
-        let data = ev.dataTransfer.getData("pieceId");
+        const data = ev.dataTransfer.getData("pieceId");
         console.log("Drop", ev, data);
     }
 
@@ -246,7 +246,8 @@ export default class GameView {
     }
 
     bitToArray(bit) {
-        let arr = [], i;
+        const arr = [];
+        let i;
 
         if (bit === 0) return arr;
 
