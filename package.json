@@ -6,7 +6,9 @@
   "scripts": {
     "watch:sass": "sass sass/main.scss src/dev/index.css -w",
     "devserver": "live-server",
+    "format": "prettier . --write",
     "start": "npm-run-all --parallel devserver watch:sass",
+    "fstart": "npm-run-all --parallel devserver watch:sass format",
     "compile:sass": "sass sass/main.scss src/temp/index.comp.css",
     "concat:css": "concat -o src/temp/index.concat.css src/temp/index.comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/temp/index.concat.css -o src/temp/index.prefix.css",
