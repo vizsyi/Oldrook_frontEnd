@@ -1,9 +1,9 @@
 import GameRepply from "./gameRepply.js";
 import MCardsSM from "../models/mcardsSM.js";
-import {DUMMY_CELEBS} from "../dummyData.js"
+import { DUMMY_CELEBS } from "../dummyData.js"
 
-export default class MCardsRepply extends GameRepply{ 
-    constructor(view){
+export default class MCardsRepply extends GameRepply {
+    constructor(view) {
         super(view);
 
         this._pieces = view.pieces;
@@ -17,33 +17,32 @@ export default class MCardsRepply extends GameRepply{
         this._newGame();
     }
 
-    _newGame (){
+    _newGame() {
         this._gameCards = this._selectingCards(this._allCards, this._pieces);
 
         this._statusM.reset();
         this._viewPlug.newGame();
     }
 
-    _move (index){
-        let card;
+    _move(index) {
 
-        if (index < 0 || index >= this._pieces) 
+        if (index < 0 || index >= this._pieces)
             throw new RangeError("Invalid position");
 
         if (this._statusM.unsolvedCards[index] !== 1
             || this._firstMem && this._firstMem.index === index) return;
 
-        card = this._gameCards[index];
+        const card = this._gameCards[index];
         card.index = index;
 
         this._statusM.oneStep();
-        if(this._firstMem){
-            let paired = this._firstMem.pairId === card.pairId;
+        if (this._firstMem) {
+            const paired = this._firstMem.pairId === card.pairId;
             this._viewPlug.move([this._firstMem, card]
                 , paired);
             this._firstMem = null;
-            if (paired){
-                if(this._statusM.solved()){
+            if (paired) {
+                if (this._statusM.solved()) {
                     this._viewPlug.showResult();
                 };
             }
@@ -54,36 +53,35 @@ export default class MCardsRepply extends GameRepply{
         }
     }
 
-    intend (index){
+    intend(index) {
         setTimeout(this._move.bind(this, index), 500);
     }
 
     //MCARDS FUNCTIONS
-    _shuffle(list){
+    _shuffle(list) {
         let i, r;
 
-        for (i = list.length; i > 1; ){
+        for (i = list.length; i > 1;) {
             r = Math.floor(Math.random() * i--);
-            if (i != r) [list [i], list [r]] = [list [r], list [i]];
+            if (i !== r) [list[i], list[r]] = [list[r], list[i]];
         }
     }
 
-    _selectingCards(list, pcs){
-        let half, i, len, r, temp;
-        const selected = [];
+    _selectingCards(list, pcs) {
+        let i, r, temp;
+        const selected = [],
+            half = Math.floor(pcs / 2),
+            len = list.length;
+        if (half > len) throw new Error("Dummy list too short!");
 
-        half = Math.floor (pcs / 2);
-        len = list.length;
-        if(half > len) throw new Error("Dummy list too short!");
-
-        for (i = 0; i < half; i++){
+        for (i = 0; i < half; i++) {
             r = Math.floor(Math.random() * (len - i) + i);
-            temp = list [r];
-            if (i != r) [list [i], list [r]] = [list [r], list [i]];
+            temp = list[r];
+            if (i !== r) [list[i], list[r]] = [list[r], list[i]];
 
             temp.pairId = i;
             temp.solved = false;
-            selected.push(temp, {...temp});
+            selected.push(temp, { ...temp });
         }
 
         this._shuffle(selected);

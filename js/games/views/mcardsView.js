@@ -18,9 +18,8 @@ class CardItem {
     }
 
     turnUp(status, card) {
-        let imgE, labelE;
-        imgE = this._elem.querySelector(".mcard_img img");
-        labelE = this._elem.querySelector(".mcard_label span");
+        const imgE = this._elem.querySelector(".mcard_img img"),
+            labelE = this._elem.querySelector(".mcard_label span");
         if (imgE) imgE.setAttribute("src", this._view.celebImgPath + card.img);
         if (labelE && labelE.innerHTML !== card.name) labelE.innerHTML = card.name;
         this.setStatus(status);
@@ -123,28 +122,24 @@ export default class MCardsView extends GameView {
     }
 
     _initView(pieces) {
-        const //frag = this._fragmentF,
-            board = this._boardE,
+        const board = this._boardE,
             resultModal = this._gameTemplates.querySelector(".mcardresult").cloneNode(true),
             tempcard = this._gameTemplates.querySelector(".mcard");
+        let card;
 
         //Creating the cards
         for (let i = 0; i < pieces; i++) {
-            let card = tempcard.cloneNode(true);
+            card = tempcard.cloneNode(true);
             card.setAttribute("data-id", i);
             card.classList.add("mcard-solved");
             this._cards.push(new CardItem(i, card, this));
             board.appendChild(card);
         }
         for (let i = 0; i < 2; i++) {
-            let card = document.createElement("div");
+            card = document.createElement("div");
             card.classList.add("pause");
             board.appendChild(card);
         }
-
-        //frag.appendChild(board);
-        //this._fragmentF.appendChild(resultModal);
-        //this._desk.appendChild(frag);
 
         this._resultOutputs = resultModal.querySelectorAll("output");
         //this._setResultModal(resultModal, false);

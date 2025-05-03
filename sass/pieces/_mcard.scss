@@ -1,144 +1,144 @@
 @use "./../abstract/functions" as *;
 
 .mcard {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
     filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, .7));
 
-    /* The rotating part */
+  /* The rotating part */
+  & > div {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    border-radius: toem(7.2);
+    //box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+  }
+
+  .mcard_front,
+  .mcard_back {
+    height: 100%;
+    width: 100%;
+    border-radius: toem(7.2);
+    backface-visibility: hidden;
+  }
+
+  .mcard_front {
+    background-color: whitesmoke;
+    padding: var(--mcard-pad);
+    transform: rotateY(180deg);
+
+    /* Border */
     & > div {
-        height: 100%;
-        width: 100%;
-        position: relative;
-        transform-style: preserve-3d;
-        border-radius: toem(7.2);
-        //box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+      position: relative;
+      height: 100%;
+      border: 1px solid #444;
+      border-radius: toem(4.8);
     }
+  }
 
-    .mcard_front,
-    .mcard_back {
-        height: 100%;
-        width: 100%;
-        border-radius: toem(7.2);
-        backface-visibility: hidden;
-    }
-
-    .mcard_front {
-        background-color: whitesmoke;
-        padding: var(--mcard-pad);
-        transform: rotateY(180deg);
-
-        /* Border */
-        & > div {
-            position: relative;
-            height: 100%;
-            border: 1px solid #444;
-            border-radius: toem(4.8);
-        }
-    }
-
-    .mcard_img {
-        height: var(--mcard-img-height);
-        width: 100%;
-        display: block;
-        object-fit: cover;
+  .mcard_img {
+    height: var(--mcard-img-height);
+    width: 100%;
+    display: block;
+    object-fit: cover;
         border-radius: toem(4) toem(4) 0 0;//TODO: making more punctual
 
-        img {
-            height: 100%;
-            width: 100%;
-            object-fit: contain;
-        }
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
     }
+  }
 
-    .mcard_label {
-        height: calc(100% - var(--mcard-img-height));
-        border-top: 1px solid #444;
-        display: flex;
-        //text-align: center;
-        align-items: center;
-        justify-content: center;
+  .mcard_label {
+    height: calc(100% - var(--mcard-img-height));
+    border-top: 1px solid #444;
+    display: flex;
+    //text-align: center;
+    align-items: center;
+    justify-content: center;
         font-family: 'Courgette', cursive;
-        font-size: toem(14.8);
+    font-size: toem(14.8);
 
-        & > span {
-            text-align: right;
-            padding: 0 toem(4.8);
+    & > span {
+      text-align: right;
+      padding: 0 toem(4.8);
 
-            &::first-line {
-                text-align: left;
-            }
-        }
+      &::first-line {
+        text-align: left;
+      }
+    }
+  }
+
+  .mcard_back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: indianred;
+    z-index: 1;
+  }
+
+  &-down {
+    &:hover > div {
+      transform: rotateY(31deg);
+      transition: 0.8s;
     }
 
-    .mcard_back {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: indianred;
-        z-index: 1;
+    &.clicked > div {
+      transform: rotateY(60deg);
+      transition: 1.8s;
     }
+  }
 
-    &-down {
-        &:hover > div {
-            transform: rotateY(31deg);
-            transition: 0.8s
-        }
+  &-up > div,
+  &-pair > div {
+    transform: rotateY(180deg);
+  }
 
-        &.clicked > div {
-            transform: rotateY(60deg);
-            transition: 1.8s
-        }
-    }
+  &-solved {
+    visibility: hidden;
+  }
 
-    &-up > div,
-    &-pair > div {
-        transform: rotateY(180deg);
-    }
-    
-    &-solved {
-        visibility: hidden;
-    }
+  .mcard_heart_icon,
+  .mcard_check_icon {
+    position: absolute;
+  }
 
-    .mcard_heart_icon,
-    .mcard_check_icon {
-        position: absolute;
-    }
-
-    .mcard_heart_icon {
-        display: none;
-        top: 28%;
-        left: 25%;
-        height: 50%;
-        width: 50%;
-        fill: red;
+  .mcard_heart_icon {
+    display: none;
+    top: 28%;
+    left: 25%;
+    height: 50%;
+    width: 50%;
+    fill: red;
         opacity: .7;
-        filter: drop-shadow(2px 2px 6px rgba(255, 0, 0, 1));
-    }
+    filter: drop-shadow(2px 2px 6px rgba(255, 0, 0, 1));
+  }
 
+  .mcard_check_icon {
+    display: block;
+    top: 32%;
+    left: 25%;
+    height: 50%;
+    width: 60%;
+    fill: green;
+    opacity: 0;
+    filter: drop-shadow(2px 2px 6px rgba(0, 128, 0, 1));
+  }
+
+  &.mcard-like {
+    .mcard_heart_icon {
+      display: block;
+      animation: heartbeat 0.6s linear infinite;
+    }
+  }
+
+  &.mcard-pair {
     .mcard_check_icon {
-        display: block;
-        top: 32%;
-        left: 25%;
-        height: 50%;
-        width: 60%;
-        fill: green;
-        opacity: 0;
-        filter: drop-shadow(2px 2px 6px rgba(0, 128, 0, 1));
-    }
-
-    &.mcard-like {
-        .mcard_heart_icon {
-            display: block;
-            animation: heartbeat 0.6s linear infinite;
-        }
-    }
-
-    &.mcard-pair {
-        .mcard_check_icon {
             opacity: .9;
-            transition: all 1s;
-        }
+      transition: all 1s;
     }
+  }
 
 }
