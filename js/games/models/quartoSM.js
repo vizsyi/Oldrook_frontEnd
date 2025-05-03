@@ -1,7 +1,10 @@
 import Helper from "./../helper.js"
 
-export default class quartoSM {
-    constructor(origin) {
+export default class QuartoSM {
+    constructor(origin) { //, dummy, selectedPc
+
+        this._caracCount = 4;
+
         if (origin) {
             //this._side = origin._side;
 
@@ -77,7 +80,7 @@ export default class quartoSM {
         return matte
     }
 
-    whichMatte() { // todo: tertio, must make quarto
+    whichMatte() { // todo: it is tertio, must make quarto
         let matte = 0, m1;
         this._bits.forEach(bit => {
             // Horizontal
@@ -106,11 +109,11 @@ export default class quartoSM {
     }
 
     placeStep(spot) {
-        const bit = 1 >>> spot;
+        const bit = 1 << spot;
         let caracter, i, matte = 0;
 
-        for (i = 0; i < 4; i++) {
-            caracter = i << 1 | this._nextPiece >>> i & 1; //caracter
+        for (i = 0; i < this._caracCount; i++) {
+            caracter = i << 1 | this._selectedPc >>> i & 1; //caracter
 
             matte |= this._caracMatte(this._bits[caracter] |= bit);
         }
@@ -129,6 +132,7 @@ export default class quartoSM {
     }
 
     reset(dummy = null) {
+        const pieceCount = 1 << this._caracCount;
 
         if (dummy) {
             //todo: handling dummy parameter
@@ -140,17 +144,17 @@ export default class quartoSM {
         this._selectedPc = -1;
 
         this.restPcs = [];
-        for (let i = 0; i < 16; i++) {
+        for (let i = 0; i < pieceCount; i++) {
             this.restPcs.push(i);
         }
 
-        this._restSpots = [...this._restPcs];
+        this.restSpots = this._caracCount === 3 ? [...this.restPcs, 8] : [...this._restPcs];
 
         if (this._bits) {
             this._bits.fill(0);
         }
         else {
-            this._bits = Array(8).fill(0);
+            this._bits = Array(this._caracCount * 2).fill(0);
         }
 
         this.finished = false;

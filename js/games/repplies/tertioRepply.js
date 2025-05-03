@@ -53,6 +53,7 @@ export default class TertioRepply extends GameRepply {
     }
 
     _move(spi) {
+        const pci = this._statusM.selectedPc;
         let finish, matte, result = 0;
         if ((this._statusM.phase & 1) === 0 && !this._statusM.finished) {
 
@@ -66,7 +67,7 @@ export default class TertioRepply extends GameRepply {
                 result = this._statusM.phase === 0 ? -1 : 1;
             }
 
-            this._viewPlug.move(this._statusM.selectedPc, spi, finish, result, matte);
+            this._viewPlug.move(pci, spi, finish, result, matte);
 
             // Next phase & Click
             if (this._statusM.nextPhase === 3) {
@@ -102,7 +103,7 @@ export default class TertioRepply extends GameRepply {
     }
 
     _firstSelect() {
-        this._select(this._statusM.restPcs[Math.floor(Math.random() * this._statusM.restCount)])
+        this._select(this._statusM.restPcs[Math.floor(Math.random() * this._statusM.restCount)]);
     }
 
     moveIntend(spi) {
