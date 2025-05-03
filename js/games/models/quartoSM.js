@@ -1,15 +1,15 @@
 import Helper from "./../helper.js"
 
-export default class quartoSM{ 
-    constructor(origin, nextPiece, dummy){
-        if (origin){
-            this._side = origin._side;
+export default class quartoSM {
+    constructor(origin) {
+        if (origin) {
+            //this._side = origin._side;
 
-            this._nextPiece = nextPiece;
-    
-            this._restPcs = [...origin._restPcs];
-            this._restSpots = [...origin._restSpots];
-    
+            this._selectedPc = origin._selectedPc;
+
+            this.restPcs = [...origin.restPcs];
+            this.restSpots = [...origin.restSpots];
+
             this._bits = [...origin._bits];
 
             this.finished = false;
@@ -17,21 +17,48 @@ export default class quartoSM{
         else {
             this._side = 0;
 
-            this._nextPiece = 0;
-    
-            this._restPcs = [];
-            this._restSpots = null;
-    
+            this._selectedPc = -1;
+
+            this.restPcs = []; //todo: must it be defined?
+            this.restSpots = null;
+
             this._bits;
 
+            this._phase = 1;
             this.finished = false;
 
-            this.reset(dummy)
+            //this.reset(dummy)
         }
 
     }
 
-    caracMatte(bit){
+    get nextPhase() {
+        this._phase = this._phase + 1 & 3;
+        return this._phase;
+    }
+
+    get phase() {
+        return this._phase;
+    }
+
+    get restCount() {
+        return this.restPcs.length;
+    }
+
+    get selectedPc() {
+        return this._selectedPc;
+    }
+
+    isFinished() {
+        if (this.restPcs.length === 0) {
+            this.finished = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    _caracMatte(bit) {
         let neigh, matte;
 
         // Horizontal
@@ -47,55 +74,74 @@ export default class quartoSM{
         neigh = bit & (bit >>> 3);
         matte |= neigh & (neigh >>> 6) & 8;//Position 3
 
-        // Return
         return matte
     }
 
-    placeStep(spot){
-        const bit = 1 >>> spot;
-        let matte = 0;
-
-        for (i = 0; i < 4; i++) {
-            c = i << 1 | this._nextPiece >>> i & 1; //caracter
-            
-            matte |= this.caracMatte(this._bits[c] |= bit);
-        }
-        
-        // removing the piece and the spot from the rest ones
-        Helper.removeArrItem(this._restPcs, this._nextPiece);
-        Helper.removeArrItem(this._restSpots, place);
-
-        this._nextPiece = -1;
+    whichMatte() { // todo: tertio, must make quarto
+        let matte = 0, m1;
+        this._bits.forEach(bit => {
+            // Horizontal
+            m1 = bit & (bit >>> 1) & (bit >>> 2) & 73;//Begining of the rows
+            if (m1) {
+                matte |= m1 | m1 << 1 | m1 << 2;
+            }
+            // Vertical
+            m1 = bit & (bit >>> 3) & (bit >>> 6) & 7;//Begining of the columns
+            if (m1) {
+                matte |= m1 | m1 << 3 | m1 << 6;
+            }
+            // Diagonal+
+            m1 = bit & (bit >>> 4) & (bit >>> 8) & 1;//Position 0
+            if (m1) {
+                matte |= 273;
+            }
+            // Diagonal-
+            m1 = bit & (bit >>> 2) & (bit >>> 4) & 4;//Position 2
+            if (m1) {
+                matte |= 84;
+            }
+        });
 
         return matte;
     }
 
-    pieceStep(step){
-        this._nextPiece = step;
-    }
-    
-    step(step){
-        if (this._nextPiece){
-            this.placeStep(step);
+    placeStep(spot) {
+        const bit = 1 >>> spot;
+        let caracter, i, matte = 0;
+
+        for (i = 0; i < 4; i++) {
+            caracter = i << 1 | this._nextPiece >>> i & 1; //caracter
+
+            matte |= this._caracMatte(this._bits[caracter] |= bit);
         }
-        else {
-            this.pieceStep(step);
-        }
+
+        // removing the piece and the spot from the rest ones
+        Helper.removeArrItem(this.restPcs, this._selectedPc);
+        Helper.removeArrItem(this.restSpots, spot);
+
+        this._selectedPc = -1;// For safetyness
+
+        return matte;
     }
 
-    reset(dummy){
-        
-        if(dummy){
+    select(step) {
+        this._selectedPc = step;
+    }
+
+    reset(dummy = null) {
+
+        if (dummy) {
             //todo: handling dummy parameter
             throw new ReferenceError("Not implemented yet. (16201)");
         }
 
         this._side = 0;
 
-        this._nextPiece = -1;
+        this._selectedPc = -1;
 
-        for (let i=0; i<16; i++){
-            this._restPcs.push(i);
+        this.restPcs = [];
+        for (let i = 0; i < 16; i++) {
+            this.restPcs.push(i);
         }
 
         this._restSpots = [...this._restPcs];

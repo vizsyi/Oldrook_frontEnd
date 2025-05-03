@@ -19,7 +19,7 @@ export default class TertioSM {
 
             this._selectedPc = -1;
 
-            this.restPcs = [];
+            this.restPcs = [];  //todo: must it be defined?
             this.restSpots = null;
 
             this._bits;
@@ -103,12 +103,12 @@ export default class TertioSM {
 
     placeStep(spot) {
         const bit = 1 << spot;
-        let c, i, matte = 0;
+        let caracter, i, matte = 0;
 
         for (i = 0; i < 3; i++) {
-            c = i << 1 | this._selectedPc >>> i & 1; //caracter
+            caracter = i << 1 | this._selectedPc >>> i & 1; //caracter
 
-            matte |= this._caracMatte(this._bits[c] |= bit);
+            matte |= this._caracMatte(this._bits[caracter] |= bit);
         }
 
         // removing the piece and the spot from the rest ones
@@ -124,6 +124,7 @@ export default class TertioSM {
         this._selectedPc = step;
     }
 
+    /*
     step(step) {
         if (this._selectedPc) {
             this.placeStep(step);
@@ -132,10 +133,7 @@ export default class TertioSM {
             this.select(step);
         }
     }
-
-    _resetBits() {
-        //todo: implement
-    }
+    */
 
     reset(dummy = null) {
 
@@ -148,6 +146,7 @@ export default class TertioSM {
 
         this._selectedPc = -1;
 
+        this.restPcs = [];
         for (let i = 0; i < 8; i++) {
             this.restPcs.push(i);
         }
