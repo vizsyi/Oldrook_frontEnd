@@ -99,18 +99,18 @@ export default class C4View extends GameView {
         const //frag = this._fragmentF,
             board = this._boardE,
             tempbrick = this._gameTemplates.querySelector(".c4_brick");
-        let col, rowCl;
+        let brick, col, rowCl;
 
         // The border
         for (col = 0; col < 4; col++) {
-            let brick = document.createElement("div");
+            brick = document.createElement("div");
             brick.classList.add("c4_border");
             board.appendChild(brick);
         }
 
         // The upper row
         for (col = 0; col < 9; col++) {
-            let pause = document.createElement("div");
+            const pause = document.createElement("div");
             pause.classList.add("pause");
             board.appendChild(pause);
         }
@@ -120,7 +120,7 @@ export default class C4View extends GameView {
             rowCl = "c4_row-" + row;
             this._bricks.unshift(null);
             for (col = 6; col >= 0; col--) {
-                let brick = tempbrick.cloneNode(true);
+                brick = tempbrick.cloneNode(true);
                 brick.setAttribute("data-col", col);
                 brick.classList.add(rowCl, "c4-red");
                 this._bricks.unshift(new C4Brick(brick));
