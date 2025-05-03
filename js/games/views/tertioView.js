@@ -92,7 +92,7 @@ export default class TertioView extends GameView {
 
             // Spot click
             console.log("boardclick", this._clickState);
-            if (this._clickState = "spot") {
+            if (this._clickState === "spot") {
 
                 elem = ev.target.closest(".tertio_board_spot");
                 if (elem?.classList.contains("gspot-empty")) {
@@ -103,7 +103,7 @@ export default class TertioView extends GameView {
             }
 
             // Piece click
-            if (this._clickState = "piece") {
+            if (this._clickState === "piece") {
 
                 elem = ev.target.closest(".quarto_piece");
                 if (elem?.closest(".tertio_board_side")) {
