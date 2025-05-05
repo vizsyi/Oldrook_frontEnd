@@ -4,7 +4,7 @@ import C4View from "./views/c4View.js";
 import C4Repply from "./repplies/c4Repply.js";
 import MorrisView from "./views/morrisView.js";
 import QuartoView from "./views/quartoView.js";
-import TertioView from "./views/tertioView.js";
+//import TertioView from "./views/tertioView.js";
 import TertioRepply from "./repplies/tertioRepply.js";
 //import {GAMEFIELD_CLASSES} from "./gameConfig.js"
 import RLOG from "../log/rookLog.js";
@@ -12,7 +12,7 @@ import RLOG from "../log/rookLog.js";
 class GameFactory {
     constructor() {
         // Landing part
-        this._landing_games = ["matching-players", "connect-4", "tertio"];
+        this._landing_games = ["matching-players", "connect-4", "quarto", "tertio", "quarto2x2"];
         this._landingE = document.getElementById("gameLanding");
 
         // Active part
@@ -60,8 +60,12 @@ class GameFactory {
                 view = new QuartoView(this, desk, active);
                 break;
 
+            case "quarto2x2":
+                view = new QuartoView(this, desk, active, 2);
+                break;
+
             case "tertio":
-                view = new TertioView(this, desk, active);
+                view = new QuartoView(this, desk, active, 3);
                 new TertioRepply(view);
                 break;
 

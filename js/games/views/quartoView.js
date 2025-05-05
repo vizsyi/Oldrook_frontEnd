@@ -1,12 +1,23 @@
 import GameView from "./gameView.js";
 
 export default class QuartoView extends GameView {
-    constructor(factory, deskE, active) {
-        super(factory, deskE, active, "Quarto", "quarto_board", 0, true
-            , "quarto_board_spot");
+    constructor(factory, deskE, active, variant = 0) {
+        super(factory,
+            deskE,
+            active,
+            ["Quarto", null, "Quarto 2x2", "Tertio"][variant],
+            "quarto_board",
+            0,
+            true
+            //, "quarto_board_spot" //dropZone
+        );
 
-        /*Status*/
-        //this._statusM = new C4SM();
+        // Variant properties
+        this._variant = variant;
+        this._pieceCount = 16;
+        this._spotCount = 16;
+        this._sideBoardClass;
+        this._ringClass;
 
         /* View status */
         this._spots = [];
@@ -18,11 +29,30 @@ export default class QuartoView extends GameView {
 
         this._clickState = null;
 
+        this._tertioInit();
         this._initGame();
 
         //keyboard event status
         //this._keyActivated = 23;
         //this._isKeyActivatedShown = false;
+    }
+
+    _tertioInit() {
+        if (this._variant === 3) {
+            this._pieceCount = 8;
+            this._spotCount = 9;
+
+            this._sideBoardClass = "tertio_board_side";
+            this._ringClass = "tertio_board_ring";
+        }
+        else {
+            this._sideBoardClass = this._gameClass + "_side";
+            this._ringClass = this._gameClass + "_ring";
+        }
+    }
+
+    get variant() {
+        return this._variant;
     }
 
     _noSelected() {
@@ -60,6 +90,7 @@ export default class QuartoView extends GameView {
         spotE.classList.remove("gspot-empty");
 
         // Moving the piece
+        //console.log("PieceMove:", pci, spi);
         spotE.appendChild(pieceE);
 
         // Moving lastSpot class to the recent
@@ -69,8 +100,8 @@ export default class QuartoView extends GameView {
 
         if (finish) {
             if (result && matte) {
-                for (let i = 0; i < 16; i++) {
-                    if (matte & (1 << i)) {
+                for (let i = 0; i < this._spotCount; i++) {
+                    if (matte & 1 << i) {
                         this._spots[i].classList.add("gspot-win");
                     }
                 }
@@ -107,9 +138,11 @@ export default class QuartoView extends GameView {
     _boardClick(ev) {
         let elem, id;
         if (this._clickState) {
+
             // Spot click
-            if ((this._clickState === "spot")) {
-                elem = ev.target.closest(".tertio_board_spot");
+            if (this._clickState === "spot") {
+
+                elem = ev.target.closest(".quarto_board_spot");
                 if (elem?.classList.contains("gspot-empty")) {
                     id = Number.parseInt(elem.getAttribute("data-spi"));
                     // Intend
@@ -118,9 +151,10 @@ export default class QuartoView extends GameView {
             }
 
             // Piece click
-            if ((this._clickState === "piece")) {
+            if (this._clickState === "piece") {
+
                 elem = ev.target.closest(".quarto_piece");
-                if (elem?.closest(".tertio_board_side")) {
+                if (elem?.closest("." + this._sideBoardClass)) {
                     id = Number.parseInt(elem.getAttribute("data-pci"));
                     // Intend
                     this._repplyPlug?.selectIntend(id);
@@ -130,38 +164,44 @@ export default class QuartoView extends GameView {
     }
 
     _pieceSpotRearrange() {
-        for (let i = 0; i < 16; i++) {
-            // Moving the pieces to their original side spot
+        // Moving the pieces to thir original side spot
+        for (let i = 0; i < this._pieceCount; i++) {
             this._sideSpots[i].appendChild(this._pieces[i]);
+        }
 
-            // Making the spots empty for cursor and removing winning
+        // Making the spots empty for cursor and removing winning
+        for (let i = 0; i < this._spotCount; i++) {
             this._spots[i].classList.add("gspot-empty");
             this._spots[i].classList.remove("gspot-win");
         }
+
+        // Removing lastSpot class
+        this._lastSpotE?.classList.remove("gspot-last");
+        this._lastSpotE = null;
     }
 
     _initGame() {
         const board = this._boardE,
             ring = document.createElement("div"),
             sideContainers = [document.createElement("div"), document.createElement("div")],
-            div = document.createElement("div");
+            divInRing = document.createElement("div");
         let i, elem, piece;
 
         // The spots
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < this._spotCount; i++) {
             elem = document.createElement("div");
             elem.classList.add("quarto_board_spot");
             elem.setAttribute("data-spi", i);
-            div.appendChild(elem);
+            divInRing.appendChild(elem);
 
             this._spots.push(elem);
         }
 
         // Sides
-        sideContainers[0].classList.add("quarto_board_side");
-        sideContainers[1].classList.add("quarto_board_side", "quarto_board_side-right");
+        sideContainers[0].classList.add(this._sideBoardClass);
+        sideContainers[1].classList.add(this._sideBoardClass, this._sideBoardClass + "-right");
 
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < this._pieceCount; i++) {
             // Side spots
             elem = document.createElement("div");
             sideContainers[i & 1].appendChild(elem);
@@ -174,14 +214,14 @@ export default class QuartoView extends GameView {
             if (i & 1) piece.classList.add("piece-drill");
             if (i & 2) piece.classList.add("piece-dark");
             if (i & 4 ^ 4) piece.classList.add("piece-round");
-            if (i & 8 ^ 8) piece.classList.add("piece-small");
+            if (this._variant !== 3 && i & 8 ^ 8) piece.classList.add("piece-small");
             this._pieces.push(piece);
         }
 
         this._pieceSpotRearrange();
 
-        ring.classList.add("quarto_board_ring");
-        ring.appendChild(div);
+        ring.classList.add(this._ringClass);
+        ring.appendChild(divInRing);
         board.appendChild(sideContainers[0]);
         board.appendChild(ring);
         board.appendChild(sideContainers[1]);

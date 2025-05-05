@@ -5,70 +5,137 @@
     justify-content: center;
     position: relative;
 
-    &_ring {
+    &_ring, .tertio_board_ring {
         display: flex;
         justify-content: center;
         align-items: center;
         width: var(--quarto-ring);
         height: var(--quarto-ring);
-        box-sizing: content-box;
-        //background-color: hsla(180, 100%, 50%, .25);
+        //box-sizing: content-box;
         border: 2px solid var(--color-quarto-spot);
         border-radius: 50%;
         background-color: darkgoldenrod;
+        //background-color: hsla(180, 100%, 50%, .25);
 
+        & > div {
+            @if $development {
+                border: 2px solid gray;
+            }
+        }
+        
+    }
+
+    &_ring {
         & > div {
             display: grid;
             grid-template-columns: repeat(4, var(--quarto-spot));
             grid-template-rows: repeat(4, var(--quarto-spot));
             gap: .9em;
 
-            @if $development {
-                border: 2px solid gray;
-            }
             transform: rotate(10deg);
         }
+    }
 
-        .quarto_board_spot {
-            border: 2px solid var(--color-quarto-spot);
-            border-style: groove;
-            border-radius: 50%;
-            cursor: pointer;
+    .tertio_board_ring {
+        & > div {
+            display: grid;
+            grid-template-columns: repeat(3, var(--quarto-spot));
+            grid-template-rows: repeat(3, var(--quarto-spot));
+            gap: .9em;
+
+            transform: rotate(11deg);
         }
         
     }
 
-    .quarto_board_side {
+    .quarto_board_spot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid var(--color-quarto-spot);
+        border-style: groove;
+        border-radius: 50%;
+
+        &.gspot-last {
+            //border-color: var(--color-quarto-spot-last);
+            box-shadow: blue 1px 1px 12px;
+        }
+
+        &.gspot-win {
+            background-color: var(--color-quarto-spot-win);
+        }
+    }
+
+    &_side, .tertio_board_side {
         position: absolute;
         //left: 0;
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
         justify-content: space-between;
-        align-items: flex-start;
         //height: var(--quarto-ring);
-        height: 92%;
-        padding-top: 3%;
 
         @if $development {
             border: 2px solid blue;
-        }
-
-        &:not(.quarto_board_side-right){
-            left: 0;
-        }
-
-        &.quarto_board_side-right {
-            right: 0;
-            flex-wrap: wrap-reverse;
         }
 
         & > div {
             min-height: var(--quarto-piece-round);
         }
 
+        .quarto_piece.selected {
+            outline-style: ridge;//or groove
+            outline-color:var(--color-quarto-piece-select);
+            outline-offset: .3em;
+        }
+    }
+
+    &_side {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        height: 92%;
+        padding-top: 3%;
+
+        &:not(.quarto_board_side-right){
+            left: .5em;
+        }
+
+        &.quarto_board_side-right {
+            right: .5em;
+            flex-wrap: wrap-reverse;
+        }
+
         & > div:nth-child(-n+4) {
             min-height: var(--quarto-piece-small-round);
+        }
+    }
+
+    .tertio_board_side {
+        flex-wrap: nowrap;
+        align-items: center;
+        height: 70%;
+        padding-top: 5%;
+
+        &:not(.tertio_board_side-right){
+            left: 1em;
+        }
+
+        &.tertio_board_side-right {
+            right: 1em;
+        }
+
+    }
+
+    &.click-spot {
+        .quarto_board_spot {
+            cursor: pointer;
+        }
+    }
+
+    &.click-piece {
+        .quarto_board_side, .tertio_board_side {
+            .quarto_piece {
+                cursor: pointer;
+            }
         }
     }
 
