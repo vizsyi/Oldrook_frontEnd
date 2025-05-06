@@ -178,6 +178,9 @@ export default class QuartoView extends GameView {
         // Removing lastSpot class
         this._lastSpotE?.classList.remove("gspot-last");
         this._lastSpotE = null;
+
+        // Removing selection
+        this._noSelected();
     }
 
     _initGame() {

@@ -30,6 +30,8 @@ export default class QuartoSM {
             this._phase = 1;
             this.finished = false;
 
+            this._gameNr = 0;
+
             //this.reset(dummy)
         }
 
@@ -59,6 +61,10 @@ export default class QuartoSM {
         }
 
         return false;
+    }
+
+    newSM() {
+        return new QuartoSM(this);
     }
 
     _caracMatte(bit) {
@@ -148,7 +154,7 @@ export default class QuartoSM {
             this.restPcs.push(i);
         }
 
-        this.restSpots = this._caracCount === 3 ? [...this.restPcs, 8] : [...this._restPcs];
+        this.restSpots = this._caracCount === 3 ? [...this.restPcs, 8] : [...this.restPcs];
 
         if (this._bits) {
             this._bits.fill(0);
@@ -156,6 +162,8 @@ export default class QuartoSM {
         else {
             this._bits = Array(this._caracCount * 2).fill(0);
         }
+
+        this._phase = ++this._gameNr & 1 ? 1 : 3;
 
         this.finished = false;
 

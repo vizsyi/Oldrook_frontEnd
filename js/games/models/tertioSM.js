@@ -8,6 +8,10 @@ export default class TertioSM extends QuartoSM {
 
     }
 
+    newSM() {
+        return new TertioSM(this);
+    }
+
     _caracMatte(bit) {
         let matte;
 

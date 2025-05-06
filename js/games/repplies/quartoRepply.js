@@ -1,13 +1,17 @@
 import GameRepply from "./gameRepply.js";
+import QuartoSM from "../models/quartoSM.js";
+import Quarto2x2SM from "../models/quarto2x2SM.js";
 import TertioSM from "../models/tertioSM.js";
 
-export default class TertioRepply extends GameRepply {
+export default class QuartoRepply extends GameRepply {
     constructor(view) {
         super(view,
             null
         );
 
-        this._statusM = new TertioSM();
+        this._statusM = view.variant === 0 ? new QuartoSM() :
+            (view.variant === 3 ? new TertioSM() : new Quarto2x2SM());
+
         view.setStatusM();
 
         this._newGame();
@@ -27,7 +31,7 @@ export default class TertioRepply extends GameRepply {
 
                 // Looking for winning step
                 for (const spi of t_sm.restSpots) {
-                    const sm = new TertioSM(t_sm);
+                    const sm = t_sm.newSM();
                     if (sm.placeStep(spi)) {
                         spot = spi;
                         break;
@@ -115,10 +119,18 @@ export default class TertioRepply extends GameRepply {
     }
 
     _newGame() {
+
         this._statusM.reset();
         this._viewPlug.newGame();
 
-        this._firstSelect();
+        if (this._statusM.phase === 3) {
+            this._viewPlug.addClick(true);
+            //console.log("Repply new game end: you can select 3");
+        }
+        else {
+            this._firstSelect();
+            //console.log("Repply new game end: first select. Phase:", this._statusM.phase);
+        }
     }
 
 }
