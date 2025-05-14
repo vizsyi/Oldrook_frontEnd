@@ -28,7 +28,7 @@ export default class QuartoSM {
             this._bits;
 
             this._phase = 1;
-            this.finished = false;
+            this._finished = false;
 
             this._gameNr = 0;
 
@@ -54,6 +54,10 @@ export default class QuartoSM {
         return this._selectedPc;
     }
 
+    get finished() {
+        return this._finished;
+    }
+
     isFinished() {
         if (this.restPcs.length === 0) {
             this.finished = true;
@@ -61,6 +65,11 @@ export default class QuartoSM {
         }
 
         return false;
+    }
+
+    finish() {
+        this._finished = true;
+        return true;
     }
 
     newSM() {
@@ -165,7 +174,7 @@ export default class QuartoSM {
 
         this._phase = ++this._gameNr & 1 ? 1 : 3;
 
-        this.finished = false;
+        this._finished = false;
 
     }
 

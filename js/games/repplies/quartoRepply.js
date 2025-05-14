@@ -58,20 +58,20 @@ export default class QuartoRepply extends GameRepply {
 
     _move(spi) {
         const pci = this._statusM.selectedPc;
-        let finish, matte, result = 0;
+        let finished, matte, result = 0;
         if ((this._statusM.phase & 1) === 0 && !this._statusM.finished) {
 
             // Move
             matte = this._statusM.placeStep(spi);
-            finish = this._statusM.isFinished();
+            finished = this._statusM.isFinished();
 
             if (matte) {
-                finish = true;
+                finished = this._statusM.finish();
                 matte = this._statusM.whichMatte();
                 result = this._statusM.phase === 0 ? -1 : 1;
             }
 
-            this._viewPlug.move(pci, spi, finish, result, matte);
+            this._viewPlug.move(pci, spi, finished, result, matte);
 
             // Next phase & Click
             if (this._statusM.nextPhase === 3) {
