@@ -15,7 +15,7 @@ export default class QuartoSM {
 
             this._bits = [...origin._bits];
 
-            this.finished = false;
+            this._finished = false;
         }
         else {
             this._side = 0;
@@ -77,20 +77,20 @@ export default class QuartoSM {
     }
 
     _caracMatte(bit) {
-        let neigh, matte;
+        let m1, matte;
 
         // Horizontal
         matte = bit & (bit >>> 1);
         matte &= (matte >>> 2) & 4369;//Begining of the rows
         // Vertical
-        neigh = bit & (bit >>> 4);
-        matte |= neigh & (neigh >>> 8) & 15;//Begining of the columns
+        m1 = bit & (bit >>> 4);
+        matte |= m1 & (m1 >>> 8) & 15;//Begining of the columns
         // Diagonal+
-        neigh = bit & (bit >>> 5);
-        matte |= neigh & (neigh >>> 10) & 1;//Position 0
+        m1 = bit & (bit >>> 5);
+        matte |= m1 & (m1 >>> 10) & 1;//Position 0
         // Diagonal-
-        neigh = bit & (bit >>> 3);
-        matte |= neigh & (neigh >>> 6) & 8;//Position 3
+        m1 = bit & (bit >>> 3);
+        matte |= m1 & (m1 >>> 6) & 8;//Position 3
 
         return matte
     }
@@ -99,24 +99,26 @@ export default class QuartoSM {
         let matte = 0, m1;
         this._bits.forEach(bit => {
             // Horizontal
-            m1 = bit & (bit >>> 1) & (bit >>> 2) & 73;//Begining of the rows
+            m1 = bit & (bit >>> 1);
+            m1 &= (m1 >>> 2) & 4369;//Begining of the rows
             if (m1) {
-                matte |= m1 | m1 << 1 | m1 << 2;
+                m1 |= m1 << 1;
+                matte |= m1 | m1 << 2;
             }
             // Vertical
-            m1 = bit & (bit >>> 3) & (bit >>> 6) & 7;//Begining of the columns
+            m1 = bit & (bit >>> 4);
+            m1 &= (m1 >>> 8) & 15;//Begining of the columns
             if (m1) {
-                matte |= m1 | m1 << 3 | m1 << 6;
+                m1 |= m1 << 4;
+                matte |= m1 | m1 << 8;
             }
             // Diagonal+
-            m1 = bit & (bit >>> 4) & (bit >>> 8) & 1;//Position 0
-            if (m1) {
-                matte |= 273;
+            if ((bit & 33825 ^ 33825) === 0) { //Position 0
+                matte |= 33825;
             }
             // Diagonal-
-            m1 = bit & (bit >>> 2) & (bit >>> 4) & 4;//Position 2
-            if (m1) {
-                matte |= 84;
+            if ((bit & 4680 ^ 4680) === 0) { //Position 3
+                matte |= 4680;
             }
         });
 
