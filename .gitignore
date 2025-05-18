@@ -17,6 +17,7 @@ src/dev/*.css.map
 img/*.jpg
 img/*.jpeg
 img/*.png
+img/*.ico
 img/celebs/*.jpg
 img/celebs/*.png
 
