@@ -16,7 +16,7 @@
     <meta property="og:type" content="website">
 
     <title>Oldrook - Memory & Board Games</title>
-    <link rel="stylesheet" href="src/index.css">
+    <link rel="stylesheet" href="./../src/index.css">
     <script src="js/script.js" type="module"></script>
     <!-- <script src="src/index_min.js" defer></script> -->
 </head>
@@ -34,9 +34,10 @@
                 Sharpen your mind with our collection of classic memory like
                 <a href="rookgame.html?game=matching-players"><strong>Matching pairs</strong>,</a>
                 or board games like
-                <a href="rookgame.html?game=connect-4"><strong>Connect-4</strong>,</a>
-                <a href="rookgame.html?game=tertio"><strong>Tertio</strong>,</a>
-                which rules are similar to Quarto.
+                <a href="rookgame.html?game=connect-4"><strong>Connect-4</strong></a>,
+                <a href="rookgame.html?game=quarto"><strong>Quarto</strong></a>,
+                <a href="rookgame.html?game=quarto2x2"><strong>Quarto 2x2</strong></a> or
+                <a href="rookgame.html?game=tertio"><strong>Tertio</strong></a>.
                 <br>
                 All games are browser-based, free to play and great for all ages.
             </p>
@@ -45,8 +46,9 @@
                 <a href="rookgame.html?game=matching-players">Play <strong>Concentration</strong>.</a>
                 <a href="rookgame.html?game=matching-players">Play <strong>Memory game</strong>.</a>
                 <a href="rookgame.html?game=matching-players"><strong>Match famous players</strong>.</a>
+                <a href="rookgame.html?game=quarto">Play <strong>Quarto</strong>.</a>
+                <a href="rookgame.html?game=quarto2x2">Play <strong>Quarto 2x2</strong>.</a>
                 <a href="rookgame.html?game=tertio">Play <strong>Tertio</strong>.</a>
-                <a href="rookgame.html?game=tertio">Play <strong>Quarto</strong>.</a>
                 <a href="rookgame.html?game=connect-4">Play <strong>Connect-4</strong>.</a>
             </p>
             <hr>
@@ -71,9 +73,20 @@
             <p>You don’t pick your own piece to place — your opponent chooses it for you! You place that piece anywhere on the board. Then you pick a piece for your opponent to place next.</p>
         </div>
 
+        <div class="gamecard" style="padding: 1em;">
+            <p style="width: 40%;text-align: left;">
+                In this Quarto variant, You can win by placing four matching pieces that share the same attribute in a 2x2 square.
+            </p>
+            <ul>Like in standard Quarto:</ul>
+            <li>Each piece has 4 attributes, each attribute having 2 options - tall or short, light or dark, square or round, solid or hollow.</li>
+            <li>You don’t pick your own piece to place — your opponent chooses it for you! You place that piece anywhere on the board. Then you pick a piece for your opponent to place next.</li>
+        </div>
+
 <p>Your goal is to create a line (horizontal, vertical, or diagonal) of four pieces that share a common attribute.</p><p>Each piece has 4 attributes, each attribute having 2 options - big or small, light or dark, square or round, solid or hollow.</p><p>You don’t pick your own piece to place — your opponent chooses it for you! You place that piece anywhere on the board. Then you pick a piece for your opponent to place next.</p>
 
 <p>Its rules are similar to Quarto, but it is played with 8 pieces.</p><p>Your goal is to create a line (horizontal, vertical, or diagonal) of three pieces that share a common attribute.</p><p>Each piece has 3 attributes, each attribute having 2 options - light or dark, square or round, solid or hollow.</p><p>You don’t pick your own piece to place — your opponent chooses it for you! You place that piece anywhere on the board. Then you pick a piece for your opponent to place next.</p>
+
+<p>In this Quarto variant, You can win by placing four matching pieces that share the same attribute in a 2x2 square.</p><ul>Like in standard Quarto:</ul><li>Each piece has 4 attributes, each attribute having 2 options - tall or short, light or dark, square or round, solid or hollow.</li><li>You don’t pick your own piece to place — your opponent chooses it for you! You place that piece anywhere on the board. Then you pick a piece for your opponent to place next.</li>
 
 
         <main id="gameLanding"></main>
@@ -84,57 +97,6 @@
             </div>
         </footer>
     </div>
-    <!-- Modals -->
-    <section class="nondisplay">
 
-        <div id="modalfade" class="mmodal_fade"></div>
-    </section>
-    <!-- Rook game templates -->
-    <aside id="gameTemplates" class="nondisplay">
-        <div class="mcard">
-            <div>
-                <div class="mcard_front">
-                    <div>
-                        <div class="mcard_img">
-                            <img>
-                        </div>
-                        <div class="mcard_label">
-                            <span></span>
-                        </div>
-                        <svg class="mcard_heart_icon">
-                            <use xlink:href="img/sprite.svg#icon-heart"></use>
-                        </svg>
-                        <svg class="mcard_check_icon">
-                            <use xlink:href="img/sprite.svg#icon-checkmark"></use>
-                        </svg>
-                    </div>
-                </div>
-                <div class="mcard_back">
-                </div>
-            </div>
-        </div>
-        <div class="gamemodal gameresult">
-            <h2 class="gameresult_label-won">You have won!</h2>
-            <h2 class="gameresult_label-lost">Sorry, you have lost!</h2>
-            <h2 class="gameresult_label-draw">It is a draw.</h2>
-            <hr>
-            <div>
-                <button class="btn btn-secondary btn-close">Close</button>
-            </div>
-        </div>
-        <div class="gamemodal mcardresult">
-            <h2>You have found all the pairs</h2>
-            <br>
-            <p>Time used: <output id="mcardResultTime"></p>
-            <p>Card turn over: <output></p>
-            <p>Points: <output></p>
-        </div>
-        <div class="c4_brick">
-            <div class="c4_chip"></div>
-            <div>
-                <div class="c4_touch"></div>
-            </div>
-        </div>
-    </aside>
 </body>
 </html>
