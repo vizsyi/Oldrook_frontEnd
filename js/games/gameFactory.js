@@ -129,9 +129,9 @@ class GameFactory {
         this._landingE.appendChild(fragmentF);
     }
 
-    _addActiveView(game, desk, active, id) {
+    _addActiveView(game, desk, active) {
         this._activeView?.dispo();
-        [this._activeView, game] = this._createView(game, desk, active, id);
+        [this._activeView, game] = this._createView(game, desk, active);
 
         document.title = this._activeView
             ? this._activeView.gameTitle + " at Oldrook"
@@ -150,7 +150,7 @@ class GameFactory {
         this._labelSelect.blur();
         if (game !== this._game) {
             this._game = game;
-            this._addActiveView(game, this._activeDesk, true, 0);
+            this._addActiveView(game, this._activeDesk, true);
         }
         //localStorage.setItem("rookgame", game);
     }

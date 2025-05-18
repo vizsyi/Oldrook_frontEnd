@@ -15,7 +15,7 @@ export default class GameRepply {
         this._negamaxDepth = this._useDifficulty ? difficultyDepthMap.values().next().value : 0;
         this._difficultyName = "";
 
-        if (this._viewPlug.active) this.activate();
+        if (this._viewPlug.active) this._activate();
     }
 
     _setDifficulty(diffName) {
@@ -30,7 +30,7 @@ export default class GameRepply {
     }
 
     _difficultyHandler(inputElem) {
-        if (inputElem && this._setDifficulty) {
+        if (inputElem && this._useDifficulty) {
             const diff = inputElem.id?.substring(11);
             if (diff !== this._difficultyName) {
                 this._difficultyName = diff;
@@ -42,17 +42,19 @@ export default class GameRepply {
     _difficultyShow(show = true) {
         if (this._factory) {
             this._factory.difficultyShow(show);
-            this._difficultyHandler(
-                this._factory.difficultyForm?.querySelector("input:checked"));
+            if (show) {
+                this._difficultyHandler(
+                    this._factory.difficultyForm?.querySelector("input:checked"));
+            }
         }
     }
 
-    activate() {
+    _activate() {
         // Show difficulty form
         if (this._useDifficulty) this._difficultyShow(true);
     }
 
-    deactivate() {
+    _deactivate() {
         this._difficultyShow(false);
     }
 
@@ -70,6 +72,7 @@ export default class GameRepply {
     }
 
     dispo() {
+        this._deactivate();
         this._viewPlug = null;
         this._statusM = null;
         this._factory = null;

@@ -7,8 +7,8 @@ export default class C4Repply extends GameRepply {
             new Map([
                 ["easy", 2],
                 ["med", 4],
-                ["hard", 8],
-                ["albert", 12]
+                ["hard", 6],
+                ["albert", 10]
             ])
         );
 
